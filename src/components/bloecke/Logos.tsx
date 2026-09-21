@@ -5,13 +5,13 @@ import { LogosLaufschrift as LogosBand } from './LogosLaufschrift';
 
 /**
  * Partner- und Referenzlogos. Zwei Darstellungen, per Häkchen "Als scrollendes Band zeigen" im CMS:
- * - Laufschrift: Logos laufen endlos durch, wie auf www.infraone.ch, mit Umschalter zwischen weisser Silhouette und
- *   Originalfarben (Client-Komponente LogosLaufschrift.tsx). Reine CSS-Animation, Pause beim Überfahren, steht bei
+ * - Laufschrift: Logos laufen endlos durch, wie auf www.infraone.ch. Die Redaktion wählt im CMS zwischen weisser
+ *   Silhouette und Originalfarben (LogosLaufschrift.tsx). Reine CSS-Animation, Pause beim Überfahren, steht bei
  *   "Bewegung reduzieren" still (globale Regel in globals.css).
  * - Raster: ruhige, feste Reihe wie bisher, für wenige Logos.
  */
 export function Logos({ daten: d }: { daten: BlockDaten<'logos'> }) {
-  if (d.laufschrift) return <LogosBand titel={d.titel} standard={d.darstellung} logos={d.logos} />;
+  if (d.laufschrift) return <LogosBand titel={d.titel} darstellung={d.darstellung} logos={d.logos} />;
   return <LogosRaster daten={d} />;
 }
 

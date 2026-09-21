@@ -241,9 +241,9 @@ export function seitenBloecke(bildOrdner: string) {
             defaultValue: false,
           }),
           darstellung: fields.select({
-            label: 'Anfangsdarstellung des scrollenden Bandes',
+            label: 'Darstellung des scrollenden Bandes',
             description:
-              'Weiss zeigt alle Logos als weisse Silhouette, Farbe in den Originalfarben auf weissen Kacheln. Besucherinnen und Besucher können auf der Website selbst umschalten, sobald mindestens drei Logos eine Farbversion haben.',
+              'Weiss zeigt alle Logos als weisse Silhouette. Farbe zeigt die Logos in Originalfarben auf weissen Kacheln, nur Logos mit ausgefülltem Feld "Logo in Farbe". Gilt nur, wenn das Band eingeschaltet ist.',
             options: [
               { label: 'Weiss', value: 'weiss' },
               { label: 'Farbe', value: 'farbig' },

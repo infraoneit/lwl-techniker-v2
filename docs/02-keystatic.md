@@ -80,7 +80,7 @@ Startseite und Seiten werden aus diesen Blöcken zusammengesetzt (Schema in `src
 | Offene Stellen (automatisch) | siehe Automatik unten |
 | Ablauf in Schritten | nummerierte Schritte mit Verbindungslinie |
 | Team | Personen mit Foto, Funktion, Kontakt |
-| Partner und Zertifikate | Logoleiste |
+| Partner und Referenzen (Logos) | Logoleiste als festes Raster oder als scrollendes Band. Beim Band wählt die Redaktion im Feld "Darstellung", ob die Logos als weisse Silhouette oder in Originalfarben auf weissen Kacheln laufen |
 | Kundenstimmen | Zitate mit Name und Funktion |
 | Häufige Fragen | aufklappbare Fragen |
 | Kontaktaufruf | farbiges Band mit Knopf und Telefon |

@@ -200,83 +200,103 @@
           },
           {
             "name": "AXA",
-            "logo": "/bilder/statisch/logos/axa.png"
+            "logo": "/bilder/statisch/logos/axa.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/axa.webp"
           },
           {
             "name": "Baumann Kölliker Gruppe",
-            "logo": "/bilder/statisch/logos/baumann-koelliker-gruppe.png"
+            "logo": "/bilder/statisch/logos/baumann-koelliker-gruppe.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/baumann-koelliker-gruppe.webp"
           },
           {
             "name": "Biotta",
-            "logo": "/bilder/statisch/logos/biotta.png"
+            "logo": "/bilder/statisch/logos/biotta.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/biotta.webp"
           },
           {
             "name": "Bundesamt für Strassen ASTRA",
-            "logo": "/bilder/statisch/logos/astra.png"
+            "logo": "/bilder/statisch/logos/astra.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/astra.webp"
           },
           {
             "name": "Burkhalter",
-            "logo": "/bilder/statisch/logos/burkhalter.png"
+            "logo": "/bilder/statisch/logos/burkhalter.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/burkhalter.webp"
           },
           {
             "name": "Cablex",
-            "logo": "/bilder/statisch/logos/cablex.png"
+            "logo": "/bilder/statisch/logos/cablex.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/cablex.webp"
           },
           {
             "name": "Conny-Land",
-            "logo": "/bilder/statisch/logos/conny-land.png"
+            "logo": "/bilder/statisch/logos/conny-land.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/conny-land.webp"
           },
           {
             "name": "Coop",
-            "logo": "/bilder/statisch/logos/coop.png"
+            "logo": "/bilder/statisch/logos/coop.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/coop.webp"
           },
           {
             "name": "Credit Suisse",
-            "logo": "/bilder/statisch/logos/credit-suisse.png"
+            "logo": "/bilder/statisch/logos/credit-suisse.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/credit-suisse.webp"
           },
           {
             "name": "EMS-Chemie",
-            "logo": "/bilder/statisch/logos/ems-chemie.png"
+            "logo": "/bilder/statisch/logos/ems-chemie.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/ems-chemie.webp"
           },
           {
             "name": "Equans",
-            "logo": "/bilder/statisch/logos/equans.png"
+            "logo": "/bilder/statisch/logos/equans.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/equans.webp"
           },
           {
             "name": "ETH Zürich",
-            "logo": "/bilder/statisch/logos/eth-zuerich.png"
+            "logo": "/bilder/statisch/logos/eth-zuerich.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/eth-zuerich.webp"
           },
           {
             "name": "Flughafen Zürich",
-            "logo": "/bilder/statisch/logos/flughafen-zuerich.png"
+            "logo": "/bilder/statisch/logos/flughafen-zuerich.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/flughafen-zuerich.webp"
           },
           {
             "name": "Globus",
-            "logo": "/bilder/statisch/logos/globus.png"
+            "logo": "/bilder/statisch/logos/globus.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/globus.webp"
           },
           {
             "name": "Green Datacenter",
-            "logo": "/bilder/statisch/logos/green-datacenter.png"
+            "logo": "/bilder/statisch/logos/green-datacenter.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/green-datacenter.webp"
           },
           {
             "name": "Groupe Mutuel",
-            "logo": "/bilder/statisch/logos/group-mutuel.png"
+            "logo": "/bilder/statisch/logos/group-mutuel.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/group-mutuel.webp"
           },
           {
             "name": "Hermès",
-            "logo": "/bilder/statisch/logos/hermes.png"
+            "logo": "/bilder/statisch/logos/hermes.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/hermes.webp"
           },
           {
             "name": "Hirslanden",
-            "logo": "/bilder/statisch/logos/hirslanden.png"
+            "logo": "/bilder/statisch/logos/hirslanden.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/hirslanden.webp"
           },
           {
             "name": "Kummler+Matter",
-            "logo": "/bilder/statisch/logos/kummler-matter.png"
+            "logo": "/bilder/statisch/logos/kummler-matter.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/kummler-matter.webp"
           },
           {
             "name": "Kunsthaus Zürich",
-            "logo": "/bilder/statisch/logos/kunsthaus-zuerich.png"
+            "logo": "/bilder/statisch/logos/kunsthaus-zuerich.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/kunsthaus-zuerich.webp"
           }
         ]
       }

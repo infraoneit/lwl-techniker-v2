@@ -62,13 +62,17 @@ function randFarben(daten, w, h) {
   return { farben: ergebnis, heller };
 }
 
-/** Kleinster Abstand jedes Pixels zu den Hintergrundfarben. */
-function abstandZumHintergrund(weich, w, h, farben) {
+/**
+ * Kleinster Abstand jedes Pixels zu den Hintergrundfarben.
+ * Bei hellem Hintergrund zählen zusätzlich helle, farblose Grautöne als Hintergrund (Verläufe von Weiss nach Hellgrau).
+ */
+function abstandZumHintergrund(weich, w, h, farben, heller) {
   const nah = new Float32Array(w * h);
   for (let p = 0; p < w * h; p++) {
     const px = [weich[p * 3], weich[p * 3 + 1], weich[p * 3 + 2]];
     let best = Infinity;
     for (const f of farben) best = Math.min(best, abstand(px, f));
+    if (heller && hell(px) > 165) best = Math.min(best, (Math.max(...px) - Math.min(...px)) * 2);
     nah[p] = best;
   }
   return nah;
@@ -86,8 +90,8 @@ async function weiss(name, pfad) {
     for (let p = 0; p < w * h; p++) aus[p * 4 + 3] = data[p * 4 + 3];
   } else {
     const weich = await sharp(pfad).flatten({ background: '#ffffff' }).removeAlpha().blur(0.7).raw().toBuffer();
-    const { farben } = randFarben(weich, w, h);
-    const nah = abstandZumHintergrund(weich, w, h, farben);
+    const { farben, heller } = randFarben(weich, w, h);
+    const nah = abstandZumHintergrund(weich, w, h, farben, heller);
     const NIEDRIG = 26;
     const HOCH = 72;
     for (let p = 0; p < w * h; p++) {
@@ -110,7 +114,7 @@ async function farbig(name, pfad) {
   const { width: w, height: h } = info;
   const weich = await sharp(pfad).flatten({ background: '#ffffff' }).removeAlpha().blur(0.7).raw().toBuffer();
   const { farben, heller } = randFarben(weich, w, h);
-  const nah = abstandZumHintergrund(weich, w, h, farben);
+  const nah = abstandZumHintergrund(weich, w, h, farben, heller);
 
   // Umriss des Logos aus deutlichen Abweichungen vom Hintergrund
   const zeilen = new Uint32Array(h);
