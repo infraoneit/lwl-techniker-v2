@@ -253,8 +253,9 @@ export function seitenBloecke(bildOrdner: string) {
           logos: fields.array(
             fields.object({
               name: text('Name', { pflicht: true, max: 60, beschreibung: 'Wird als Bildbeschreibung verwendet.' }),
-              logo: bild('Logo', bildOrdner, { pflicht: true, hinweis: 'SVG oder PNG mit transparentem Hintergrund, unter 30 KB. Im scrollenden Band als weisse Silhouette, darum weiss oder einfarbig hell einfärben.' }),
-              logoFarbig: bild('Logo in Farbe (optional)', bildOrdner, {
+              // Gemeinsame Ordner für alle Logos. Die vorhandenen Dateien liegen dort, und Keystatic erkennt Bilder nur im Ordner des Feldes.
+              logo: bild('Logo', 'statisch/logos', { pflicht: true, hinweis: 'SVG oder PNG mit transparentem Hintergrund, unter 30 KB. Im scrollenden Band als weisse Silhouette, darum weiss oder einfarbig hell einfärben.' }),
+              logoFarbig: bild('Logo in Farbe (optional)', 'statisch/logos-farbig', {
                 hinweis: 'Originalfarben, zugeschnitten auf das Logo, mit weissem Hintergrund, unter 30 KB. Wird nur in der Farbdarstellung des scrollenden Bandes gezeigt.',
               }),
               link: link('Link (optional)'),
