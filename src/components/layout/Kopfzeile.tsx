@@ -118,7 +118,17 @@ export function Kopfzeile({ firmenname, logo, telefon, menue, knopf }: Props) {
             'flex items-center justify-between gap-6 rounded-full border border-marke/20 bg-flaeche-dunkel/90 px-4 py-2 whitespace-nowrap backdrop-blur-xl transition-[border-color,box-shadow] duration-300 hover:border-marke/35 hover:shadow-[0_0_28px_rgba(240,168,0,0.06)] lg:justify-start lg:px-5 lg:py-2.5 3xl:px-7 3xl:py-3.5'
           )}
         >
-          <Link href="/" className="flex shrink-0 items-center" aria-label={`${firmenname}, zur Startseite`}>
+          <Link
+            href="/"
+            className="flex shrink-0 items-center"
+            aria-label={`${firmenname}, zur Startseite`}
+            // Auf der Startseite scrollt Next.js bei einem Klick auf denselben Link nicht nach oben
+            onClick={(e) => {
+              if (pfad !== '/') return;
+              e.preventDefault();
+              window.scrollTo({ top: 0 });
+            }}
+          >
             {logo ? (
               <Image src={logo} alt={firmenname} width={240} height={100} loading="eager" unoptimized={logo.endsWith('.svg')} className="h-8 w-auto lg:h-9 3xl:h-11" />
             ) : (
