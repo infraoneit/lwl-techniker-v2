@@ -320,6 +320,26 @@
     @apply block w-full border border-linie bg-flaeche-dunkel px-4 py-3 text-base text-text transition-colors outline-none placeholder:text-text-leise/70 focus:border-marke focus:ring-2 focus:ring-marke/25;
   }
 
+  /*
+   * LAUFSCHRIFT (Logos.tsx, Modus 'laufschrift'): Logos laufen endlos durch, wie auf www.infraone.ch.
+   * Die Spur enthält die Logoliste zweimal hintereinander und schiebt sich um genau die halbe eigene
+   * Breite nach links, dadurch ist der Übergang zur Wiederholung unsichtbar. Pause beim Überfahren.
+   * Steht bei "Bewegung reduzieren" still (globale Regel oben in dieser Datei).
+   */
+  .logos-laufschrift-spur {
+    animation-name: laufschrift;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  .logos-laufschrift:hover .logos-laufschrift-spur {
+    animation-play-state: paused;
+  }
+  @keyframes laufschrift {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
   /* Fliesstext aus Markdoc */
   .fliesstext {
     @apply text-text;

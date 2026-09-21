@@ -231,10 +231,15 @@ export function seitenBloecke(bildOrdner: string) {
       },
 
       logos: {
-        label: 'Partner und Zertifikate (Logos)',
+        label: 'Partner und Referenzen (Logos)',
         itemLabel: (p) => p.fields.titel.value || 'Logos',
         schema: fields.object({
-          titel: text('Titel', { max: 90, beschreibung: 'z. B. "Partner und Mitgliedschaften". Kann leer bleiben.' }),
+          titel: text('Titel', { max: 90, beschreibung: 'z. B. "Partner und Mitgliedschaften" oder "Referenzen". Kann leer bleiben.' }),
+          laufschrift: fields.checkbox({
+            label: 'Als scrollendes Band zeigen',
+            description: 'Ein: Logos laufen ununterbrochen durch (ab 4 Logos empfohlen). Aus: festes Raster wie bisher.',
+            defaultValue: false,
+          }),
           logos: fields.array(
             fields.object({
               name: text('Name', { pflicht: true, max: 60, beschreibung: 'Wird als Bildbeschreibung verwendet.' }),
@@ -242,9 +247,9 @@ export function seitenBloecke(bildOrdner: string) {
               link: link('Link (optional)'),
             }),
             {
-              label: 'Logos (3 bis 12)',
+              label: 'Logos',
               itemLabel: (p) => p.fields.name.value || 'Logo',
-              validation: { length: { min: 3, max: 12 } },
+              validation: { length: { min: 3, max: 200 } },
             }
           ),
         }),

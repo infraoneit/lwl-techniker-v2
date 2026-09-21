@@ -62,6 +62,199 @@
       }
     },
     {
+      "discriminant": "logos",
+      "value": {
+        "titel": "Eine Auswahl unserer Referenzen",
+        "laufschrift": true,
+        "logos": [
+          {
+            "name": "SwissLife Arena",
+            "logo": "/bilder/statisch/logos/swisslife-arena.png"
+          },
+          {
+            "name": "Tertianum",
+            "logo": "/bilder/statisch/logos/tertianium.png"
+          },
+          {
+            "name": "The Circle Zürich",
+            "logo": "/bilder/statisch/logos/the-circle-zuerich.png"
+          },
+          {
+            "name": "Tiffany & Co.",
+            "logo": "/bilder/statisch/logos/tiffany-and-co.png"
+          },
+          {
+            "name": "UBS",
+            "logo": "/bilder/statisch/logos/ubs.png"
+          },
+          {
+            "name": "UPC",
+            "logo": "/bilder/statisch/logos/upc.png"
+          },
+          {
+            "name": "Universitätsspital Zürich",
+            "logo": "/bilder/statisch/logos/usz.png"
+          },
+          {
+            "name": "Luzerner Kantonalbank",
+            "logo": "/bilder/statisch/logos/luzerner-kantonalbank.png"
+          },
+          {
+            "name": "Shopping Arena",
+            "logo": "/bilder/statisch/logos/shopping-arena.png"
+          },
+          {
+            "name": "Swisspro",
+            "logo": "/bilder/statisch/logos/swisspro.png"
+          },
+          {
+            "name": "Louis Vuitton",
+            "logo": "/bilder/statisch/logos/lv.png"
+          },
+          {
+            "name": "ISA Bodywear",
+            "logo": "/bilder/statisch/logos/isa-bodywear.png"
+          },
+          {
+            "name": "McLaren",
+            "logo": "/bilder/statisch/logos/mclaren.png"
+          },
+          {
+            "name": "Migros",
+            "logo": "/bilder/statisch/logos/migros.png"
+          },
+          {
+            "name": "Mövenpick",
+            "logo": "/bilder/statisch/logos/moevenpick.png"
+          },
+          {
+            "name": "NEP Switzerland",
+            "logo": "/bilder/statisch/logos/nep.png"
+          },
+          {
+            "name": "Olma Messen St. Gallen",
+            "logo": "/bilder/statisch/logos/olma-messen.png"
+          },
+          {
+            "name": "Privatklinik Bethanien",
+            "logo": "/bilder/statisch/logos/privatklinik-bethanien.png"
+          },
+          {
+            "name": "Privera",
+            "logo": "/bilder/statisch/logos/privera.png"
+          },
+          {
+            "name": "Raiffeisen",
+            "logo": "/bilder/statisch/logos/raiffeisen.png"
+          },
+          {
+            "name": "Rieter",
+            "logo": "/bilder/statisch/logos/rieter.png"
+          },
+          {
+            "name": "SBB CFF FFS",
+            "logo": "/bilder/statisch/logos/sbb.png"
+          },
+          {
+            "name": "Schibli Elektrotechnik",
+            "logo": "/bilder/statisch/logos/schibli.png"
+          },
+          {
+            "name": "Sunrise",
+            "logo": "/bilder/statisch/logos/sunrise.png"
+          },
+          {
+            "name": "Swisscom",
+            "logo": "/bilder/statisch/logos/swisscom.png"
+          },
+          {
+            "name": "Swiss Football League",
+            "logo": "/bilder/statisch/logos/swiss-football-league.png"
+          },
+          {
+            "name": "AXA",
+            "logo": "/bilder/statisch/logos/axa.png"
+          },
+          {
+            "name": "Baumann Kölliker Gruppe",
+            "logo": "/bilder/statisch/logos/baumann-koelliker-gruppe.png"
+          },
+          {
+            "name": "Biotta",
+            "logo": "/bilder/statisch/logos/biotta.png"
+          },
+          {
+            "name": "Bundesamt für Strassen ASTRA",
+            "logo": "/bilder/statisch/logos/astra.png"
+          },
+          {
+            "name": "Burkhalter",
+            "logo": "/bilder/statisch/logos/burkhalter.png"
+          },
+          {
+            "name": "Cablex",
+            "logo": "/bilder/statisch/logos/cablex.png"
+          },
+          {
+            "name": "Conny-Land",
+            "logo": "/bilder/statisch/logos/conny-land.png"
+          },
+          {
+            "name": "Coop",
+            "logo": "/bilder/statisch/logos/coop.png"
+          },
+          {
+            "name": "Credit Suisse",
+            "logo": "/bilder/statisch/logos/credit-suisse.png"
+          },
+          {
+            "name": "EMS-Chemie",
+            "logo": "/bilder/statisch/logos/ems-chemie.png"
+          },
+          {
+            "name": "Equans",
+            "logo": "/bilder/statisch/logos/equans.png"
+          },
+          {
+            "name": "ETH Zürich",
+            "logo": "/bilder/statisch/logos/eth-zuerich.png"
+          },
+          {
+            "name": "Flughafen Zürich",
+            "logo": "/bilder/statisch/logos/flughafen-zuerich.png"
+          },
+          {
+            "name": "Globus",
+            "logo": "/bilder/statisch/logos/globus.png"
+          },
+          {
+            "name": "Green Datacenter",
+            "logo": "/bilder/statisch/logos/green-datacenter.png"
+          },
+          {
+            "name": "Groupe Mutuel",
+            "logo": "/bilder/statisch/logos/group-mutuel.png"
+          },
+          {
+            "name": "Hermès",
+            "logo": "/bilder/statisch/logos/hermes.png"
+          },
+          {
+            "name": "Hirslanden",
+            "logo": "/bilder/statisch/logos/hirslanden.png"
+          },
+          {
+            "name": "Kummler+Matter",
+            "logo": "/bilder/statisch/logos/kummler-matter.png"
+          },
+          {
+            "name": "Kunsthaus Zürich",
+            "logo": "/bilder/statisch/logos/kunsthaus-zuerich.png"
+          }
+        ]
+      }
+    },
+    {
       "discriminant": "textMitBild",
       "value": {
         "ueberzeile": "Ausrüstung",
