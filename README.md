@@ -1,6 +1,6 @@
 # Website LWL-Techniker Schweiz GmbH
 
-Website der LWL-Techniker Schweiz GmbH (www.lwl-techniker.ch), erstellt aus der InfraOne-Vorlage `_vorlage-website` mit Next.js, Keystatic und Netlify. Die Inhalte stammen von der bisherigen Website. Das Design folgt dem Entwurf `index.html` aus dem ersten Commit: dunkles Nachtblau mit Bernstein, Faserwellen als Vollbild-Animation (`src/components/ui/Faserwellen.tsx`), schwebende Pill-Navigation, Fadenkreuz-Cursor und Titel in Versalien mit Kontur. Breiten, Abstände, Blöcke und Prüfungen der Vorlage bleiben unverändert.
+Website der LWL-Techniker Schweiz GmbH (www.lwl-techniker.ch), erstellt aus der InfraOne-Vorlage `_vorlage-website` mit Next.js, Keystatic und Netlify. Die Inhalte stammen von der bisherigen Website. Das Design folgt dem Entwurf `index.html` aus dem ersten Commit: dunkles Nachtblau mit Bernstein, Faserwellen als Vollbild-Animation (`src/components/ui/Faserwellen.tsx`), schwebende Pill-Navigation und Titel in Versalien mit Kontur. Der Fadenkreuz-Cursor des Entwurfs wurde weggelassen. Breiten, Abstände, Blöcke und Prüfungen der Vorlage bleiben unverändert.
 Aufgebaut nach dem Vorbild von schaltkraft.ch (Breite, Aufbau, Keystatic) und elektro-tel.ch (automatische Referenzen und Stellen auf der Startseite).
 
 **Wer mit dieser Vorlage arbeitet, liest zuerst die Dokumentation in `docs/`.** Sie ist kurz und beschreibt genau, wie wir vorgehen.

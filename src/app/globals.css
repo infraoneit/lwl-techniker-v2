@@ -5,7 +5,8 @@
  *
  * Dunkles Nachtblau mit Bernstein als Akzent, übernommen aus dem Entwurf (index.html im ersten Commit):
  * Faserwellen als Vollbild-Animation hinter der ganzen Seite, schwebende Pill-Navigation,
- * grosse Titel in Versalien mit Konturschrift, Knöpfe mit abgeschnittener Ecke.
+ * grosse Titel in Versalien mit Konturschrift, Knöpfe mit abgeschnittener Ecke. Der Fadenkreuz-Cursor
+ * des Entwurfs wurde bewusst weggelassen.
  * Breiten, Abstände und Klassen der InfraOne-Vorlage bleiben erhalten (docs/08-design-und-qualitaet.md).
  */
 
@@ -111,15 +112,6 @@
   :focus-visible {
     outline: 3px solid var(--color-marke);
     outline-offset: 3px;
-  }
-
-  /* Fadenkreuz-Cursor (src/components/ui/Fadenkreuz.tsx) ersetzt den Mauszeiger nur auf Geräten mit Maus */
-  html.fadenkreuz,
-  html.fadenkreuz a,
-  html.fadenkreuz button,
-  html.fadenkreuz label,
-  html.fadenkreuz summary {
-    cursor: none;
   }
 
   /* Animationen des Startbereichs (Hero.tsx): Titelzeilen steigen auf, Balken wächst, Text blendet ein */

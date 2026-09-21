@@ -4,7 +4,6 @@ import { Kopfzeile } from '@/components/layout/Kopfzeile';
 import { Fusszeile } from '@/components/layout/Fusszeile';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { Einblenden } from '@/components/ui/Einblenden';
-import { Fadenkreuz } from '@/components/ui/Fadenkreuz';
 import { Faserwellen } from '@/components/ui/Faserwellen';
 import { holeEinstellungen, holeNavigation } from '@/lib/cms';
 import { sauberText } from '@/lib/text';
@@ -54,7 +53,6 @@ export default async function WebsiteLayout({ children }: { children: React.Reac
       <Fusszeile einstellungen={e} navigation={n} />
       <JsonLd daten={organisation} />
       <Einblenden />
-      <Fadenkreuz />
     </>
   );
 }
