@@ -1,0 +1,266 @@
+@import 'tailwindcss';
+
+/*
+ * DESIGNSYSTEM
+ *
+ * Pro Projekt werden nur die Farben und Schriften unter @theme angepasst.
+ * Breiten, Abstände und Komponenten-Klassen bleiben gleich. Sie sind der Qualitätsstandard.
+ * Details: docs/08-design-und-qualitaet.md
+ */
+
+@theme {
+  /* Markenfarben LWL-Techniker: Nachtblau aus dem Logo als Hauptfarbe, Bernstein aus dem Logo als Akzent auf dunklen Flächen (marke-hell). Kontrast zu Weiss mindestens 4.5:1 (WCAG AA). */
+  --color-marke: #2b2f86;
+  --color-marke-dunkel: #1f2266;
+  --color-marke-hell: #f5b400;
+
+  /* Neutrale Flächen und Text */
+  --color-grund: #ffffff;
+  --color-flaeche: #f3f4f9;
+  --color-flaeche-dunkel: #0b1235;
+  --color-flaeche-dunkel-2: #141d4d;
+  --color-text: #13162b;
+  --color-text-leise: #545a75;
+  --color-text-hell: #f4f5fb;
+  --color-text-hell-leise: #b3b8d4;
+  --color-linie: #dfe1ec;
+  --color-linie-dunkel: #26306e;
+
+  /* Zusätzlicher Breakpoint für sehr breite Bildschirme (2200 px). In rem, damit er richtig nach 2xl sortiert wird */
+  --breakpoint-3xl: 137.5rem;
+
+  /* Schriften: Variablen werden in src/app/schriften.ts gesetzt */
+  --font-sans: var(--font-text), ui-sans-serif, system-ui, sans-serif;
+  --font-titel: var(--font-ueberschrift), ui-sans-serif, system-ui, sans-serif;
+
+  /* Eher kantig als verspielt: wirkt sachlich und hebt sich von typischen Baukastenseiten ab */
+  --radius-karte: 0.375rem;
+  --radius-knopf: 0.25rem;
+
+  --animate-einblenden: einblenden 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  @keyframes einblenden {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Anker (z. B. #formular) nicht unter der fixierten Kopfzeile verstecken */
+    scroll-padding-top: 7rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-grund font-sans text-text antialiased;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    text-rendering: optimizeLegibility;
+  }
+
+  @media (min-width: 1024px) {
+    body {
+      font-size: 1.125rem;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-titel text-balance;
+    letter-spacing: -0.02em;
+    line-height: 1.12;
+    /* Lange deutsche Wörter (z. B. Elektroinstallateur/in) auf schmalen Handys trennen statt überlaufen lassen */
+    hyphens: auto;
+    overflow-wrap: break-word;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    @apply bg-marke text-white;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-marke);
+    outline-offset: 3px;
+  }
+
+  /* Auf farbigen und dunklen Flächen wäre der Fokusrahmen sonst unsichtbar */
+  .bg-marke :focus-visible,
+  .bg-flaeche-dunkel :focus-visible {
+    outline-color: #ffffff;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /*
+   * EINBLENDEN BEIM SCROLLEN
+   * Elemente mit data-einblenden werden von src/components/ui/Einblenden.tsx gesteuert:
+   *   data-einblenden="sofort"    beim Laden schon sichtbar, keine Animation
+   *   data-einblenden="sichtbar"  beim Scrollen erreicht, weich einblenden
+   * Bewusst eine Animation statt transition: Hover-Übergänge (transition-shadow usw.) auf
+   * denselben Elementen würden eine transition überschreiben.
+   * Ohne JavaScript, beim Drucken und bei "Bewegung reduzieren" bleibt alles sofort sichtbar.
+   */
+  .js-einblenden [data-einblenden]:not([data-einblenden='sofort'], [data-einblenden='sichtbar']) {
+    opacity: 0;
+  }
+  .js-einblenden [data-einblenden='sichtbar'] {
+    animation: einblenden-scroll 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(var(--einblenden-index, 0) * 90ms);
+  }
+  @keyframes einblenden-scroll {
+    from {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @media print, (prefers-reduced-motion: reduce) {
+    .js-einblenden [data-einblenden] {
+      opacity: 1 !important;
+      animation: none !important;
+    }
+  }
+  /*
+   * SEITENBREITE (Qualitätsstandard, übernommen von schaltkraft.ch)
+   * max 2400 px, Rand 24 / 32 / 48 px. Deutlich breiter als die üblichen 1280 px.
+   * Lange Fliesstexte werden separat mit .lesebreite begrenzt.
+   */
+  .container-seite {
+    @apply mx-auto w-full max-w-[2400px] px-6 sm:px-8 lg:px-12;
+  }
+
+  .lesebreite {
+    max-width: 72ch;
+  }
+
+  /* Vertikale Abstände: nur diese drei verwenden */
+  .abschnitt {
+    @apply py-16 lg:py-24;
+  }
+  .abschnitt-kompakt {
+    @apply py-12 lg:py-16;
+  }
+  .abschnitt-gross {
+    @apply py-20 lg:py-32;
+  }
+
+  .ueberzeile {
+    @apply mb-4 inline-flex items-center gap-3 text-sm font-semibold tracking-[0.14em] text-marke uppercase;
+  }
+  .ueberzeile::before {
+    content: '';
+    @apply h-px w-8 bg-current;
+  }
+
+  /* Titel wachsen ab 2200 px (3xl) weiter, passend zur breiten Seite */
+  .titel-1 {
+    @apply text-4xl font-bold sm:text-5xl lg:text-6xl 2xl:text-7xl 3xl:text-8xl;
+  }
+  .titel-2 {
+    @apply text-3xl font-bold sm:text-4xl lg:text-5xl 3xl:text-6xl;
+  }
+  .titel-3 {
+    @apply text-xl font-semibold lg:text-2xl 3xl:text-3xl;
+  }
+  .einleitung {
+    @apply text-lg text-text-leise lg:text-xl 3xl:text-2xl;
+    line-height: 1.6;
+  }
+
+  .knopf-primaer {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-[var(--radius-knopf)] bg-marke px-7 py-3 text-base font-semibold text-white transition-colors duration-200 hover:bg-marke-dunkel disabled:cursor-not-allowed disabled:opacity-60 lg:min-h-14 lg:px-9;
+  }
+  .knopf-sekundaer {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-[var(--radius-knopf)] border border-current px-7 py-3 text-base font-semibold transition-colors duration-200 hover:bg-text hover:text-grund lg:min-h-14 lg:px-9;
+  }
+  .knopf-hell {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-[var(--radius-knopf)] border border-white/40 px-7 py-3 text-base font-semibold text-white transition-colors duration-200 hover:border-white hover:bg-white hover:text-text lg:min-h-14 lg:px-9;
+  }
+
+  .formular-label {
+    @apply mb-2 block text-sm font-semibold;
+  }
+  .formular-feld {
+    @apply block w-full rounded-md border border-linie bg-white px-4 py-3 text-base text-text transition-colors outline-none placeholder:text-text-leise/70 focus:border-marke focus:ring-2 focus:ring-marke/25;
+  }
+
+  /* Fliesstext aus Markdoc */
+  .fliesstext {
+    @apply text-text;
+  }
+  .fliesstext > * + * {
+    margin-top: 1.25em;
+  }
+  .fliesstext h2 {
+    @apply mt-14 text-3xl font-bold lg:text-4xl;
+  }
+  .fliesstext h3 {
+    @apply mt-10 text-2xl font-semibold;
+  }
+  .fliesstext h4 {
+    @apply mt-8 text-xl font-semibold;
+  }
+  .fliesstext a {
+    @apply font-medium text-marke underline underline-offset-4 hover:text-marke-dunkel;
+  }
+  .fliesstext ul {
+    @apply list-disc space-y-2 pl-6 marker:text-marke;
+  }
+  .fliesstext ol {
+    @apply list-decimal space-y-2 pl-6 marker:text-marke;
+  }
+  .fliesstext blockquote {
+    @apply border-l-4 border-marke pl-6 text-xl text-text-leise italic;
+  }
+  .fliesstext hr {
+    @apply my-12 border-linie;
+  }
+  .fliesstext .abbildung {
+    @apply my-10 block;
+  }
+  .fliesstext .abbildung img {
+    @apply block w-full rounded-[var(--radius-karte)];
+  }
+  .fliesstext .abbildung-text {
+    @apply mt-3 block text-sm text-text-leise;
+  }
+  .fliesstext .tabelle-scroll {
+    @apply overflow-x-auto;
+  }
+  .fliesstext table {
+    @apply w-full border-collapse text-left text-base;
+  }
+  .fliesstext th {
+    @apply border-b-2 border-text py-3 pr-6 font-semibold;
+  }
+  .fliesstext td {
+    @apply border-b border-linie py-3 pr-6 align-top;
+  }
+}

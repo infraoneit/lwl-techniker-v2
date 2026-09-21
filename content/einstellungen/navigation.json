@@ -1,0 +1,101 @@
+{
+  "hauptmenue": [
+    {
+      "text": "Leistungen",
+      "link": "/leistungen",
+      "unterpunkte": [
+        {
+          "text": "Muffenspleissungen",
+          "link": "/leistungen/muffenspleissungen",
+          "beschreibung": "Spleissen in Muffen, Verteilern und Kabelendverschlüssen, mit Messung und Protokoll"
+        },
+        {
+          "text": "FTTH-Installation",
+          "link": "/leistungen/ftth-installation",
+          "beschreibung": "Glasfaseranschlüsse bis in Wohnungen und Geschäftshäuser"
+        },
+        {
+          "text": "Serverräume und Rechenzentren",
+          "link": "/leistungen/serverraeume-und-rechenzentren",
+          "beschreibung": "Strukturierte Verkabelung für Rechenzentren und Serverräume"
+        },
+        {
+          "text": "Verkehrstechnik und Autobahnprojekte",
+          "link": "/leistungen/verkehrstechnik-und-autobahnprojekte",
+          "beschreibung": "Montage und Inbetriebnahme auf Nationalstrassen, in Tunnels und Gemeinden"
+        },
+        {
+          "text": "Inhouse-Installationen",
+          "link": "/leistungen/inhouse-installationen",
+          "beschreibung": "LWL-Komponenten und Provider-Anbindungen im Gebäude"
+        },
+        {
+          "text": "Fehlerlokalisation und Notfalleinsätze",
+          "link": "/leistungen/fehlerlokalisation-und-notfalleinsaetze",
+          "beschreibung": "Störungen im Glasfasernetz finden und beheben, Begehungen vor Ort"
+        },
+        {
+          "text": "LWL-Produkte und Produktentwicklung",
+          "link": "/leistungen/lwl-produkte-und-produktentwicklung",
+          "beschreibung": "Vorkonfektionierte Kabel, Patchkabel, Verteiler und Sonderanfertigungen"
+        },
+        {
+          "text": "Schulungen",
+          "link": "/leistungen/schulungen",
+          "beschreibung": "Grundlagen und Installationsschulungen bei Ihnen vor Ort"
+        }
+      ]
+    },
+    {
+      "text": "Produkte",
+      "link": "/produkte",
+      "unterpunkte": []
+    },
+    {
+      "text": "Referenzen",
+      "link": "/referenzen",
+      "unterpunkte": []
+    },
+    {
+      "text": "Über uns",
+      "link": "/ueber-uns",
+      "unterpunkte": []
+    }
+  ],
+  "knopf": {
+    "text": "Kontakt",
+    "link": "/kontakt"
+  },
+  "fusszeile": [
+    {
+      "text": "Leistungen",
+      "link": "/leistungen"
+    },
+    {
+      "text": "Produkte",
+      "link": "/produkte"
+    },
+    {
+      "text": "Referenzen",
+      "link": "/referenzen"
+    },
+    {
+      "text": "Über uns",
+      "link": "/ueber-uns"
+    },
+    {
+      "text": "Kontakt",
+      "link": "/kontakt"
+    }
+  ],
+  "rechtliches": [
+    {
+      "text": "Impressum",
+      "link": "/impressum"
+    },
+    {
+      "text": "Datenschutz",
+      "link": "/datenschutz"
+    }
+  ]
+}

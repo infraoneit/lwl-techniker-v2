@@ -1,0 +1,29 @@
+{
+  "leistungen": {
+    "ueberzeile": "Leistungen",
+    "titel": "Glasfaserinstallationen, Messtechnik und LWL-Produkte",
+    "einleitung": "Unsere LWL-Techniker spleissen, messen und installieren Glasfaseranlagen in der ganzen Schweiz. Dazu liefern wir vorkonfektionierte Kabel und passive Komponenten aus eigener Entwicklung.",
+    "seo": {
+      "titel": "Leistungen in der Glasfasertechnik",
+      "beschreibung": "Muffenspleissungen, FTTH-Installation, Rechenzentren, Verkehrstechnik, Inhouse-Installationen, Fehlerbehebung, LWL-Produkte und Schulungen."
+    }
+  },
+  "referenzen": {
+    "ueberzeile": "Referenzen",
+    "titel": "Projekte in der ganzen Schweiz",
+    "einleitung": "Eine Auswahl unserer Einsätze für Netzbetreiber, Gemeinden, Unternehmen und die Swiss Football League.",
+    "seo": {
+      "titel": "Referenzen",
+      "beschreibung": "FTTH-Projekte, Verkehrstechnik auf Nationalstrassen, Inhouse-Installationen und VAR Support für die Swiss Football League."
+    }
+  },
+  "jobs": {
+    "ueberzeile": "Stellen",
+    "titel": "Offene Stellen",
+    "einleitung": "Offene Stellen erscheinen hier, sobald wir eine Stelle ausschreiben. Initiativbewerbungen senden Sie an info@lwl-techniker.ch.",
+    "seo": {
+      "titel": "Offene Stellen",
+      "beschreibung": "Aktuelle Stellen bei der LWL-Techniker Schweiz GmbH in St. Gallen."
+    }
+  }
+}

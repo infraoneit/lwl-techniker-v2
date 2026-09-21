@@ -1,0 +1,113 @@
+{
+  "titel": "Über uns",
+  "inSitemap": true,
+  "seo": {
+    "titel": "Über uns",
+    "beschreibung": "Team, Philosophie und Arbeitsweise der LWL-Techniker Schweiz GmbH in St. Gallen, Fachbetrieb für Glasfasertechnik und Telekommunikation."
+  },
+  "bloecke": [
+    {
+      "discriminant": "hero",
+      "value": {
+        "ueberzeile": "Über uns",
+        "titel": "Ein Fachbetrieb für Glasfasertechnik und Telekommunikation aus St. Gallen",
+        "text": "Die LWL-Techniker Schweiz GmbH ist Kompetenz- und Servicepartner im Glasfaserbereich. Für unsere langjährige Kundschaft sind wir die Anlaufstelle für komplexe Projekte und Aufgabenstellungen.",
+        "bild": "/bilder/seiten/ueber-uns/bloecke/0/value/bild.jpg",
+        "bildAlt": "Zwei Monteure besprechen einen Auftrag anhand eines Klemmbretts",
+        "knopfPrimaer": {},
+        "knopfSekundaer": {},
+        "variante": "geteilt",
+        "hoehe": "kompakt"
+      }
+    },
+    {
+      "discriminant": "textMitBild",
+      "value": {
+        "ueberzeile": "Philosophie",
+        "titel": "Qualität ist uns wichtiger als Quantität",
+        "text": "Wir möchten Sie mit unserem Können und unserer Zuverlässigkeit zufriedenstellen. Qualität beginnt bei unserem Angebot an ausgewählten Produkten zu fairen Preisen und geht weiter bis zur einwandfreien Ausführung Ihres Auftrags.\n\nLangjährige Erfahrung im Bereich Fiberoptic und im Umgang mit unterschiedlichsten Aufgabenstellungen hilft uns, rasch fachkundige und nachhaltige Lösungen in allen Glasfaserbereichen anzubieten. Wir entwickeln stetig neue Produkte für unsere Kundschaft.",
+        "bild": "/bilder/seiten/ueber-uns/bloecke/1/value/bild.jpg",
+        "bildAlt": "Mitarbeiterin lötet ein Bauteil am Arbeitsplatz in der Werkstatt",
+        "bildPosition": "links",
+        "knopf": {
+          "text": "Produkte ansehen",
+          "link": "/produkte"
+        }
+      }
+    },
+    {
+      "discriminant": "vorteile",
+      "value": {
+        "ueberzeile": "Werte",
+        "titel": "Wofür wir stehen",
+        "eintraege": [
+          {
+            "titel": "Kompetent in der Planung",
+            "text": "Unsere Erfahrung im Bereich Fiberoptic hilft uns, rasch fachkundige und nachhaltige Lösungen in allen Glasfaserbereichen anzubieten."
+          },
+          {
+            "titel": "Immer am Ball und informiert",
+            "text": "Für unsere langjährige Kundschaft sind wir die Anlaufstelle für komplexe Projekte. Wir entwickeln stetig neue Produkte."
+          },
+          {
+            "titel": "Respekt und Vertrauen",
+            "text": "Wir pflegen bestehende Partnerschaften und bauen neue auf. Die Basis dafür sind Vertrauen, gegenseitiger Respekt und Anerkennung."
+          },
+          {
+            "titel": "Für heute und morgen",
+            "text": "Unser Team funktioniert als Ganzes und lässt jedem Mitglied Raum für die eigene Entfaltung. Ehrlichkeit, Teamarbeit und Kundenorientierung prägen unsere Unternehmenskultur."
+          },
+          {
+            "titel": "Ausgewählte Produkte zu fairen Preisen",
+            "text": "Unser Angebot besteht aus ausgewählten Produkten. Jedes konfektionierte Kabel prüfen wir vor dem Versand und verpacken es sauber."
+          },
+          {
+            "titel": "Nachhaltigkeit",
+            "text": "Wir trennen Abfall konsequent, reparieren Geräte wenn möglich und planen Neuinstallationen so, dass sie lange halten."
+          }
+        ]
+      }
+    },
+    {
+      "discriminant": "team",
+      "value": {
+        "ueberzeile": "Team",
+        "titel": "Ihre Ansprechpersonen",
+        "text": "Sie erreichen uns direkt, ohne Umweg über eine Zentrale.",
+        "personen": [
+          {
+            "name": "Lulzim Selimi",
+            "funktion": "Gründer",
+            "foto": "/bilder/seiten/ueber-uns/bloecke/3/value/personen/0/foto.webp",
+            "email": "info@lwl-techniker.ch",
+            "telefon": "+41 78 920 80 00"
+          },
+          {
+            "name": "Arsel Thuma",
+            "funktion": "Geschäftsleiter",
+            "foto": "/bilder/seiten/ueber-uns/bloecke/3/value/personen/1/foto.webp",
+            "email": "a.thuma@lwl-techniker.ch",
+            "telefon": "+41 79 225 34 74"
+          },
+          {
+            "name": "Lindi Selimi",
+            "funktion": "VAR-Techniker, Spleiss- und Messtechniker",
+            "foto": "/bilder/seiten/ueber-uns/bloecke/3/value/personen/2/foto.webp"
+          }
+        ]
+      }
+    },
+    {
+      "discriminant": "kontaktaufruf",
+      "value": {
+        "titel": "Lernen Sie uns kennen",
+        "text": "Rufen Sie uns an oder schreiben Sie uns. Gerne besprechen wir Ihr Vorhaben persönlich.",
+        "knopf": {
+          "text": "Kontakt aufnehmen",
+          "link": "/kontakt"
+        },
+        "telefonZeigen": true
+      }
+    }
+  ]
+}

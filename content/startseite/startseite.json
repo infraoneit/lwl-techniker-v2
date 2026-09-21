@@ -1,0 +1,101 @@
+{
+  "seo": {},
+  "bloecke": [
+    {
+      "discriminant": "hero",
+      "value": {
+        "ueberzeile": "Wir bringen Licht ans Ziel",
+        "titel": "Glasfaserinstallationen, Spleiss- und Messtechnik in der ganzen Schweiz",
+        "text": "Die LWL-Techniker Schweiz GmbH aus St. Gallen spleisst, misst und installiert Glasfaseranlagen für Netzbetreiber, Gemeinden und Unternehmen. Dazu liefern wir vorkonfektionierte LWL-Kabel und passive Komponenten.",
+        "bild": "/bilder/startseite/bloecke/0/value/bild.jpg",
+        "knopfPrimaer": {
+          "text": "Projekt anfragen",
+          "link": "/kontakt"
+        },
+        "knopfSekundaer": {
+          "text": "Leistungen ansehen",
+          "link": "/leistungen"
+        },
+        "variante": "vollbild",
+        "hoehe": "gross"
+      }
+    },
+    {
+      "discriminant": "leistungen",
+      "value": {
+        "ueberzeile": "Leistungen",
+        "titel": "Was wir für Sie ausführen",
+        "text": "Von der Muffenspleissung über den FTTH-Anschluss bis zur Verkabelung im Rechenzentrum. Jede Installation schliessen wir mit Messung und Protokoll ab."
+      }
+    },
+    {
+      "discriminant": "textMitBild",
+      "value": {
+        "ueberzeile": "Ausrüstung",
+        "titel": "Eigener Maschinenpark für Spleiss- und Messarbeiten",
+        "text": "Unsere LWL-Techniker verfügen über mehrjährige Erfahrung in der Spleiss- und Messtechnik und führen auch nicht alltägliche Installationen sauber aus. Die Messung und Protokollierung gehört bei jedem Auftrag dazu.\n\nWir arbeiten mit einem zeitgemässen Maschinenpark mit Spleiss- und OTDR-Messgeräten. Die Geräte werden regelmässig gereinigt und gewartet.",
+        "bild": "/bilder/startseite/bloecke/2/value/bild.jpg",
+        "bildAlt": "Techniker steckt Glasfaser-Patchkabel in einem Netzwerkschrank",
+        "bildPosition": "rechts",
+        "knopf": {
+          "text": "Firma kennenlernen",
+          "link": "/ueber-uns"
+        }
+      }
+    },
+    {
+      "discriminant": "referenzen",
+      "value": {
+        "ueberzeile": "Referenzen",
+        "titel": "Ausgewählte Projekte",
+        "anzahl": "4",
+        "linkText": "Alle Referenzen"
+      }
+    },
+    {
+      "discriminant": "vorteile",
+      "value": {
+        "ueberzeile": "Arbeitsweise",
+        "titel": "So arbeiten wir mit Ihnen zusammen",
+        "eintraege": [
+          {
+            "titel": "Qualität vor Quantität",
+            "text": "Jeden Auftrag führen wir sauber und vollständig aus. Das beginnt bei der Auswahl der Produkte und endet mit der geprüften Übergabe."
+          },
+          {
+            "titel": "Messung und Protokoll",
+            "text": "Jede Installation messen wir mit OTDR-Geräten und übergeben ein Abnahmeprotokoll."
+          },
+          {
+            "titel": "Eigenes Personal",
+            "text": "Projektleitung und Umsetzung erfolgen durch eigene, qualifizierte Mitarbeitende."
+          },
+          {
+            "titel": "Schweizweit im Einsatz",
+            "text": "Unsere Montageteams arbeiten in der ganzen Schweiz, in Gemeinden, auf Kantonsstrassen und auf der Autobahn."
+          },
+          {
+            "titel": "Erreichbar bei Störungen",
+            "text": "Bei einem Problem im Glasfasernetz sind wir die Anlaufstelle für eine rasche und unkomplizierte Behebung."
+          },
+          {
+            "titel": "Nachhaltig unterwegs",
+            "text": "Wir trennen Abfall konsequent, reparieren Geräte wenn möglich und planen Neuinstallationen so, dass sie lange halten."
+          }
+        ]
+      }
+    },
+    {
+      "discriminant": "kontaktaufruf",
+      "value": {
+        "titel": "Sie planen ein Glasfaserprojekt?",
+        "text": "Beschreiben Sie uns Ihr Vorhaben. Wir melden uns rasch und besprechen bei Bedarf die Situation vor Ort.",
+        "knopf": {
+          "text": "Anfrage senden",
+          "link": "/kontakt"
+        },
+        "telefonZeigen": true
+      }
+    }
+  ]
+}
