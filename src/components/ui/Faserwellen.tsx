@@ -88,12 +88,23 @@ export function Faserwellen() {
       aufbauen();
     };
 
-    /** Ein Schub: mehrere Fasern senden fast gleichzeitig einen Puls, so entsteht ein wanderndes Lichtbündel */
+    /**
+     * Zufälliges Tempo für einen einzelnen Puls: die meisten liegen im mittleren Bereich,
+     * einzelne sind sehr langsam oder sehr schnell unterwegs (Faktor 10 zwischen den Extremen),
+     * wie unterschiedliche Datenpakete im selben Kabel.
+     */
+    const pulsTempo = () => {
+      const r = Math.random();
+      if (r < 0.12) return zufall(0.0012, 0.0022); // sehr langsam
+      if (r > 0.88) return zufall(0.012, 0.02); // sehr schnell
+      return zufall(0.003, 0.007); // normal
+    };
+
+    /** Ein Schub: mehrere Fasern senden fast gleichzeitig einen Puls, mit stark unterschiedlichem Tempo */
     const schub = () => {
       const anzahl = Math.round(zufall(8, 16));
-      const tempo = zufall(0.0035, 0.0055);
       for (let i = 0; i < anzahl && pulse.length < 90; i++) {
-        pulse.push({ faser: Math.floor(Math.random() * fasern.length), pos: -0.04 - Math.random() * 0.06, tempo: tempo * zufall(0.9, 1.1), staerke: zufall(0.5, 1) });
+        pulse.push({ faser: Math.floor(Math.random() * fasern.length), pos: -0.04 - Math.random() * 0.06, tempo: pulsTempo(), staerke: zufall(0.5, 1) });
       }
       naechsterSchub = t + zufall(1.2, 2.4);
     };
@@ -140,7 +151,8 @@ export function Faserwellen() {
         const f = fasern[p.faser];
         const kopfX = p.pos * breite;
         if (kopfX < -40 || kopfX > breite + 40) continue;
-        const laenge = breite * 0.06;
+        // Schnelle Pulse ziehen einen längeren Schweif, langsame einen kurzen
+        const laenge = breite * (0.03 + Math.min(p.tempo, 0.02) * 2.2);
         const startX = kopfX - laenge;
         ctx.beginPath();
         for (let x = Math.max(0, startX); x <= Math.min(breite, kopfX); x += SCHRITT) {
