@@ -9,7 +9,7 @@ type Props = { daten: BlockDaten<'hero'>; istErster: boolean };
 /**
  * Startbereich in zwei Varianten:
  * - vollbild: füllt den Bildschirm, Text unten, dahinter die Faserwellen (oder ein Bild, falls gesetzt).
- *   Titelzeilen aus dem CMS: erste Zeile gefüllt, zweite im Bernstein-Verlauf, dritte als Kontur (wie im Entwurf).
+ *   Titelzeilen aus dem CMS: erste Zeile als Kontur, zweite im Bernstein-Verlauf, dritte gefüllt in Weiss.
  * - geteilt:  Text links, Bild rechts, für Unterseiten.
  */
 export function Hero({ daten: d, istErster }: Props) {
@@ -36,7 +36,7 @@ function Knoepfe({ d, className }: { d: BlockDaten<'hero'>; className?: string }
   );
 }
 
-/** Titelzeilen mit gestaffeltem Aufsteigen. Zeile 2 im Verlauf, Zeile 3 als Kontur. */
+/** Titelzeilen mit gestaffeltem Aufsteigen. Zeile 1 als Kontur, Zeile 2 im gelben Verlauf, Zeile 3 in Weiss. */
 function Titelzeilen({ titel }: { titel: string }) {
   const zeilen = sauberText(titel)
     .split('\n')
@@ -47,7 +47,7 @@ function Titelzeilen({ titel }: { titel: string }) {
       {zeilen.map((zeile, i) => (
         <span key={i} className="block overflow-hidden">
           <span
-            className={cn('hero-zeile block', i === 1 && 'verlauf', i === 2 && 'kontur')}
+            className={cn('hero-zeile block', i === 0 && 'kontur', i === 1 && 'verlauf')}
             style={{ animationDelay: `${0.45 + i * 0.15}s` }}
           >
             {zeile}

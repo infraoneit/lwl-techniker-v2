@@ -1,4 +1,4 @@
-import { Chakra_Petch, Exo_2 } from 'next/font/google';
+import { Exo_2, Poppins } from 'next/font/google';
 
 /**
  * Schriften werden von next/font beim Build heruntergeladen und selbst ausgeliefert.
@@ -11,7 +11,7 @@ export const schriftText = Exo_2({
   display: 'swap',
 });
 
-export const schriftUeberschrift = Chakra_Petch({
+export const schriftUeberschrift = Poppins({
   subsets: ['latin'],
   variable: '--font-ueberschrift',
   weight: ['500', '600', '700'],
