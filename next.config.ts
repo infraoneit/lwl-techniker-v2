@@ -1,6 +1,9 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  // Die Einrichtung der Keystatic-GitHub-App läuft über http://127.0.0.1:3000/keystatic.
+  // Ohne diese Freigabe blockiert der Entwicklungsserver die Live-Aktualisierung für diese Adresse.
+  allowedDevOrigins: ['127.0.0.1'],
   // Bildformate wählt auf Netlify das Image CDN selbst (AVIF oder WebP je nach Browser).
   // Die Einstellung gilt nur für npm start ausserhalb von Netlify.
   images: {
