@@ -18,7 +18,8 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang={SPRACHE} className={`${schriftText.variable} ${schriftUeberschrift.variable}`}>
-      <body>{children}</body>
+      {/* suppressHydrationWarning: Browser-Erweiterungen (z. B. ColorZilla) schreiben Attribute in den Body, bevor React lädt */}
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }
