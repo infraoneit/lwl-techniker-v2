@@ -47,7 +47,7 @@ function Titelzeilen({ titel }: { titel: string }) {
       {zeilen.map((zeile, i) => (
         <span key={i} className="block overflow-hidden">
           <span
-            className={cn('block translate-y-[110%] opacity-0 motion-safe:animate-[zeile-auf_0.9s_cubic-bezier(0.16,1,0.3,1)_forwards] motion-reduce:translate-y-0 motion-reduce:opacity-100', i === 1 && 'verlauf', i === 2 && 'kontur')}
+            className={cn('hero-zeile block', i === 1 && 'verlauf', i === 2 && 'kontur')}
             style={{ animationDelay: `${0.45 + i * 0.15}s` }}
           >
             {zeile}
@@ -80,17 +80,17 @@ function HeroVollbild({ daten: d, istErster }: Props) {
       <div className={cn('container-seite flex flex-col justify-end', gross ? 'pt-32 pb-16 lg:pt-40 lg:pb-20' : 'pt-32 pb-12 lg:pt-36 lg:pb-16')}>
         <div className="max-w-[90rem]">
           {d.ueberzeile ? (
-            <p className="ueberzeile-punkt opacity-0 motion-safe:animate-[auf_0.7s_0.4s_forwards] motion-reduce:opacity-100">{sauberText(d.ueberzeile)}</p>
+            <p className="ueberzeile-punkt hero-auf" style={{ animationDelay: '0.4s' }}>{sauberText(d.ueberzeile)}</p>
           ) : null}
           <TitelTag className={gross ? 'titel-hero' : 'titel-1'}>
             <Titelzeilen titel={d.titel} />
           </TitelTag>
           <div
-            className="my-10 h-0.5 w-0 bg-gradient-to-r from-marke via-marke-hell to-transparent motion-safe:animate-[balken_1.1s_0.9s_cubic-bezier(0.16,1,0.3,1)_forwards] motion-reduce:w-[55%]"
+            className="hero-balken my-10 h-0.5 bg-gradient-to-r from-marke via-marke-hell to-transparent"
             aria-hidden
           />
         </div>
-        <div className="grid items-end gap-8 opacity-0 motion-safe:animate-[auf_0.7s_1.2s_forwards] motion-reduce:opacity-100 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+        <div className="hero-auf grid items-end gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-16" style={{ animationDelay: '1.2s' }}>
           <div>
             {absaetze(d.text).map((a, i) => (
               <p key={i} className="max-w-xl text-base leading-8 text-text-leise lg:text-lg 3xl:text-xl">
