@@ -240,10 +240,23 @@ export function seitenBloecke(bildOrdner: string) {
             description: 'Ein: Logos laufen ununterbrochen durch (ab 4 Logos empfohlen). Aus: festes Raster wie bisher.',
             defaultValue: false,
           }),
+          darstellung: fields.select({
+            label: 'Anfangsdarstellung des scrollenden Bandes',
+            description:
+              'Weiss zeigt alle Logos als weisse Silhouette, Farbe in den Originalfarben auf weissen Kacheln. Besucherinnen und Besucher können auf der Website selbst umschalten, sobald mindestens drei Logos eine Farbversion haben.',
+            options: [
+              { label: 'Weiss', value: 'weiss' },
+              { label: 'Farbe', value: 'farbig' },
+            ],
+            defaultValue: 'weiss',
+          }),
           logos: fields.array(
             fields.object({
               name: text('Name', { pflicht: true, max: 60, beschreibung: 'Wird als Bildbeschreibung verwendet.' }),
-              logo: bild('Logo', bildOrdner, { pflicht: true, hinweis: 'SVG oder PNG mit transparentem Hintergrund, unter 30 KB.' }),
+              logo: bild('Logo', bildOrdner, { pflicht: true, hinweis: 'SVG oder PNG mit transparentem Hintergrund, unter 30 KB. Im scrollenden Band als weisse Silhouette, darum weiss oder einfarbig hell einfärben.' }),
+              logoFarbig: bild('Logo in Farbe (optional)', bildOrdner, {
+                hinweis: 'Originalfarben, zugeschnitten auf das Logo, mit weissem Hintergrund, unter 30 KB. Wird nur in der Farbdarstellung des scrollenden Bandes gezeigt.',
+              }),
               link: link('Link (optional)'),
             }),
             {

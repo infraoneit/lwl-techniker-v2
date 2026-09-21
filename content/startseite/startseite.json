@@ -66,110 +66,137 @@
       "value": {
         "titel": "Eine Auswahl unserer Referenzen",
         "laufschrift": true,
+        "darstellung": "weiss",
         "logos": [
           {
             "name": "SwissLife Arena",
-            "logo": "/bilder/statisch/logos/swisslife-arena.png"
+            "logo": "/bilder/statisch/logos/swisslife-arena.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/swisslife-arena.webp"
           },
           {
             "name": "Tertianum",
-            "logo": "/bilder/statisch/logos/tertianium.png"
+            "logo": "/bilder/statisch/logos/tertianium.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/tertianium.webp"
           },
           {
             "name": "The Circle Zürich",
-            "logo": "/bilder/statisch/logos/the-circle-zuerich.png"
+            "logo": "/bilder/statisch/logos/the-circle-zuerich.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/the-circle-zuerich.webp"
           },
           {
             "name": "Tiffany & Co.",
-            "logo": "/bilder/statisch/logos/tiffany-and-co.png"
+            "logo": "/bilder/statisch/logos/tiffany-and-co.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/tiffany-and-co.webp"
           },
           {
             "name": "UBS",
-            "logo": "/bilder/statisch/logos/ubs.png"
+            "logo": "/bilder/statisch/logos/ubs.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/ubs.webp"
           },
           {
             "name": "UPC",
-            "logo": "/bilder/statisch/logos/upc.png"
+            "logo": "/bilder/statisch/logos/upc.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/upc.webp"
           },
           {
             "name": "Universitätsspital Zürich",
-            "logo": "/bilder/statisch/logos/usz.png"
+            "logo": "/bilder/statisch/logos/usz.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/usz.webp"
           },
           {
             "name": "Luzerner Kantonalbank",
-            "logo": "/bilder/statisch/logos/luzerner-kantonalbank.png"
+            "logo": "/bilder/statisch/logos/luzerner-kantonalbank.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/luzerner-kantonalbank.webp"
           },
           {
             "name": "Shopping Arena",
-            "logo": "/bilder/statisch/logos/shopping-arena.png"
+            "logo": "/bilder/statisch/logos/shopping-arena.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/shopping-arena.webp"
           },
           {
             "name": "Swisspro",
-            "logo": "/bilder/statisch/logos/swisspro.png"
+            "logo": "/bilder/statisch/logos/swisspro.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/swisspro.webp"
           },
           {
             "name": "Louis Vuitton",
-            "logo": "/bilder/statisch/logos/lv.png"
+            "logo": "/bilder/statisch/logos/lv.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/lv.webp"
           },
           {
             "name": "ISA Bodywear",
-            "logo": "/bilder/statisch/logos/isa-bodywear.png"
+            "logo": "/bilder/statisch/logos/isa-bodywear.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/isa-bodywear.webp"
           },
           {
             "name": "McLaren",
-            "logo": "/bilder/statisch/logos/mclaren.png"
+            "logo": "/bilder/statisch/logos/mclaren.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/mclaren.webp"
           },
           {
             "name": "Migros",
-            "logo": "/bilder/statisch/logos/migros.png"
+            "logo": "/bilder/statisch/logos/migros.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/migros.webp"
           },
           {
             "name": "Mövenpick",
-            "logo": "/bilder/statisch/logos/moevenpick.png"
+            "logo": "/bilder/statisch/logos/moevenpick.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/moevenpick.webp"
           },
           {
             "name": "NEP Switzerland",
-            "logo": "/bilder/statisch/logos/nep.png"
+            "logo": "/bilder/statisch/logos/nep.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/nep.webp"
           },
           {
             "name": "Olma Messen St. Gallen",
-            "logo": "/bilder/statisch/logos/olma-messen.png"
+            "logo": "/bilder/statisch/logos/olma-messen.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/olma-messen.webp"
           },
           {
             "name": "Privatklinik Bethanien",
-            "logo": "/bilder/statisch/logos/privatklinik-bethanien.png"
+            "logo": "/bilder/statisch/logos/privatklinik-bethanien.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/privatklinik-bethanien.webp"
           },
           {
             "name": "Privera",
-            "logo": "/bilder/statisch/logos/privera.png"
+            "logo": "/bilder/statisch/logos/privera.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/privera.webp"
           },
           {
             "name": "Raiffeisen",
-            "logo": "/bilder/statisch/logos/raiffeisen.png"
+            "logo": "/bilder/statisch/logos/raiffeisen.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/raiffeisen.webp"
           },
           {
             "name": "Rieter",
-            "logo": "/bilder/statisch/logos/rieter.png"
+            "logo": "/bilder/statisch/logos/rieter.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/rieter.webp"
           },
           {
             "name": "SBB CFF FFS",
-            "logo": "/bilder/statisch/logos/sbb.png"
+            "logo": "/bilder/statisch/logos/sbb.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/sbb.webp"
           },
           {
             "name": "Schibli Elektrotechnik",
-            "logo": "/bilder/statisch/logos/schibli.png"
+            "logo": "/bilder/statisch/logos/schibli.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/schibli.webp"
           },
           {
             "name": "Sunrise",
-            "logo": "/bilder/statisch/logos/sunrise.png"
+            "logo": "/bilder/statisch/logos/sunrise.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/sunrise.webp"
           },
           {
             "name": "Swisscom",
-            "logo": "/bilder/statisch/logos/swisscom.png"
+            "logo": "/bilder/statisch/logos/swisscom.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/swisscom.webp"
           },
           {
             "name": "Swiss Football League",
-            "logo": "/bilder/statisch/logos/swiss-football-league.png"
+            "logo": "/bilder/statisch/logos/swiss-football-league.png",
+            "logoFarbig": "/bilder/statisch/logos-farbig/swiss-football-league.webp"
           },
           {
             "name": "AXA",
