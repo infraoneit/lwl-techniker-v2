@@ -28,7 +28,7 @@ export function ReferenzKarte({ referenz: r, titelEbene = 'h3', sizes = KARTEN_S
         <Image src={r.titelbild} alt={r.titelbildAlt} fill sizes={sizes} className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]" />
       </div>
       <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-text-leise">
-        {r.kategorie ? <span className="font-semibold text-marke">{r.kategorie}</span> : null}
+        {r.kategorie ? <span className="text-xs font-medium tracking-[0.2em] text-marke uppercase">{r.kategorie}</span> : null}
         {r.ort ? <span>{r.ort}</span> : null}
         {r.datum && r.datumZeigen ? <span>{monatJahr(r.datum)}</span> : null}
       </div>
@@ -47,7 +47,7 @@ export function LeistungKarte({ leistung: l, titelEbene = 'h3', sizes = KARTEN_S
   return (
     <article
       data-einblenden
-      className="group relative flex flex-col overflow-hidden rounded-[var(--radius-karte)] border border-linie bg-grund transition-shadow duration-300 hover:shadow-xl"
+      className="group relative flex flex-col overflow-hidden rounded-[var(--radius-karte)] border border-linie bg-flaeche transition-colors duration-300 hover:border-marke/60"
     >
       <div className="relative aspect-[16/10] overflow-hidden bg-flaeche">
         <Image src={l.bild} alt={l.bildAlt} fill sizes={sizes} className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]" />
@@ -59,7 +59,7 @@ export function LeistungKarte({ leistung: l, titelEbene = 'h3', sizes = KARTEN_S
           </Link>
         </Titel>
         <p className="mt-3 flex-1 text-text-leise">{sauberText(l.kurzbeschreibung)}</p>
-        <span className="mt-6 inline-flex items-center gap-2 font-semibold text-marke" aria-hidden>
+        <span className="mt-6 inline-flex items-center gap-2 font-titel text-xs font-semibold tracking-[0.18em] text-marke uppercase" aria-hidden>
           Zur Leistung
           <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
         </span>

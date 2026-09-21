@@ -8,30 +8,53 @@ type Props = { daten: BlockDaten<'hero'>; istErster: boolean };
 
 /**
  * Startbereich in zwei Varianten:
- * - vollbild: Bild über die ganze Breite, Text darauf (mit Verlauf für Lesbarkeit)
- * - geteilt:  Text links auf ruhiger Fläche, Bild rechts gerahmt (wie schaltkraft.ch)
+ * - vollbild: füllt den Bildschirm, Text unten, dahinter die Faserwellen (oder ein Bild, falls gesetzt).
+ *   Titelzeilen aus dem CMS: erste Zeile gefüllt, zweite im Bernstein-Verlauf, dritte als Kontur (wie im Entwurf).
+ * - geteilt:  Text links, Bild rechts, für Unterseiten.
  */
 export function Hero({ daten: d, istErster }: Props) {
   return d.variante === 'geteilt' ? <HeroGeteilt daten={d} istErster={istErster} /> : <HeroVollbild daten={d} istErster={istErster} />;
 }
 
-function Knoepfe({ d, hell }: { d: BlockDaten<'hero'>; hell: boolean }) {
+function Knoepfe({ d, className }: { d: BlockDaten<'hero'>; className?: string }) {
   const primaer = d.knopfPrimaer.text && d.knopfPrimaer.link;
   const sekundaer = d.knopfSekundaer.text && d.knopfSekundaer.link;
   if (!primaer && !sekundaer) return null;
   return (
-    <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
+    <div className={cn('flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4', className)}>
       {primaer ? (
         <Link href={d.knopfPrimaer.link} className="knopf-primaer">
           {d.knopfPrimaer.text}
         </Link>
       ) : null}
       {sekundaer ? (
-        <Link href={d.knopfSekundaer.link} className={hell ? 'knopf-hell' : 'knopf-sekundaer'}>
+        <Link href={d.knopfSekundaer.link} className="knopf-sekundaer">
           {d.knopfSekundaer.text}
         </Link>
       ) : null}
     </div>
+  );
+}
+
+/** Titelzeilen mit gestaffeltem Aufsteigen. Zeile 2 im Verlauf, Zeile 3 als Kontur. */
+function Titelzeilen({ titel }: { titel: string }) {
+  const zeilen = sauberText(titel)
+    .split('\n')
+    .map((z) => z.trim())
+    .filter(Boolean);
+  return (
+    <>
+      {zeilen.map((zeile, i) => (
+        <span key={i} className="block overflow-hidden">
+          <span
+            className={cn('block translate-y-[110%] opacity-0 motion-safe:animate-[zeile-auf_0.9s_cubic-bezier(0.16,1,0.3,1)_forwards] motion-reduce:translate-y-0 motion-reduce:opacity-100', i === 1 && 'verlauf', i === 2 && 'kontur')}
+            style={{ animationDelay: `${0.45 + i * 0.15}s` }}
+          >
+            {zeile}
+          </span>
+        </span>
+      ))}
+    </>
   );
 }
 
@@ -40,32 +63,42 @@ function HeroVollbild({ daten: d, istErster }: Props) {
   const TitelTag = istErster ? 'h1' : 'h2';
 
   return (
-    <section className={cn('relative isolate flex overflow-hidden bg-flaeche-dunkel text-text-hell', gross ? 'min-h-[78svh]' : 'min-h-[48svh]')}>
+    <section
+      className={cn(
+        'relative isolate flex overflow-hidden',
+        // Der Startbereich beginnt unter der schwebenden Navigation ganz oben (negativer Rand gleicht den Abstand von main aus)
+        istErster && '-mt-24 lg:-mt-28',
+        gross ? 'min-h-[100svh]' : 'min-h-[60svh]'
+      )}
+    >
       {d.bild ? (
         <>
-          <Image
-            src={d.bild}
-            alt={d.bildAlt}
-            fill
-            loading={istErster ? 'eager' : 'lazy'}
-            fetchPriority={istErster ? 'high' : 'auto'}
-            sizes="100vw"
-            className="-z-20 object-cover"
-          />
-          {/* Mobil liegt der Text über dem ganzen Bild, deshalb dort Verlauf von unten */}
-          <div className="absolute inset-0 -z-10 bg-gradient-to-t from-black/85 via-black/55 to-black/25 lg:bg-gradient-to-r lg:from-black/80 lg:via-black/50 lg:to-black/10" aria-hidden />
+          <Image src={d.bild} alt={d.bildAlt} fill loading={istErster ? 'eager' : 'lazy'} fetchPriority={istErster ? 'high' : 'auto'} sizes="100vw" className="-z-20 object-cover" />
+          <div className="absolute inset-0 -z-10 bg-gradient-to-t from-grund via-grund/70 to-grund/30" aria-hidden />
         </>
       ) : null}
-      <div className={cn('container-seite flex flex-col justify-end', gross ? 'pt-28 pb-16 lg:pt-40 lg:pb-24' : 'pt-20 pb-12 lg:pt-28 lg:pb-16')}>
-        <div className="max-w-5xl animate-einblenden">
-          {d.ueberzeile ? <p className="ueberzeile !text-marke-hell">{sauberText(d.ueberzeile)}</p> : null}
-          <TitelTag className={cn(gross ? 'titel-1' : 'titel-2', 'whitespace-pre-line')}>{sauberText(d.titel)}</TitelTag>
-          {absaetze(d.text).map((a, i) => (
-            <p key={i} className="mt-6 max-w-3xl text-lg text-text-hell-leise lg:text-xl 3xl:text-2xl">
-              {a}
-            </p>
-          ))}
-          <Knoepfe d={d} hell />
+      <div className={cn('container-seite flex flex-col justify-end', gross ? 'pt-32 pb-16 lg:pt-40 lg:pb-20' : 'pt-32 pb-12 lg:pt-36 lg:pb-16')}>
+        <div className="max-w-[90rem]">
+          {d.ueberzeile ? (
+            <p className="ueberzeile-punkt opacity-0 motion-safe:animate-[auf_0.7s_0.4s_forwards] motion-reduce:opacity-100">{sauberText(d.ueberzeile)}</p>
+          ) : null}
+          <TitelTag className={gross ? 'titel-hero' : 'titel-1'}>
+            <Titelzeilen titel={d.titel} />
+          </TitelTag>
+          <div
+            className="my-10 h-0.5 w-0 bg-gradient-to-r from-marke via-marke-hell to-transparent motion-safe:animate-[balken_1.1s_0.9s_cubic-bezier(0.16,1,0.3,1)_forwards] motion-reduce:w-[55%]"
+            aria-hidden
+          />
+        </div>
+        <div className="grid items-end gap-8 opacity-0 motion-safe:animate-[auf_0.7s_1.2s_forwards] motion-reduce:opacity-100 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+          <div>
+            {absaetze(d.text).map((a, i) => (
+              <p key={i} className="max-w-xl text-base leading-8 text-text-leise lg:text-lg 3xl:text-xl">
+                {a}
+              </p>
+            ))}
+          </div>
+          <Knoepfe d={d} className="lg:flex-col lg:items-start" />
         </div>
       </div>
     </section>
@@ -77,12 +110,7 @@ function HeroGeteilt({ daten: d, istErster }: Props) {
   const TitelTag = istErster ? 'h1' : 'h2';
 
   return (
-    <section className="relative overflow-hidden bg-flaeche">
-      {/* Feines Raster als ruhige Struktur im Hintergrund */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.35] [background-image:linear-gradient(var(--color-linie)_1px,transparent_1px),linear-gradient(90deg,var(--color-linie)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:linear-gradient(to_bottom,black,transparent)]"
-        aria-hidden
-      />
+    <section className="relative overflow-hidden border-b border-linie">
       <div className={cn('container-seite relative grid items-center gap-12 lg:grid-cols-2 lg:gap-20 2xl:gap-28', gross ? 'py-16 lg:py-24' : 'py-12 lg:py-16')}>
         <div className="max-w-3xl animate-einblenden">
           {d.ueberzeile ? <p className="ueberzeile">{sauberText(d.ueberzeile)}</p> : null}
@@ -92,12 +120,12 @@ function HeroGeteilt({ daten: d, istErster }: Props) {
               {a}
             </p>
           ))}
-          <Knoepfe d={d} hell={false} />
+          <Knoepfe d={d} className="mt-10" />
         </div>
         {d.bild ? (
           <div
             className={cn(
-              'relative overflow-hidden rounded-[var(--radius-karte)] bg-flaeche-dunkel shadow-[0_30px_80px_-30px_rgba(0,0,0,0.35)]',
+              'relative overflow-hidden border border-linie bg-flaeche shadow-[0_30px_80px_-30px_rgba(0,0,0,0.6)]',
               gross ? 'aspect-[4/3] lg:aspect-auto lg:h-[min(72svh,760px)]' : 'aspect-[16/10] lg:aspect-auto lg:h-[min(48svh,520px)]'
             )}
           >

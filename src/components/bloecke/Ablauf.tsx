@@ -3,39 +3,28 @@ import { sauberText } from '@/lib/text';
 import type { BlockDaten } from './BlockRenderer';
 
 /**
- * Nummerierte Schritte. Handy: untereinander mit senkrechter Linie.
- * Tablet: zwei Spalten ohne Linie. Ab 1280 px: nebeneinander mit waagrechter Linie.
+ * Schritte auf einer Leitlinie wie im Entwurf: Punkt, "Schritt 01", Titel in Versalien, Text.
+ * Handy: untereinander an einer senkrechten Linie. Tablet: zwei Spalten. Ab 1280 px: nebeneinander mit waagrechter Linie.
  */
 export function Ablauf({ daten: d }: { daten: BlockDaten<'ablauf'> }) {
   const spalten = d.schritte.length >= 5 ? 'xl:grid-cols-5' : d.schritte.length === 4 ? 'xl:grid-cols-4' : 'xl:grid-cols-3';
 
   return (
-    <section className="abschnitt">
+    <section className="abschnitt border-b border-linie">
       <div className="container-seite">
         <AbschnittKopf ueberzeile={d.ueberzeile} titel={d.titel} text={d.text} />
-        <ol className={`relative grid gap-10 md:grid-cols-2 md:gap-x-12 xl:gap-8 ${spalten}`}>
+        <ol className={`relative grid gap-10 md:grid-cols-2 md:gap-x-12 xl:gap-12 ${spalten}`}>
+          {/* Leitlinie: senkrecht auf dem Handy, waagrecht ab 1280 px */}
+          <span className="absolute top-0 bottom-0 left-[6px] w-px bg-gradient-to-b from-marke to-marke/10 md:hidden xl:top-[6px] xl:right-0 xl:bottom-auto xl:left-0 xl:block xl:h-px xl:w-auto xl:bg-gradient-to-r" aria-hidden />
           {d.schritte.map((s, i) => (
-            <li
-              key={i}
-              data-einblenden
-              style={{ '--einblenden-index': i } as React.CSSProperties}
-              className="relative pl-16 xl:pt-16 xl:pl-0"
-            >
-              {/* Verbindungslinie zum nächsten Schritt */}
-              {i < d.schritte.length - 1 ? (
-                <span
-                  className="absolute top-12 bottom-[-2.5rem] left-[1.4rem] w-px bg-linie md:hidden xl:top-[1.4rem] xl:right-[-2rem] xl:bottom-auto xl:left-12 xl:block xl:h-px xl:w-auto"
-                  aria-hidden
-                />
-              ) : null}
+            <li key={i} data-einblenden style={{ '--einblenden-index': i } as React.CSSProperties} className="relative pl-10 md:pl-0 xl:pt-12">
               <span
-                className="absolute top-0 left-0 flex size-11 items-center justify-center rounded-full border border-marke bg-grund font-titel text-sm font-bold text-marke"
+                className="absolute top-0 left-0 size-[14px] rounded-full border-2 border-marke bg-grund shadow-[0_0_14px_rgba(240,168,0,0.4)] md:static md:mb-5 md:block xl:absolute xl:mb-0"
                 aria-hidden
-              >
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <h3 className="titel-3">{sauberText(s.titel)}</h3>
-              <p className="mt-3 max-w-xl text-text-leise">{sauberText(s.text)}</p>
+              />
+              <p className="text-xs font-medium tracking-[0.32em] text-marke uppercase">Schritt {String(i + 1).padStart(2, '0')}</p>
+              <h3 className="titel-3 mt-2">{sauberText(s.titel)}</h3>
+              <p className="mt-3 max-w-xl text-[0.95rem] leading-7 text-text-leise">{sauberText(s.text)}</p>
             </li>
           ))}
         </ol>

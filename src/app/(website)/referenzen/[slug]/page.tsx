@@ -85,7 +85,7 @@ export default async function ReferenzSeite({ params }: Props) {
       ) : null}
 
       {weitere.length > 0 ? (
-        <section className="abschnitt border-t border-linie bg-flaeche">
+        <section className="abschnitt border-t border-linie bg-flaeche/60">
           <div className="container-seite">
             <h2 className="titel-2 mb-10">Weitere Referenzen</h2>
             <div className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">

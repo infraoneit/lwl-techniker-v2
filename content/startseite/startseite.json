@@ -4,17 +4,16 @@
     {
       "discriminant": "hero",
       "value": {
-        "ueberzeile": "Wir bringen Licht ans Ziel",
-        "titel": "Glasfaserinstallationen, Spleiss- und Messtechnik in der ganzen Schweiz",
+        "ueberzeile": "Glasfaser · Spleissung · FTTH · Inhouse · Autobahn",
+        "titel": "Wir bringen\nLicht\nans Ziel.",
         "text": "Die LWL-Techniker Schweiz GmbH aus St. Gallen spleisst, misst und installiert Glasfaseranlagen für Netzbetreiber, Gemeinden und Unternehmen. Dazu liefern wir vorkonfektionierte LWL-Kabel und passive Komponenten.",
-        "bild": "/bilder/startseite/bloecke/0/value/bild.jpg",
         "knopfPrimaer": {
-          "text": "Projekt anfragen",
-          "link": "/kontakt"
-        },
-        "knopfSekundaer": {
           "text": "Leistungen ansehen",
           "link": "/leistungen"
+        },
+        "knopfSekundaer": {
+          "text": "Projekt besprechen",
+          "link": "/kontakt"
         },
         "variante": "vollbild",
         "hoehe": "gross"
@@ -24,23 +23,33 @@
       "discriminant": "leistungen",
       "value": {
         "ueberzeile": "Leistungen",
-        "titel": "Was wir für Sie ausführen",
+        "titel": "Unsere Expertise",
         "text": "Von der Muffenspleissung über den FTTH-Anschluss bis zur Verkabelung im Rechenzentrum. Jede Installation schliessen wir mit Messung und Protokoll ab."
       }
     },
     {
-      "discriminant": "textMitBild",
+      "discriminant": "ablauf",
       "value": {
-        "ueberzeile": "Ausrüstung",
-        "titel": "Eigener Maschinenpark für Spleiss- und Messarbeiten",
-        "text": "Unsere LWL-Techniker verfügen über mehrjährige Erfahrung in der Spleiss- und Messtechnik und führen auch nicht alltägliche Installationen sauber aus. Die Messung und Protokollierung gehört bei jedem Auftrag dazu.\n\nWir arbeiten mit einem zeitgemässen Maschinenpark mit Spleiss- und OTDR-Messgeräten. Die Geräte werden regelmässig gereinigt und gewartet.",
-        "bild": "/bilder/startseite/bloecke/2/value/bild.jpg",
-        "bildAlt": "Techniker steckt Glasfaser-Patchkabel in einem Netzwerkschrank",
-        "bildPosition": "rechts",
-        "knopf": {
-          "text": "Firma kennenlernen",
-          "link": "/ueber-uns"
-        }
+        "ueberzeile": "Arbeitsweise",
+        "titel": "Von Planung bis Übergabe",
+        "schritte": [
+          {
+            "titel": "Beratung und Begehung",
+            "text": "Wir klären mit Ihnen Umfang, Termine und Material, bei Bedarf direkt vor Ort bei Ihnen oder Ihrer Kundschaft."
+          },
+          {
+            "titel": "Installation und Kabelzug",
+            "text": "Unser Montageteam verlegt und montiert die LWL-Komponenten, im Gebäude, in Muffen oder im Aussenbereich."
+          },
+          {
+            "titel": "Spleissung und Montage",
+            "text": "Wir spleissen die Fasern in Muffen, Spleissboxen und Kabelendverschlüssen und bestücken Verteiler und Racks."
+          },
+          {
+            "titel": "Messung und Übergabe",
+            "text": "Wir messen alle Fasern mit dem OTDR, dokumentieren die Anlage und übergeben Ihnen das Abnahmeprotokoll."
+          }
+        ]
       }
     },
     {
@@ -53,45 +62,27 @@
       }
     },
     {
-      "discriminant": "vorteile",
+      "discriminant": "textMitBild",
       "value": {
-        "ueberzeile": "Arbeitsweise",
-        "titel": "So arbeiten wir mit Ihnen zusammen",
-        "eintraege": [
-          {
-            "titel": "Qualität vor Quantität",
-            "text": "Jeden Auftrag führen wir sauber und vollständig aus. Das beginnt bei der Auswahl der Produkte und endet mit der geprüften Übergabe."
-          },
-          {
-            "titel": "Messung und Protokoll",
-            "text": "Jede Installation messen wir mit OTDR-Geräten und übergeben ein Abnahmeprotokoll."
-          },
-          {
-            "titel": "Eigenes Personal",
-            "text": "Projektleitung und Umsetzung erfolgen durch eigene, qualifizierte Mitarbeitende."
-          },
-          {
-            "titel": "Schweizweit im Einsatz",
-            "text": "Unsere Montageteams arbeiten in der ganzen Schweiz, in Gemeinden, auf Kantonsstrassen und auf der Autobahn."
-          },
-          {
-            "titel": "Erreichbar bei Störungen",
-            "text": "Bei einem Problem im Glasfasernetz sind wir die Anlaufstelle für eine rasche und unkomplizierte Behebung."
-          },
-          {
-            "titel": "Nachhaltig unterwegs",
-            "text": "Wir trennen Abfall konsequent, reparieren Geräte wenn möglich und planen Neuinstallationen so, dass sie lange halten."
-          }
-        ]
+        "ueberzeile": "Ausrüstung",
+        "titel": "Eigener Maschinenpark für Spleiss- und Messarbeiten",
+        "text": "Unsere LWL-Techniker verfügen über mehrjährige Erfahrung in der Spleiss- und Messtechnik und führen auch nicht alltägliche Installationen sauber aus. Die Messung und Protokollierung gehört bei jedem Auftrag dazu.\n\nWir arbeiten mit einem zeitgemässen Maschinenpark mit Spleiss- und OTDR-Messgeräten. Die Geräte werden regelmässig gereinigt und gewartet.",
+        "bild": "/bilder/startseite/bloecke/4/value/bild.jpg",
+        "bildAlt": "Techniker steckt Glasfaser-Patchkabel in einem Netzwerkschrank",
+        "bildPosition": "rechts",
+        "knopf": {
+          "text": "Firma kennenlernen",
+          "link": "/ueber-uns"
+        }
       }
     },
     {
       "discriminant": "kontaktaufruf",
       "value": {
-        "titel": "Sie planen ein Glasfaserprojekt?",
+        "titel": "Projekt starten lohnt sich",
         "text": "Beschreiben Sie uns Ihr Vorhaben. Wir melden uns rasch und besprechen bei Bedarf die Situation vor Ort.",
         "knopf": {
-          "text": "Anfrage senden",
+          "text": "Jetzt anfragen",
           "link": "/kontakt"
         },
         "telefonZeigen": true

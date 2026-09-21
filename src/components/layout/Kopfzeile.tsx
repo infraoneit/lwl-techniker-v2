@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { ChevronDown, Menu, Phone, X } from 'lucide-react';
+import { ChevronDown, Menu, X } from 'lucide-react';
 import { cn } from '@/lib/cn';
 
 type Unterpunkt = { text: string; link: string; beschreibung?: string };
@@ -19,14 +19,14 @@ type Props = {
 };
 
 /**
- * Kopfzeile mit Hauptmenü, Mega-Menü (ab 3 Unterpunkten mit Beschreibung) und mobilem Menü.
- * Das mobile Menü liegt bewusst ausserhalb von <header>: backdrop-filter am Header würde
- * sonst die Position des fixierten Menüs verfälschen.
+ * Schwebende Pill-Navigation aus dem Entwurf (mit der hellen Logovariante, weil die Pille dunkel ist): fest oben in der Mitte, dunkel und leicht durchscheinend,
+ * Menüpunkte in Versalien, Knopf im Bernstein-Verlauf. Untermenüs klappen als dunkle Tafel auf.
+ * Auf dem Handy wird die Pille so breit wie der Bildschirm, das Menü öffnet als Vollbild.
+ * Tastatur: Escape schliesst, Fokus springt ins Menü und zurück, geschlossen ist das Menü inert.
  */
 export function Kopfzeile({ firmenname, logo, telefon, menue, knopf }: Props) {
   const pfad = usePathname();
   const [offen, setOffen] = useState(false);
-  const [gescrollt, setGescrollt] = useState(false);
   const umschalter = useRef<HTMLButtonElement>(null);
   const mobilesMenue = useRef<HTMLDivElement>(null);
   const hauptnavigation = useRef<HTMLElement>(null);
@@ -34,13 +34,6 @@ export function Kopfzeile({ firmenname, logo, telefon, menue, knopf }: Props) {
   const [untermenue, setUntermenue] = useState<number | null>(null);
   /** Mit Escape geschlossenes Untermenü, bleibt verborgen bis die Maus den Menüpunkt verlässt */
   const [verborgen, setVerborgen] = useState<number | null>(null);
-
-  useEffect(() => {
-    const pruefen = () => setGescrollt(window.scrollY > 24);
-    pruefen();
-    window.addEventListener('scroll', pruefen, { passive: true });
-    return () => window.removeEventListener('scroll', pruefen);
-  }, []);
 
   const schliessen = useCallback(() => {
     setOffen(false);
@@ -64,7 +57,6 @@ export function Kopfzeile({ firmenname, logo, telefon, menue, knopf }: Props) {
       setUntermenue(null);
       if (index >= 0) {
         setVerborgen(index);
-        // Fokus nur zurückholen, wenn er schon im Menüpunkt lag (nicht aus einem Formularfeld wegnehmen)
         if (offenerPunkt?.matches(':focus-within')) offenerPunkt.querySelector<HTMLElement>('a')?.focus();
       }
     };
@@ -79,7 +71,7 @@ export function Kopfzeile({ firmenname, logo, telefon, menue, knopf }: Props) {
     };
   }, []);
 
-  // Mobiles Menü schliessen, wenn das Fenster breiter wird (z. B. Tablet drehen)
+  // Mobiles Menü schliessen, wenn das Fenster breiter wird
   useEffect(() => {
     const breit = window.matchMedia('(min-width: 1024px)');
     const pruefen = () => {
@@ -95,9 +87,7 @@ export function Kopfzeile({ firmenname, logo, telefon, menue, knopf }: Props) {
     const hintergrund = [document.getElementById('inhalt'), document.querySelector('footer')].filter(Boolean) as HTMLElement[];
     document.body.style.overflow = 'hidden';
     hintergrund.forEach((el) => el.setAttribute('inert', ''));
-    // Kurz warten, bis das Menü nicht mehr inert und unsichtbar ist, dann fokussieren
     const fokusZeit = window.setTimeout(() => mobilesMenue.current?.querySelector<HTMLElement>('a, button')?.focus(), 60);
-
     const taste = (e: KeyboardEvent) => {
       if (e.key === 'Escape') schliessen();
     };
@@ -116,37 +106,30 @@ export function Kopfzeile({ firmenname, logo, telefon, menue, knopf }: Props) {
 
   return (
     <>
-      <header
-        className={cn(
-          'sticky top-0 z-50 border-b transition-[background-color,border-color,box-shadow] duration-300',
-          gescrollt || offen ? 'border-linie bg-grund/95 shadow-[0_8px_30px_-12px_rgba(0,0,0,0.12)] backdrop-blur-md' : 'border-transparent bg-grund'
-        )}
-      >
+      <header className="fixed inset-x-3 top-3 z-50 sm:inset-x-4 sm:top-4 lg:inset-x-auto lg:left-1/2 lg:-translate-x-1/2">
         <a
           href="#inhalt"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-[60] focus:rounded focus:bg-marke focus:px-4 focus:py-2 focus:text-white"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-[60] focus:bg-marke focus:px-4 focus:py-2 focus:font-semibold focus:text-text-dunkel"
         >
           Zum Inhalt springen
         </a>
-        <div className="container-seite flex h-20 items-center justify-between gap-8 lg:h-24 3xl:h-28">
+        <div
+          className={cn(
+            'flex items-center justify-between gap-6 rounded-full border border-marke/20 bg-flaeche-dunkel/90 px-4 py-2 whitespace-nowrap backdrop-blur-xl transition-[border-color,box-shadow] duration-300 hover:border-marke/35 hover:shadow-[0_0_28px_rgba(240,168,0,0.06)] lg:justify-start lg:px-5 lg:py-2.5 3xl:px-7 3xl:py-3.5'
+          )}
+        >
           <Link href="/" className="flex shrink-0 items-center" aria-label={`${firmenname}, zur Startseite`}>
             {logo ? (
-              <Image
-                src={logo}
-                alt={firmenname}
-                width={240}
-                height={80}
-                loading="eager"
-                unoptimized={logo.endsWith('.svg')}
-                className="h-10 w-auto lg:h-12 3xl:h-16"
-              />
+              <Image src={logo} alt={firmenname} width={240} height={100} loading="eager" unoptimized={logo.endsWith('.svg')} className="h-8 w-auto lg:h-9 3xl:h-11" />
             ) : (
-              <span className="font-titel text-xl font-extrabold tracking-tight lg:text-2xl">{firmenname}</span>
+              <span className="font-titel text-base font-bold tracking-[0.06em] uppercase">{firmenname}</span>
             )}
           </Link>
 
+          <span className="hidden h-4 w-px bg-blau lg:block" aria-hidden />
+
           <nav aria-label="Hauptnavigation" className="hidden lg:block" ref={hauptnavigation}>
-            <ul className="flex items-center gap-1 xl:gap-4 2xl:gap-8">
+            <ul className="flex items-center gap-1 xl:gap-2 3xl:gap-4">
               {menue.map((punkt, index) => {
                 const mega = punkt.unterpunkte.length > 2;
                 const hatUntermenue = punkt.unterpunkte.length > 0;
@@ -164,7 +147,7 @@ export function Kopfzeile({ firmenname, logo, telefon, menue, knopf }: Props) {
                     <Link
                       href={punkt.link}
                       className={cn(
-                        'inline-flex items-center rounded-md py-2 pl-3 text-[0.95rem] font-medium transition-colors hover:text-marke 2xl:text-base 3xl:text-lg',
+                        'inline-flex items-center rounded-full py-2 pl-3 text-[0.7rem] font-medium tracking-[0.22em] text-text-leise uppercase transition-colors hover:text-text 3xl:text-xs',
                         hatUntermenue ? 'pr-1' : 'pr-3',
                         istAktiv(punkt.link) && 'text-marke'
                       )}
@@ -175,7 +158,7 @@ export function Kopfzeile({ firmenname, logo, telefon, menue, knopf }: Props) {
                     {hatUntermenue ? (
                       <button
                         type="button"
-                        className="inline-flex size-8 items-center justify-center rounded-md hover:text-marke"
+                        className="inline-flex size-8 items-center justify-center rounded-full text-text-leise hover:text-text"
                         aria-expanded={aufgeklappt}
                         aria-controls={`untermenue-${index}`}
                         aria-label={`Untermenü ${punkt.text} ${aufgeklappt ? 'schliessen' : 'öffnen'}`}
@@ -191,7 +174,7 @@ export function Kopfzeile({ firmenname, logo, telefon, menue, knopf }: Props) {
                       <div
                         id={`untermenue-${index}`}
                         className={cn(
-                          'absolute top-full pt-3 transition-all duration-200',
+                          'absolute top-full pt-4 transition-all duration-200',
                           mega ? 'left-1/2 -translate-x-1/2' : 'left-0',
                           aufgeklappt
                             ? 'visible opacity-100'
@@ -201,8 +184,8 @@ export function Kopfzeile({ firmenname, logo, telefon, menue, knopf }: Props) {
                       >
                         <ul
                           className={cn(
-                            'rounded-[var(--radius-karte)] border border-linie bg-grund p-2 shadow-xl',
-                            mega ? 'grid w-[40rem] grid-cols-2 gap-1 border-t-2 border-t-marke p-3' : 'min-w-64'
+                            'border border-marke/20 bg-flaeche-dunkel/95 p-2 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.7)] backdrop-blur-xl',
+                            mega ? 'grid w-[44rem] grid-cols-2 gap-1 border-t-2 border-t-marke p-3' : 'min-w-64'
                           )}
                         >
                           {punkt.unterpunkte.map((u) => (
@@ -210,10 +193,10 @@ export function Kopfzeile({ firmenname, logo, telefon, menue, knopf }: Props) {
                               <Link
                                 href={u.link}
                                 onClick={() => setUntermenue(null)}
-                                className="block rounded-md px-4 py-3 transition-colors hover:bg-flaeche focus-visible:bg-flaeche"
+                                className="block px-4 py-3 whitespace-normal transition-colors hover:bg-blau/30 focus-visible:bg-blau/30"
                                 aria-current={pfad === u.link ? 'page' : undefined}
                               >
-                                <span className="block text-[0.95rem] font-semibold">{u.text}</span>
+                                <span className="block font-titel text-sm font-semibold tracking-[0.04em] uppercase">{u.text}</span>
                                 {mega && u.beschreibung ? <span className="mt-1 block text-sm leading-snug text-text-leise">{u.beschreibung}</span> : null}
                               </Link>
                             </li>
@@ -226,31 +209,26 @@ export function Kopfzeile({ firmenname, logo, telefon, menue, knopf }: Props) {
               })}
             </ul>
           </nav>
-          <div className="hidden items-center gap-6 lg:flex">
-            <a
-              href={telefonLink}
-              className="hidden items-center gap-2 text-[0.95rem] font-medium whitespace-nowrap hover:text-marke xl:inline-flex 2xl:text-base"
+
+          {hatKnopf ? (
+            <Link
+              href={knopf.link!}
+              className="hidden items-center rounded-full bg-gradient-to-r from-marke to-marke-hell px-5 py-2 font-titel text-[0.7rem] font-semibold tracking-[0.18em] text-text-dunkel uppercase shadow-[0_0_16px_rgba(240,168,0,0.25)] transition-opacity hover:opacity-85 lg:inline-flex 3xl:px-6 3xl:text-xs"
             >
-              <Phone className="size-4" aria-hidden />
-              {telefon}
-            </a>
-            {hatKnopf ? (
-              <Link href={knopf.link!} className="knopf-primaer !min-h-11 !px-6 !text-[0.95rem] 2xl:!text-base">
-                {knopf.text}
-              </Link>
-            ) : null}
-          </div>
+              {knopf.text}
+            </Link>
+          ) : null}
 
           <button
             ref={umschalter}
             type="button"
-            className="inline-flex size-11 items-center justify-center rounded-md lg:hidden"
+            className="inline-flex size-10 items-center justify-center rounded-full border border-marke/20 text-marke lg:hidden"
             onClick={() => (offen ? schliessen() : setOffen(true))}
             aria-expanded={offen}
             aria-controls="mobiles-menue"
             aria-label={offen ? 'Menü schliessen' : 'Menü öffnen'}
           >
-            {offen ? <X className="size-7" aria-hidden /> : <Menu className="size-7" aria-hidden />}
+            {offen ? <X className="size-5" aria-hidden /> : <Menu className="size-5" aria-hidden />}
           </button>
         </div>
       </header>
@@ -261,22 +239,30 @@ export function Kopfzeile({ firmenname, logo, telefon, menue, knopf }: Props) {
         inert={!offen}
         aria-hidden={!offen}
         className={cn(
-          'fixed inset-x-0 top-20 bottom-0 z-40 overflow-y-auto bg-grund transition-[opacity,transform,visibility] duration-300 ease-out lg:hidden',
-          offen ? 'visible translate-y-0 opacity-100' : 'invisible -translate-y-2 opacity-0'
+          'fixed inset-0 z-40 overflow-y-auto bg-flaeche-dunkel/95 backdrop-blur-xl transition-[opacity,visibility] duration-300 ease-out lg:hidden',
+          offen ? 'visible opacity-100' : 'invisible opacity-0'
         )}
       >
-        <nav aria-label="Mobile Navigation" className="container-seite py-8">
-          <ul className="divide-y divide-linie border-y border-linie">
-            {menue.map((punkt) => (
-              <li key={punkt.link} className="py-2">
-                <Link href={punkt.link} onClick={() => setOffen(false)} className={cn('block py-3 text-2xl font-semibold', istAktiv(punkt.link) && 'text-marke')}>
+        <nav aria-label="Mobile Navigation" className="container-seite flex min-h-full flex-col justify-center py-24">
+          <ul className="space-y-2">
+            {menue.map((punkt, i) => (
+              <li
+                key={punkt.link}
+                className={cn('transition-[opacity,transform] duration-300', offen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0')}
+                style={{ transitionDelay: offen ? `${60 + i * 60}ms` : '0ms' }}
+              >
+                <Link
+                  href={punkt.link}
+                  onClick={() => setOffen(false)}
+                  className={cn('block py-3 font-titel text-2xl tracking-[0.2em] text-text-leise uppercase hover:text-marke', istAktiv(punkt.link) && 'text-marke')}
+                >
                   {punkt.text}
                 </Link>
                 {punkt.unterpunkte.length > 0 ? (
-                  <ul className="mb-3 space-y-1 pl-4">
+                  <ul className="mb-4 space-y-1 border-l border-linie pl-4">
                     {punkt.unterpunkte.map((u) => (
                       <li key={u.link}>
-                        <Link href={u.link} onClick={() => setOffen(false)} className="block py-2 text-lg text-text-leise">
+                        <Link href={u.link} onClick={() => setOffen(false)} className="block py-2 text-base text-text-leise hover:text-text">
                           {u.text}
                         </Link>
                       </li>
@@ -286,14 +272,13 @@ export function Kopfzeile({ firmenname, logo, telefon, menue, knopf }: Props) {
               </li>
             ))}
           </ul>
-          <div className="mt-8 flex flex-col gap-4">
+          <div className={cn('mt-10 flex flex-col gap-4 transition-[opacity,transform] duration-300', offen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0')} style={{ transitionDelay: offen ? '320ms' : '0ms' }}>
             {hatKnopf ? (
               <Link href={knopf.link!} onClick={() => setOffen(false)} className="knopf-primaer">
                 {knopf.text}
               </Link>
             ) : null}
             <a href={telefonLink} className="knopf-sekundaer">
-              <Phone className="size-5" aria-hidden />
               {telefon}
             </a>
           </div>

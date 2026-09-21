@@ -4,6 +4,8 @@ import { Kopfzeile } from '@/components/layout/Kopfzeile';
 import { Fusszeile } from '@/components/layout/Fusszeile';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { Einblenden } from '@/components/ui/Einblenden';
+import { Fadenkreuz } from '@/components/ui/Fadenkreuz';
+import { Faserwellen } from '@/components/ui/Faserwellen';
 import { holeEinstellungen, holeNavigation } from '@/lib/cms';
 import { sauberText } from '@/lib/text';
 import { DOMAIN } from '@/site.config';
@@ -43,11 +45,16 @@ export default async function WebsiteLayout({ children }: { children: React.Reac
 
   return (
     <>
-      <Kopfzeile firmenname={e.firmenname} logo={e.logo} telefon={e.telefon} menue={n.hauptmenue} knopf={n.knopf} />
-      <main id="inhalt">{children}</main>
+      <Kopfzeile firmenname={e.firmenname} logo={e.logohell ?? e.logo} telefon={e.telefon} menue={n.hauptmenue} knopf={n.knopf} />
+      {/* Faserwellen liegen fest hinter der ganzen Seite, der Startbereich der Startseite füllt den Bildschirm */}
+      <Faserwellen />
+      <main id="inhalt" className="pt-24 lg:pt-28">
+        {children}
+      </main>
       <Fusszeile einstellungen={e} navigation={n} />
       <JsonLd daten={organisation} />
       <Einblenden />
+      <Fadenkreuz />
     </>
   );
 }

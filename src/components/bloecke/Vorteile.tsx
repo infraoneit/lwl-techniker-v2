@@ -4,15 +4,17 @@ import type { BlockDaten } from './BlockRenderer';
 
 export function Vorteile({ daten: d }: { daten: BlockDaten<'vorteile'> }) {
   return (
-    <section className="abschnitt bg-flaeche-dunkel text-text-hell">
+    <section className="abschnitt">
       <div className="container-seite">
         <AbschnittKopf ueberzeile={d.ueberzeile} titel={d.titel} hell />
-        <ol className="grid gap-px overflow-hidden rounded-[var(--radius-karte)] bg-linie-dunkel sm:grid-cols-2 xl:grid-cols-3">
+        <ol className="grid gap-px border border-linie bg-linie sm:grid-cols-2 xl:grid-cols-3">
           {d.eintraege.map((e, i) => (
-            <li key={i} className="bg-flaeche-dunkel-2 p-8 lg:p-10">
-              <span className="font-titel text-sm font-bold text-marke-hell">{String(i + 1).padStart(2, '0')}</span>
+            <li key={i} data-einblenden className="group bg-flaeche p-8 transition-colors hover:bg-blau/20 lg:p-10">
+              <span className="font-titel text-sm font-bold tracking-[0.1em] text-marke" aria-hidden>
+                {String(i + 1).padStart(2, '0')}
+              </span>
               <h3 className="titel-3 mt-4">{sauberText(e.titel)}</h3>
-              <p className="mt-3 text-text-hell-leise">{sauberText(e.text)}</p>
+              <p className="mt-3 text-[0.95rem] leading-7 text-text-leise">{sauberText(e.text)}</p>
             </li>
           ))}
         </ol>

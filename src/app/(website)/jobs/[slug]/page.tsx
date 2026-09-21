@@ -95,7 +95,7 @@ export default async function JobSeite({ params }: Props) {
       <section className="abschnitt">
         <div className="container-seite grid gap-12 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] lg:gap-20">
           <div className="fliesstext lesebreite">{inhalt}</div>
-          <aside className="h-fit rounded-[var(--radius-karte)] bg-flaeche-dunkel p-8 text-text-hell lg:sticky lg:top-32 lg:p-10">
+          <aside className="h-fit rounded-[var(--radius-karte)] border border-linie bg-flaeche p-8 text-text-hell lg:sticky lg:top-32 lg:p-10">
             <h2 className="titel-3">So bewerben Sie sich</h2>
             <p className="mt-3 text-text-hell-leise">
               Senden Sie Ihre Unterlagen per E-Mail{j.kontaktperson ? ` an ${j.kontaktperson}` : ''}. Wir melden uns persönlich bei Ihnen.

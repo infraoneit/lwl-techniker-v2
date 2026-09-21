@@ -1,30 +1,33 @@
 @import 'tailwindcss';
 
 /*
- * DESIGNSYSTEM
+ * DESIGNSYSTEM LWL-TECHNIKER
  *
- * Pro Projekt werden nur die Farben und Schriften unter @theme angepasst.
- * Breiten, Abstände und Komponenten-Klassen bleiben gleich. Sie sind der Qualitätsstandard.
- * Details: docs/08-design-und-qualitaet.md
+ * Dunkles Nachtblau mit Bernstein als Akzent, übernommen aus dem Entwurf (index.html im ersten Commit):
+ * Faserwellen als Vollbild-Animation hinter der ganzen Seite, schwebende Pill-Navigation,
+ * grosse Titel in Versalien mit Konturschrift, Knöpfe mit abgeschnittener Ecke.
+ * Breiten, Abstände und Klassen der InfraOne-Vorlage bleiben erhalten (docs/08-design-und-qualitaet.md).
  */
 
 @theme {
-  /* Markenfarben LWL-Techniker: Nachtblau aus dem Logo als Hauptfarbe, Bernstein aus dem Logo als Akzent auf dunklen Flächen (marke-hell). Kontrast zu Weiss mindestens 4.5:1 (WCAG AA). */
-  --color-marke: #2b2f86;
-  --color-marke-dunkel: #1f2266;
-  --color-marke-hell: #f5b400;
+  /* Markenfarben: Bernstein aus dem Logo. Kontrast Bernstein auf Nachtblau 9.6 zu 1, dunkler Text auf Bernstein 11 zu 1 */
+  --color-marke: #f0a800;
+  --color-marke-dunkel: #d99700;
+  --color-marke-hell: #f0d200;
 
-  /* Neutrale Flächen und Text */
-  --color-grund: #ffffff;
-  --color-flaeche: #f3f4f9;
-  --color-flaeche-dunkel: #0b1235;
-  --color-flaeche-dunkel-2: #141d4d;
-  --color-text: #13162b;
-  --color-text-leise: #545a75;
-  --color-text-hell: #f4f5fb;
-  --color-text-hell-leise: #b3b8d4;
-  --color-linie: #dfe1ec;
-  --color-linie-dunkel: #26306e;
+  /* Flächen und Text: Nachtblau in drei Stufen */
+  --color-grund: #08112e;
+  --color-flaeche: #0f1a40;
+  --color-flaeche-dunkel: #060d22;
+  --color-flaeche-dunkel-2: #0f1a40;
+  --color-blau: #1e2d78;
+  --color-text: #e8e4f8;
+  --color-text-leise: #aaa7c8;
+  --color-text-hell: #e8e4f8;
+  --color-text-hell-leise: #aaa7c8;
+  --color-text-dunkel: #060d22;
+  --color-linie: #1e2d78;
+  --color-linie-dunkel: #1e2d78;
 
   /* Zusätzlicher Breakpoint für sehr breite Bildschirme (2200 px). In rem, damit er richtig nach 2xl sortiert wird */
   --breakpoint-3xl: 137.5rem;
@@ -33,9 +36,9 @@
   --font-sans: var(--font-text), ui-sans-serif, system-ui, sans-serif;
   --font-titel: var(--font-ueberschrift), ui-sans-serif, system-ui, sans-serif;
 
-  /* Eher kantig als verspielt: wirkt sachlich und hebt sich von typischen Baukastenseiten ab */
-  --radius-karte: 0.375rem;
-  --radius-knopf: 0.25rem;
+  /* Kanten bewusst gerade wie im Entwurf, Knöpfe mit abgeschnittener Ecke (siehe .knopf-primaer) */
+  --radius-karte: 0.125rem;
+  --radius-knopf: 0;
 
   --animate-einblenden: einblenden 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 
@@ -54,16 +57,30 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    /* Anker (z. B. #formular) nicht unter der fixierten Kopfzeile verstecken */
+    /* Anker (z. B. #formular) nicht unter der schwebenden Navigation verstecken */
     scroll-padding-top: 7rem;
     -webkit-text-size-adjust: 100%;
+    background: var(--color-grund);
   }
 
+  /* Kein Hintergrund auf body: sonst verdeckt er die Faserwellen (negativer z-index). Die Farbe liegt auf html. */
   body {
-    @apply bg-grund font-sans text-text antialiased;
+    @apply font-sans text-text antialiased;
     font-size: 1.0625rem;
     line-height: 1.7;
     text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  /* Punktraster über der ganzen Seite, wie im Entwurf */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -20;
+    background-image: radial-gradient(circle, rgb(30 45 120 / 0.5) 1px, transparent 1px);
+    background-size: 38px 38px;
+    pointer-events: none;
   }
 
   @media (min-width: 1024px) {
@@ -77,9 +94,8 @@
   h3,
   h4 {
     @apply font-titel text-balance;
-    letter-spacing: -0.02em;
-    line-height: 1.12;
-    /* Lange deutsche Wörter (z. B. Elektroinstallateur/in) auf schmalen Handys trennen statt überlaufen lassen */
+    letter-spacing: -0.01em;
+    line-height: 1.05;
     hyphens: auto;
     overflow-wrap: break-word;
   }
@@ -89,7 +105,7 @@
   }
 
   ::selection {
-    @apply bg-marke text-white;
+    @apply bg-marke text-text-dunkel;
   }
 
   :focus-visible {
@@ -97,10 +113,36 @@
     outline-offset: 3px;
   }
 
-  /* Auf farbigen und dunklen Flächen wäre der Fokusrahmen sonst unsichtbar */
-  .bg-marke :focus-visible,
-  .bg-flaeche-dunkel :focus-visible {
-    outline-color: #ffffff;
+  /* Fadenkreuz-Cursor (src/components/ui/Fadenkreuz.tsx) ersetzt den Mauszeiger nur auf Geräten mit Maus */
+  html.fadenkreuz,
+  html.fadenkreuz a,
+  html.fadenkreuz button,
+  html.fadenkreuz label,
+  html.fadenkreuz summary {
+    cursor: none;
+  }
+
+  /* Animationen des Startbereichs (Hero.tsx): Titelzeilen steigen auf, Balken wächst, Text blendet ein */
+  @keyframes zeile-auf {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes auf {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes balken {
+    to {
+      width: 55%;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -120,21 +162,18 @@
    * Elemente mit data-einblenden werden von src/components/ui/Einblenden.tsx gesteuert:
    *   data-einblenden="sofort"    beim Laden schon sichtbar, keine Animation
    *   data-einblenden="sichtbar"  beim Scrollen erreicht, weich einblenden
-   * Bewusst eine Animation statt transition: Hover-Übergänge (transition-shadow usw.) auf
-   * denselben Elementen würden eine transition überschreiben.
-   * Ohne JavaScript, beim Drucken und bei "Bewegung reduzieren" bleibt alles sofort sichtbar.
    */
   .js-einblenden [data-einblenden]:not([data-einblenden='sofort'], [data-einblenden='sichtbar']) {
     opacity: 0;
   }
   .js-einblenden [data-einblenden='sichtbar'] {
-    animation: einblenden-scroll 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: einblenden-scroll 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
     animation-delay: calc(var(--einblenden-index, 0) * 90ms);
   }
   @keyframes einblenden-scroll {
     from {
       opacity: 0;
-      transform: translateY(28px);
+      transform: translateY(18px);
     }
     to {
       opacity: 1;
@@ -147,11 +186,8 @@
       animation: none !important;
     }
   }
-  /*
-   * SEITENBREITE (Qualitätsstandard, übernommen von schaltkraft.ch)
-   * max 2400 px, Rand 24 / 32 / 48 px. Deutlich breiter als die üblichen 1280 px.
-   * Lange Fliesstexte werden separat mit .lesebreite begrenzt.
-   */
+
+  /* SEITENBREITE: max 2400 px, Rand 24 / 32 / 48 px (Qualitätsstandard der Vorlage) */
   .container-seite {
     @apply mx-auto w-full max-w-[2400px] px-6 sm:px-8 lg:px-12;
   }
@@ -171,44 +207,96 @@
     @apply py-20 lg:py-32;
   }
 
+  /* Überzeile mit Schrägstrich, wie "/ Leistungen" im Entwurf */
   .ueberzeile {
-    @apply mb-4 inline-flex items-center gap-3 text-sm font-semibold tracking-[0.14em] text-marke uppercase;
+    @apply mb-4 inline-flex items-center gap-3 text-xs font-medium tracking-[0.42em] text-marke uppercase;
   }
   .ueberzeile::before {
-    content: '';
-    @apply h-px w-8 bg-current;
+    content: '/';
+    @apply font-titel font-bold;
   }
 
-  /* Titel wachsen ab 2200 px (3xl) weiter, passend zur breiten Seite */
+  /* Überzeile im Startbereich: leuchtender Punkt statt Schrägstrich */
+  .ueberzeile-punkt {
+    @apply mb-6 inline-flex items-center gap-3 text-xs font-medium tracking-[0.4em] text-marke uppercase;
+  }
+  .ueberzeile-punkt::before {
+    content: '';
+    @apply size-1.5 rounded-full bg-marke;
+    box-shadow: 0 0 10px var(--color-marke);
+    animation: blinken 2s 1s ease-in-out infinite;
+  }
+  @keyframes blinken {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
+
+  /* Titel in Versalien wie im Entwurf. Die Kontur (letztes Wort) setzt AbschnittKopf über .kontur */
+  .titel-hero {
+    @apply font-bold uppercase;
+    font-size: clamp(3.2rem, 10.5vw, 12rem);
+    line-height: 0.86;
+    letter-spacing: -0.02em;
+  }
   .titel-1 {
-    @apply text-4xl font-bold sm:text-5xl lg:text-6xl 2xl:text-7xl 3xl:text-8xl;
+    @apply font-bold uppercase;
+    font-size: clamp(2.6rem, 6vw, 6rem);
+    line-height: 0.92;
+    letter-spacing: -0.015em;
   }
   .titel-2 {
-    @apply text-3xl font-bold sm:text-4xl lg:text-5xl 3xl:text-6xl;
+    @apply font-bold uppercase;
+    font-size: clamp(2rem, 4.5vw, 4rem);
+    line-height: 0.92;
   }
   .titel-3 {
-    @apply text-xl font-semibold lg:text-2xl 3xl:text-3xl;
+    @apply text-lg font-semibold tracking-[0.04em] uppercase lg:text-xl 3xl:text-2xl;
+    line-height: 1.15;
   }
   .einleitung {
     @apply text-lg text-text-leise lg:text-xl 3xl:text-2xl;
     line-height: 1.6;
   }
 
+  /* Konturschrift und Farbverlauf für einzelne Wörter in Titeln */
+  .kontur {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--color-text);
+    paint-order: stroke fill;
+  }
+  .verlauf {
+    background: linear-gradient(90deg, var(--color-marke), var(--color-marke-hell) 60%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Knöpfe: Bernstein-Verlauf mit abgeschnittener Ecke (primär), Geisterknopf (sekundär und hell) */
   .knopf-primaer {
-    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-[var(--radius-knopf)] bg-marke px-7 py-3 text-base font-semibold text-white transition-colors duration-200 hover:bg-marke-dunkel disabled:cursor-not-allowed disabled:opacity-60 lg:min-h-14 lg:px-9;
+    @apply inline-flex min-h-12 items-center justify-center gap-3 px-7 py-3 font-titel text-sm font-bold tracking-[0.18em] text-text-dunkel uppercase transition-opacity duration-200 hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-60 lg:min-h-14 lg:px-9;
+    background: linear-gradient(100deg, var(--color-marke), var(--color-marke-hell));
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+    box-shadow: 0 0 24px rgb(240 168 0 / 0.22);
   }
-  .knopf-sekundaer {
-    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-[var(--radius-knopf)] border border-current px-7 py-3 text-base font-semibold transition-colors duration-200 hover:bg-text hover:text-grund lg:min-h-14 lg:px-9;
-  }
+  .knopf-sekundaer,
   .knopf-hell {
-    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-[var(--radius-knopf)] border border-white/40 px-7 py-3 text-base font-semibold text-white transition-colors duration-200 hover:border-white hover:bg-white hover:text-text lg:min-h-14 lg:px-9;
+    @apply inline-flex min-h-12 items-center justify-center gap-3 border border-marke/30 px-7 py-3 font-titel text-sm font-semibold tracking-[0.18em] text-marke uppercase transition-colors duration-200 hover:border-marke hover:bg-marke/5 lg:min-h-14 lg:px-9;
+  }
+  /* Kleine Pillen für Social Media und Filter */
+  .pille {
+    @apply inline-flex min-h-10 items-center border border-linie px-4 py-2 text-xs font-medium tracking-[0.22em] text-text-leise uppercase transition-colors hover:border-marke hover:text-marke;
   }
 
   .formular-label {
-    @apply mb-2 block text-sm font-semibold;
+    @apply mb-2 block text-xs font-semibold tracking-[0.18em] text-text-leise uppercase;
   }
   .formular-feld {
-    @apply block w-full rounded-md border border-linie bg-white px-4 py-3 text-base text-text transition-colors outline-none placeholder:text-text-leise/70 focus:border-marke focus:ring-2 focus:ring-marke/25;
+    @apply block w-full border border-linie bg-flaeche-dunkel px-4 py-3 text-base text-text transition-colors outline-none placeholder:text-text-leise/70 focus:border-marke focus:ring-2 focus:ring-marke/25;
   }
 
   /* Fliesstext aus Markdoc */
@@ -219,16 +307,16 @@
     margin-top: 1.25em;
   }
   .fliesstext h2 {
-    @apply mt-14 text-3xl font-bold lg:text-4xl;
+    @apply mt-14 text-2xl font-bold uppercase lg:text-3xl;
   }
   .fliesstext h3 {
-    @apply mt-10 text-2xl font-semibold;
+    @apply mt-10 text-xl font-semibold uppercase lg:text-2xl;
   }
   .fliesstext h4 {
-    @apply mt-8 text-xl font-semibold;
+    @apply mt-8 text-lg font-semibold uppercase;
   }
   .fliesstext a {
-    @apply font-medium text-marke underline underline-offset-4 hover:text-marke-dunkel;
+    @apply font-medium text-marke underline underline-offset-4 hover:text-marke-hell;
   }
   .fliesstext ul {
     @apply list-disc space-y-2 pl-6 marker:text-marke;
@@ -258,7 +346,7 @@
     @apply w-full border-collapse text-left text-base;
   }
   .fliesstext th {
-    @apply border-b-2 border-text py-3 pr-6 font-semibold;
+    @apply border-b-2 border-marke py-3 pr-6 font-semibold;
   }
   .fliesstext td {
     @apply border-b border-linie py-3 pr-6 align-top;

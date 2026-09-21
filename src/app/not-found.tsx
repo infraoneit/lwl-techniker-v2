@@ -11,10 +11,10 @@ export default async function NichtGefunden() {
 
   return (
     <>
-      <Kopfzeile firmenname={e.firmenname} logo={e.logo} telefon={e.telefon} menue={n.hauptmenue} knopf={n.knopf} />
-      <main id="inhalt" className="container-seite abschnitt-gross">
+      <Kopfzeile firmenname={e.firmenname} logo={e.logohell ?? e.logo} telefon={e.telefon} menue={n.hauptmenue} knopf={n.knopf} />
+      <main id="inhalt" className="container-seite abschnitt-gross pt-32 lg:pt-40">
         <p className="ueberzeile">Fehler 404</p>
-        <h1 className="titel-1 max-w-4xl">Diese Seite gibt es nicht mehr oder die Adresse ist falsch.</h1>
+        <h1 className="titel-1 max-w-5xl">Diese Seite gibt es nicht mehr oder die Adresse ist falsch.</h1>
         <p className="einleitung mt-6 max-w-2xl">Über die Startseite finden Sie alle Inhalte. Bei Fragen erreichen Sie uns unter {e.telefon}.</p>
         <Link href="/" className="knopf-primaer mt-10">
           Zur Startseite

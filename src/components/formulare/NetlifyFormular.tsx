@@ -90,7 +90,7 @@ export function NetlifyFormular({
         <h3 className="mt-5 text-2xl font-semibold">Vielen Dank für Ihre Nachricht</h3>
         <p className="mt-3 max-w-prose text-text-leise">{bestaetigung}</p>
         {testmodus ? (
-          <p className="mt-4 rounded-md bg-amber-100 px-4 py-3 text-sm text-amber-900">
+          <p className="mt-4 border border-marke/40 bg-marke/10 px-4 py-3 text-sm text-marke">
             Testmodus: Lokal wird nichts versendet. Auf Netlify geht die Anfrage an die hinterlegte Adresse.
           </p>
         ) : null}
@@ -174,7 +174,7 @@ export function NetlifyFormular({
       })}
 
       {status === 'fehler' ? (
-        <div className="flex gap-3 rounded-md border border-red-300 bg-red-50 p-4 text-sm text-red-900 sm:col-span-2" role="alert">
+        <div className="flex gap-3 border border-red-400/60 bg-red-950/40 p-4 text-sm text-red-100 sm:col-span-2" role="alert">
           <TriangleAlert className="size-5 shrink-0" aria-hidden />
           <p>
             Die Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es erneut. Sie erreichen uns auch per E-Mail an{' '}
