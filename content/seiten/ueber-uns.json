@@ -25,7 +25,7 @@
       "value": {
         "ueberzeile": "Philosophie",
         "titel": "Qualität ist uns wichtiger als Quantität",
-        "text": "Wir möchten Sie mit unserem Können und unserer Zuverlässigkeit zufriedenstellen. Qualität beginnt bei unserem Angebot an ausgewählten Produkten zu fairen Preisen und geht weiter bis zur einwandfreien Ausführung Ihres Auftrags.\n\nLangjährige Erfahrung im Bereich Fiberoptic und im Umgang mit unterschiedlichsten Aufgabenstellungen hilft uns, rasch fachkundige und nachhaltige Lösungen in allen Glasfaserbereichen anzubieten. Wir entwickeln stetig neue Produkte für unsere Kundschaft.",
+        "text": "Wir möchten Sie mit unserem Können und unserer Zuverlässigkeit zufriedenstellen. Qualität beginnt bei unserem Angebot an ausgewählten Produkten zu fairen Preisen und geht weiter bis zur einwandfreien Ausführung Ihres Auftrags.\n\nUnser Team bringt über 20 Jahre Erfahrung in der Glasfasertechnik mit. Der Umgang mit unterschiedlichsten Aufgabenstellungen hilft uns, rasch fachkundige und nachhaltige Lösungen in allen Glasfaserbereichen anzubieten. Wir entwickeln stetig neue Produkte für unsere Kundschaft.",
         "bild": "/bilder/seiten/ueber-uns/bloecke/1/value/bild.jpg",
         "bildAlt": "Mitarbeiterin lötet ein Bauteil am Arbeitsplatz in der Werkstatt",
         "bildPosition": "links",
@@ -90,9 +90,28 @@
             "telefon": "+41 79 225 34 74"
           },
           {
-            "name": "Lindi Selimi",
-            "funktion": "VAR-Techniker, Spleiss- und Messtechniker",
-            "foto": "/bilder/seiten/ueber-uns/bloecke/3/value/personen/2/foto.webp"
+            "name": "David Thuma",
+            "funktion": "LWL-Techniker",
+            "email": "d.thuma@lwl-techniker.ch",
+            "telefon": "+41 76 445 54 37"
+          },
+          {
+            "name": "Christian Colaci",
+            "funktion": "LWL-Techniker",
+            "email": "c.colaci@lwl-techniker.ch",
+            "telefon": "+41 79 262 43 92"
+          },
+          {
+            "name": "Edwin Stefanov",
+            "funktion": "LWL-Techniker",
+            "email": "e.stefanov@lwl-techniker.ch",
+            "telefon": "+41 76 408 63 04"
+          },
+          {
+            "name": "Zelije Selimi",
+            "funktion": "LWL-Technikerin",
+            "email": "z.selimi@lwl-techniker.ch",
+            "telefon": "+41 76 732 90 32"
           }
         ]
       }

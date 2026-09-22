@@ -144,11 +144,6 @@
             "logoFarbig": "/bilder/statisch/logos-farbig/moevenpick.webp"
           },
           {
-            "name": "NEP Switzerland",
-            "logo": "/bilder/statisch/logos/nep.png",
-            "logoFarbig": "/bilder/statisch/logos-farbig/nep.webp"
-          },
-          {
             "name": "Olma Messen St. Gallen",
             "logo": "/bilder/statisch/logos/olma-messen.png",
             "logoFarbig": "/bilder/statisch/logos-farbig/olma-messen.webp"
@@ -192,11 +187,6 @@
             "name": "Swisscom",
             "logo": "/bilder/statisch/logos/swisscom.png",
             "logoFarbig": "/bilder/statisch/logos-farbig/swisscom.webp"
-          },
-          {
-            "name": "Swiss Football League",
-            "logo": "/bilder/statisch/logos/swiss-football-league.png",
-            "logoFarbig": "/bilder/statisch/logos-farbig/swiss-football-league.webp"
           },
           {
             "name": "AXA",
