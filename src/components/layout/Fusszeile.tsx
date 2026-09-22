@@ -20,7 +20,7 @@ export function Fusszeile({ einstellungen: e, navigation: n }: { einstellungen: 
         <div className="grid gap-12 md:grid-cols-2 xl:grid-cols-[1.4fr_1fr_1fr_1fr] xl:gap-16">
           <div className="max-w-md">
             {e.logohell ? (
-              <Image src={e.logohell} alt={e.firmenname} width={220} height={92} unoptimized={e.logohell.endsWith('.svg')} className="h-12 w-auto" />
+              <Image src={e.logohell} alt={e.firmenname} width={220} height={92} unoptimized={e.logohell.endsWith('.svg')} className="h-16 w-auto" />
             ) : (
               <p className="font-titel text-xl font-bold tracking-[0.06em] uppercase">{e.firmenname}</p>
             )}

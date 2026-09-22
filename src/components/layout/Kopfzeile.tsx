@@ -139,7 +139,7 @@ export function Kopfzeile({ firmenname, logo, telefon, menue, knopf }: Props) {
             }}
           >
             {logo ? (
-              <Image src={logo} alt={firmenname} width={240} height={100} loading="eager" unoptimized={logo.endsWith('.svg')} className="h-8 w-auto lg:h-9 3xl:h-11" />
+              <Image src={logo} alt={firmenname} width={240} height={100} loading="eager" unoptimized={logo.endsWith('.svg')} className="h-9 w-auto lg:h-11 3xl:h-14" />
             ) : (
               <span className="font-titel text-base font-bold tracking-[0.06em] uppercase">{firmenname}</span>
             )}
