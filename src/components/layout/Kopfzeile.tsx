@@ -100,6 +100,15 @@ export function Kopfzeile({ firmenname, logo, telefon, menue, knopf }: Props) {
     };
   }, [offen, schliessen]);
 
+  // Zusätzliche Absicherung zum Klick-Handler des Logos: Landet die Seite über irgendeinen Weg auf der
+  // Startseite (Logo, Link im Menü, Browser-Zurück), scrollt sie sicher nach oben. Beim ersten Laden der
+  // Seite nicht auslösen, damit ein Neuladen mit Bildlaufposition (F5) nicht zurückgesetzt wird.
+  const bereitsGeladen = useRef(false);
+  useEffect(() => {
+    if (bereitsGeladen.current && pfad === '/') window.scrollTo({ top: 0 });
+    bereitsGeladen.current = true;
+  }, [pfad]);
+
   const istAktiv = (link: string) => (link === '/' ? pfad === '/' : pfad === link || pfad.startsWith(`${link}/`));
   const telefonLink = `tel:${telefon.replaceAll(' ', '')}`;
   const hatKnopf = Boolean(knopf.text && knopf.link);
