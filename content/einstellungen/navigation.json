@@ -96,6 +96,10 @@
     {
       "text": "Datenschutz",
       "link": "/datenschutz"
+    },
+    {
+      "text": "AGB",
+      "link": "/agb"
     }
   ]
 }

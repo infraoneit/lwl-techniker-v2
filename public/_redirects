@@ -1,7 +1,7 @@
 # Weiterleitungen alter Adressen der bisherigen Website (Webflow)
 /pages/team                      /ueber-uns                                                  301
 /pages/philosophie               /ueber-uns                                                  301
-/pages/agb                       /                                                           301
+/pages/agb                       /agb                                                         301
 /pages/produkte                  /produkte                                                   301
 /shop/dienstleistungen           /leistungen                                                 301
 /contact/contact-hero            /kontakt                                                    301
