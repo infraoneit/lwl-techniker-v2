@@ -106,6 +106,16 @@ function optionalesBild(label: string, ordner: string, o: BildOptionen) {
   });
 }
 
+/** Dateifeld für Downloads (PDF), z. B. Datenblätter. Ablage wie bild(), aber unter public/dokumente/<ordner>. */
+export function datei(label: string, ordner: string, o: { beschreibung?: string } = {}) {
+  return fields.file({
+    label,
+    description: [o.beschreibung, 'PDF. Leer lassen, wenn es kein Datenblatt gibt.'].filter(Boolean).join(' '),
+    directory: `public/dokumente/${ordner}`,
+    publicPath: `/dokumente/${ordner}/`,
+  });
+}
+
 export function bild(label: string, ordner: string, o: BildOptionen & { pflicht: true }): ReturnType<typeof pflichtBild>;
 export function bild(label: string, ordner: string, o?: BildOptionen & { pflicht?: false }): ReturnType<typeof optionalesBild>;
 export function bild(label: string, ordner: string, o: BildOptionen & { pflicht?: boolean } = {}) {

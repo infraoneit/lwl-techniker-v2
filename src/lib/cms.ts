@@ -119,7 +119,18 @@ export async function holeJobsFuerStartseite(anzahl: number | 'alle') {
   return anzahl === 'alle' ? jobs : waehleFuerStartseite(jobs, anzahl);
 }
 
+// Produkte ----------------------------------------------------------------------
+
+/** Alle Produkte, sortiert nach Reihenfolge. Bestimmt zugleich die Reihenfolge der Kategorien (erstes Vorkommen). */
+export const holeProdukte = cache(async () => {
+  const alle = await reader.collections.produkte.all();
+  return alle
+    .map(({ slug, entry }) => ({ slug, ...entry }))
+    .sort((a, b) => a.reihenfolge - b.reihenfolge || a.titel.localeCompare(b.titel, 'de'));
+});
+
 export type Referenz = Awaited<ReturnType<typeof holeReferenzen>>[number];
+export type Produkt = Awaited<ReturnType<typeof holeProdukte>>[number];
 export type Job = Awaited<ReturnType<typeof holeJobs>>[number];
 export type Leistung = Awaited<ReturnType<typeof holeLeistungen>>[number];
 export type Einstellungen = Awaited<ReturnType<typeof holeEinstellungen>>;

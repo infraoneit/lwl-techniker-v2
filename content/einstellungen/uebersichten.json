@@ -252,5 +252,14 @@
       "titel": "Offene Stellen",
       "beschreibung": "Aktuelle Stellen bei der LWL-Techniker Schweiz GmbH in St. Gallen."
     }
+  },
+  "produkte": {
+    "ueberzeile": "Produkte",
+    "titel": "LWL-Produkte und Datenblätter",
+    "einleitung": "Wir liefern vorkonfektionierte Glasfaserkabel, LWL-Patchkabel, Kabelendverschlüsse, Spleissboxen und Zubehör rasch und bearbeiten Aufträge speditiv. Zu den meisten Produkten finden Sie hier das Datenblatt als PDF, für Produkte ohne Datenblatt und für Sonderanfertigungen fragen Sie uns an.",
+    "seo": {
+      "titel": "LWL-Produkte und Datenblätter",
+      "beschreibung": "Vorkonfektionierte Glasfaserkabel, Patchkabel, FTTH-Dosen, Spleissboxen, Muffen, Zubehör und Messgeräte der LWL-Techniker Schweiz GmbH."
+    }
   }
 }

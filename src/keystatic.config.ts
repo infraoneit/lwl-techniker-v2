@@ -1,7 +1,7 @@
 import { collection, config, fields, singleton } from '@keystatic/core';
 import { GITHUB_REPO, KEYSTATIC_MODUS, PROJEKT_NAME } from './site.config';
 import { seitenBloecke } from './keystatic/bloecke';
-import { alttext, bild, fliesstext, langtext, link, logosFeld, seo, text, titelMitAdresse } from './keystatic/felder';
+import { alttext, bild, datei, fliesstext, langtext, link, logosFeld, seo, text, titelMitAdresse } from './keystatic/felder';
 
 /**
  * Titel, Einleitung und SEO für die festen Übersichtsseiten /leistungen, /referenzen und /jobs.
@@ -167,6 +167,7 @@ export default config({
           logos: logosFeld({ label: 'Logos aller Kunden ("Allgemein", über den einzelnen Referenzen)' }),
         }),
         jobs: uebersicht('Seite /jobs', 'Offene Stellen'),
+        produkte: uebersicht('Seite /produkte', 'Produkte'),
       },
     }),
 
@@ -190,7 +191,7 @@ export default config({
       columns: ['titel'],
       schema: {
         // Gesperrte Adressen: gleiche Liste wie RESERVIERT in scripts/pruefe-konfiguration.mjs
-        titel: titelMitAdresse('Seitentitel', { gesperrt: ['leistungen', 'referenzen', 'jobs', 'keystatic', 'api', 'bilder'] }),
+        titel: titelMitAdresse('Seitentitel', { gesperrt: ['leistungen', 'referenzen', 'jobs', 'produkte', 'keystatic', 'api', 'bilder'] }),
         inSitemap: fields.checkbox({
           label: 'Für Google freigeben',
           description: 'Für Impressum und Datenschutz ausschalten.',
@@ -328,6 +329,33 @@ export default config({
         }),
         seo: seo(),
         inhalt: fliesstext('Stellenbeschrieb', 'jobs'),
+      },
+    }),
+
+    produkte: collection({
+      label: 'Produkte',
+      slugField: 'titel',
+      path: 'content/produkte/*',
+      format: { data: 'json' },
+      columns: ['titel', 'kategorie', 'reihenfolge'],
+      schema: {
+        titel: titelMitAdresse('Produktname'),
+        kategorie: text('Kategorie', {
+          pflicht: true,
+          max: 60,
+          beschreibung: 'Gruppiert die Produkte auf der Übersicht, z. B. "Patchkabel LWL". Gleicher Wortlaut wie bei anderen Produkten derselben Gruppe verwenden.',
+        }),
+        reihenfolge: fields.integer({
+          label: 'Reihenfolge',
+          description: 'Bestimmt die Reihenfolge der Kategorien und der Produkte innerhalb einer Kategorie. Kleinere Zahl erscheint zuerst.',
+          defaultValue: 10,
+          validation: { isRequired: true, min: 0, max: 999 },
+        }),
+        beschreibung: langtext('Beschreibung (optional)', {
+          max: 220,
+          beschreibung: 'Kurzer Hinweis, z. B. bei Produkten auf Anfrage ohne Datenblatt.',
+        }),
+        dokument: datei('Datenblatt', 'produkte'),
       },
     }),
   },
