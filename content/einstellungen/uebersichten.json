@@ -14,7 +14,7 @@
     "einleitung": "Eine Auswahl unserer Einsätze für Netzbetreiber, Gemeinden und Unternehmen.",
     "logos": {
       "titel": "Allgemein",
-      "laufschrift": true,
+      "laufschrift": false,
       "darstellung": "weiss",
       "logos": [
         {

@@ -173,7 +173,7 @@ export function logosFeld(o: { label?: string } = {}) {
     titel: text('Titel', { max: 90, beschreibung: 'z. B. "Partner und Mitgliedschaften" oder "Allgemein". Kann leer bleiben.' }),
     laufschrift: fields.checkbox({
       label: 'Als scrollendes Band zeigen',
-      description: 'Ein: Logos laufen ununterbrochen durch (ab 4 Logos empfohlen). Aus: festes Raster wie bisher.',
+      description: 'Ein: Logos laufen ununterbrochen durch (ab 4 Logos empfohlen). Aus: festes Raster, alle Logos auf einen Blick.',
       defaultValue: false,
     }),
     darstellung: fields.select({
