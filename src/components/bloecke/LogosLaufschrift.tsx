@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { cn } from '@/lib/cn';
 import { sauberText } from '@/lib/text';
 
@@ -8,8 +9,10 @@ type Darstellung = 'weiss' | 'farbig';
 /**
  * Scrollendes Logo-Band. Die Darstellung wählt die Redaktion im CMS (Feld "Darstellung des scrollenden Bandes"):
  * - Weiss: alle Logos als weisse Silhouette (Feld "Logo")
- * - Farbe: Logos in Originalfarben auf weissen Kacheln (Feld "Logo in Farbe"), nur Einträge mit Farbversion.
+ * - Farbe: Logos in Originalfarben, ohne Kachel (Feld "Logo in Farbe"), nur Einträge mit Farbversion.
  *   Hat kein Eintrag eine Farbversion, erscheint automatisch die weisse Darstellung.
+ *
+ * Jedes Logo führt zur Referenzen-Übersicht, wo "Unsere Kunden" alle Logos auf einen Blick zeigt.
  *
  * Endlosschlaufe wie auf www.infraone.ch: Die Liste steht zweimal hintereinander und schiebt sich um die halbe
  * Breite nach links (@keyframes laufschrift in globals.css). Die zweite Liste ist für Screenreader unsichtbar.
@@ -27,14 +30,17 @@ export function LogosLaufschrift({ titel, darstellung, logos }: { titel: string;
         const quelle = farbig ? (l.logoFarbig as string) : l.logo;
         return (
           <li key={`${l.name}-${i}`} className="flex h-14 w-36 shrink-0 items-center justify-center lg:h-16 lg:w-44">
-            <Image
-              src={quelle}
-              alt={versteckt ? '' : l.name}
-              width={farbig ? 320 : 180}
-              height={farbig ? 128 : 72}
-              unoptimized={quelle.endsWith('.svg')}
-              className={cn('h-full w-full object-contain', !farbig && 'opacity-80 transition-opacity duration-300 hover:opacity-100')}
-            />
+            <Link href="/referenzen" tabIndex={versteckt ? -1 : undefined} className="flex h-full w-full items-center justify-center">
+              <Image
+                src={quelle}
+                alt={versteckt ? '' : l.name}
+                width={farbig ? 320 : 180}
+                height={farbig ? 128 : 72}
+                // Farbige Logos haben Transparenz: next/image würde sie beim Verkleinern über AVIF opak einfärben.
+                unoptimized={farbig || quelle.endsWith('.svg')}
+                className={cn('h-full w-full object-contain', !farbig && 'opacity-80 transition-opacity duration-300 hover:opacity-100')}
+              />
+            </Link>
           </li>
         );
       })}

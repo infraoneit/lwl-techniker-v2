@@ -35,7 +35,8 @@ function LogosRaster({ daten: d }: { daten: BlockDaten<'logos'> }) {
                 alt={l.name}
                 width={farbig ? 200 : 180}
                 height={farbig ? 80 : 72}
-                unoptimized={quelle.endsWith('.svg')}
+                // Farbige Logos haben Transparenz: next/image würde sie beim Verkleinern über AVIF opak einfärben.
+                unoptimized={farbig || quelle.endsWith('.svg')}
                 className={cn('h-10 w-auto max-w-[160px] object-contain lg:h-12', !farbig && 'opacity-80 transition-opacity duration-300 hover:opacity-100')}
               />
             );

@@ -5,7 +5,7 @@
  * zwei Varianten für das Logo-Band auf der Startseite:
  *
  *   weiss    public/bilder/statisch/logos/<kurzname>.png         reine weisse Silhouette, durchsichtiger Hintergrund
- *   farbig   public/bilder/statisch/logos-farbig/<kurzname>.webp  Originalfarben, zugeschnitten, auf weissem Grund
+ *   farbig   public/bilder/statisch/logos-farbig/<kurzname>.webp  Originalfarben, zugeschnitten, durchsichtiger Hintergrund
  *
  * Hintergrund erkennen: Aus einem schmalen Rand rund um das Bild werden die häufigsten Farben bestimmt.
  * Farben, die nur an wenigen Stellen den Rand berühren (zum Beispiel ein Buchstabe am Bildrand),
@@ -110,11 +110,46 @@ async function weiss(name, pfad) {
 }
 
 async function farbig(name, pfad) {
-  const { data, info } = await sharp(pfad).flatten({ background: '#ffffff' }).removeAlpha().raw().toBuffer({ resolveWithObject: true });
+  const { data, info } = await sharp(pfad).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   const { width: w, height: h } = info;
-  const weich = await sharp(pfad).flatten({ background: '#ffffff' }).removeAlpha().blur(0.7).raw().toBuffer();
-  const { farben, heller } = randFarben(weich, w, h);
-  const nah = abstandZumHintergrund(weich, w, h, farben, heller);
+  let durchsichtig = 0;
+  for (let i = 3; i < data.length; i += 4) if (data[i] < 250) durchsichtig++;
+  const echteTransparenz = durchsichtig / (w * h) > 0.005;
+
+  const aus = Buffer.alloc(w * h * 4);
+  for (let p = 0; p < w * h; p++) {
+    aus[p * 4] = data[p * 4];
+    aus[p * 4 + 1] = data[p * 4 + 1];
+    aus[p * 4 + 2] = data[p * 4 + 2];
+  }
+
+  let nah;
+  if (echteTransparenz) {
+    for (let p = 0; p < w * h; p++) aus[p * 4 + 3] = data[p * 4 + 3];
+    nah = new Float32Array(w * h);
+    for (let p = 0; p < w * h; p++) nah[p] = data[p * 4 + 3] > 10 ? 100 : 0;
+  } else {
+    const weich = await sharp(pfad).flatten({ background: '#ffffff' }).removeAlpha().blur(0.7).raw().toBuffer();
+    const { farben, heller } = randFarben(weich, w, h);
+    nah = abstandZumHintergrund(weich, w, h, farben, heller);
+    const NIEDRIG = 22;
+    const HOCH = 60;
+    for (let p = 0; p < w * h; p++) {
+      const t = Math.max(0, Math.min(1, (nah[p] - NIEDRIG) / (HOCH - NIEDRIG)));
+      aus[p * 4 + 3] = Math.round(t * 255);
+    }
+    // Farbe an halbdurchsichtigen Rändern vom Hintergrund befreien (sonst schimmert er als heller Rand durch),
+    // klassische Entmischung: beobachtete Farbe ist eine Mischung aus Logo und Hintergrund.
+    for (let p = 0; p < w * h; p++) {
+      const a = aus[p * 4 + 3] / 255;
+      if (a <= 0.03 || a >= 0.97) continue;
+      const bg = farben[0];
+      for (let k = 0; k < 3; k++) {
+        const beobachtet = data[p * 4 + k];
+        aus[p * 4 + k] = Math.max(0, Math.min(255, Math.round(bg[k] + (beobachtet - bg[k]) / a)));
+      }
+    }
+  }
 
   // Umriss des Logos aus deutlichen Abweichungen vom Hintergrund
   const zeilen = new Uint32Array(h);
@@ -130,20 +165,6 @@ async function farbig(name, pfad) {
   while (x0 < w - 1 && spalten[x0] < minS) x0++;
   while (x1 > x0 && spalten[x1] < minS) x1--;
 
-  // Bei hellem Hintergrund Verläufe und Rauschen auf reines Weiss ziehen
-  const roh = Buffer.from(data);
-  if (heller) {
-    for (let p = 0; p < w * h; p++) {
-      const a = Math.max(0, Math.min(1, (nah[p] - 6) / 30));
-      if (a >= 1) continue;
-      const px = [data[p * 3], data[p * 3 + 1], data[p * 3 + 2]];
-      let bg = farben[0];
-      let best = Infinity;
-      for (const f of farben) { const d = abstand(px, f); if (d < best) { best = d; bg = f; } }
-      for (let k = 0; k < 3; k++) roh[p * 3 + k] = Math.max(0, Math.min(255, Math.round(px[k] + (1 - a) * (255 - bg[k]))));
-    }
-  }
-
   const bh = y1 - y0 + 1;
   const padY = Math.round(bh * 0.06);
   const padX = Math.round(bh * 0.1);
@@ -151,18 +172,17 @@ async function farbig(name, pfad) {
   const oben = Math.max(0, y0 - padY);
   const rechts = Math.min(w, x1 + 1 + padX);
   const unten = Math.min(h, y1 + 1 + padY);
-  const fuell = heller ? { r: 255, g: 255, b: 255 } : { r: farben[0][0], g: farben[0][1], b: farben[0][2] };
 
   mkdirSync(ZIEL_FARBIG, { recursive: true });
   // Zuschneiden und Rand ergänzen in einem eigenen Schritt, weil sharp beim Verkleinern zuerst skaliert und danach ergänzt
-  const zugeschnitten = await sharp(roh, { raw: { width: w, height: h, channels: 3 } })
+  const zugeschnitten = await sharp(aus, { raw: { width: w, height: h, channels: 4 } })
     .extract({ left: links, top: oben, width: rechts - links, height: unten - oben })
     .extend({
       top: Math.max(0, padY - (y0 - oben)),
       bottom: Math.max(0, padY - (unten - (y1 + 1))),
       left: Math.max(0, padX - (x0 - links)),
       right: Math.max(0, padX - (rechts - (x1 + 1))),
-      background: fuell,
+      background: { r: 0, g: 0, b: 0, alpha: 0 },
     })
     .png({ compressionLevel: 1 })
     .toBuffer();
@@ -170,7 +190,7 @@ async function farbig(name, pfad) {
     .resize({ height: 160 })
     .webp({ quality: 92 })
     .toFile(path.join(ZIEL_FARBIG, `${name}.webp`));
-  console.log(`farbig: ${name} (${heller ? 'heller' : 'farbiger'} Hintergrund)`);
+  console.log(`farbig: ${name} (${echteTransparenz ? 'mit Transparenz' : 'ohne Transparenz'})`);
 }
 
 if (!existsSync(QUELLE)) {
