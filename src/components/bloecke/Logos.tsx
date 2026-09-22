@@ -16,7 +16,7 @@ export function Logos({ daten: d }: { daten: BlockDaten<'logos'> }) {
   return <LogosRaster daten={d} />;
 }
 
-/** Festes Raster ohne Laufband. Weiss zeigt alle Logos als weisse Silhouette, Farbe zeigt sie auf weissen Kacheln. */
+/** Festes Raster ohne Laufband. Weiss zeigt alle Logos als weisse Silhouette, Farbe zeigt sie in Originalfarben, ohne Kachel. */
 function LogosRaster({ daten: d }: { daten: BlockDaten<'logos'> }) {
   const farbige = d.logos.filter((l) => l.logoFarbig);
   const farbig = d.darstellung === 'farbig' && farbige.length > 0;
@@ -26,35 +26,28 @@ function LogosRaster({ daten: d }: { daten: BlockDaten<'logos'> }) {
     <section className="abschnitt-kompakt border-y border-linie">
       <div className="container-seite">
         {d.titel ? <h2 className="mb-10 text-center text-sm font-semibold tracking-[0.14em] text-text-leise uppercase">{sauberText(d.titel)}</h2> : null}
-        <ul className={cn('flex flex-wrap items-center justify-center', farbig ? 'gap-6 lg:gap-8' : 'gap-x-12 gap-y-8 lg:gap-x-16')}>
+        <ul className="flex flex-wrap items-center justify-center gap-x-12 gap-y-8 lg:gap-x-16">
           {liste.map((l, i) => {
             const quelle = farbig ? (l.logoFarbig as string) : l.logo;
             const bild = (
               <Image
                 src={quelle}
                 alt={l.name}
-                width={farbig ? 320 : 180}
-                height={farbig ? 128 : 72}
+                width={farbig ? 200 : 180}
+                height={farbig ? 80 : 72}
                 unoptimized={quelle.endsWith('.svg')}
-                className={cn(
-                  'object-contain transition-opacity duration-300',
-                  farbig ? 'h-full w-full p-2' : 'h-10 w-auto max-w-[160px] opacity-80 hover:opacity-100 lg:h-12'
-                )}
+                className={cn('h-10 w-auto max-w-[160px] object-contain lg:h-12', !farbig && 'opacity-80 transition-opacity duration-300 hover:opacity-100')}
               />
             );
-            const inhalt = l.link ? (
-              <a href={l.link} target={l.link.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer">
-                {bild}
-              </a>
-            ) : (
-              bild
-            );
             return (
-              <li
-                key={`${l.name}-${i}`}
-                className={cn(farbig && 'flex h-14 w-36 shrink-0 items-center justify-center overflow-hidden rounded-[var(--radius-karte)] bg-white lg:h-16 lg:w-44')}
-              >
-                {inhalt}
+              <li key={`${l.name}-${i}`}>
+                {l.link ? (
+                  <a href={l.link} target={l.link.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer">
+                    {bild}
+                  </a>
+                ) : (
+                  bild
+                )}
               </li>
             );
           })}

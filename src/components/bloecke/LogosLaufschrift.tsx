@@ -26,20 +26,14 @@ export function LogosLaufschrift({ titel, darstellung, logos }: { titel: string;
       {liste.map((l, i) => {
         const quelle = farbig ? (l.logoFarbig as string) : l.logo;
         return (
-          <li
-            key={`${l.name}-${i}`}
-            className={cn(
-              'flex h-14 w-36 shrink-0 items-center justify-center lg:h-16 lg:w-44',
-              farbig && 'overflow-hidden rounded-[var(--radius-karte)] bg-white'
-            )}
-          >
+          <li key={`${l.name}-${i}`} className="flex h-14 w-36 shrink-0 items-center justify-center lg:h-16 lg:w-44">
             <Image
               src={quelle}
               alt={versteckt ? '' : l.name}
               width={farbig ? 320 : 180}
               height={farbig ? 128 : 72}
               unoptimized={quelle.endsWith('.svg')}
-              className={cn('h-full w-full object-contain', farbig ? 'p-2' : 'opacity-80 transition-opacity duration-300 hover:opacity-100')}
+              className={cn('h-full w-full object-contain', !farbig && 'opacity-80 transition-opacity duration-300 hover:opacity-100')}
             />
           </li>
         );
