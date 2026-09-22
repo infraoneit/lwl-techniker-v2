@@ -1,3 +1,4 @@
+import { Logos } from '@/components/bloecke/Logos';
 import { Seitenkopf } from '@/components/ui/Seitenkopf';
 import { ReferenzKarte, rasterFuerKacheln } from '@/components/karten/Karten';
 import { holeReferenzen, holeUebersichten } from '@/lib/cms';
@@ -14,6 +15,7 @@ export default async function ReferenzenSeite() {
   return (
     <>
       <Seitenkopf ueberzeile={u.ueberzeile} titel={u.titel} einleitung={u.einleitung} pfad={[{ text: u.titel, href: '/referenzen' }]} />
+      {u.logos.logos.length > 0 ? <Logos daten={u.logos} /> : null}
       <section className="abschnitt">
         {referenzen.length === 0 ? (
           <p className="container-seite einleitung">Die Referenzen werden zurzeit zusammengestellt.</p>

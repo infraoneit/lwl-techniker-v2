@@ -1,5 +1,5 @@
 import { fields } from '@keystatic/core';
-import { alttext, bild, fliesstext, langtext, link, text } from './felder';
+import { alttext, bild, fliesstext, langtext, link, logosFeld, text } from './felder';
 
 /**
  * SEITENBAUKASTEN
@@ -233,40 +233,7 @@ export function seitenBloecke(bildOrdner: string) {
       logos: {
         label: 'Partner und Referenzen (Logos)',
         itemLabel: (p) => p.fields.titel.value || 'Logos',
-        schema: fields.object({
-          titel: text('Titel', { max: 90, beschreibung: 'z. B. "Partner und Mitgliedschaften" oder "Referenzen". Kann leer bleiben.' }),
-          laufschrift: fields.checkbox({
-            label: 'Als scrollendes Band zeigen',
-            description: 'Ein: Logos laufen ununterbrochen durch (ab 4 Logos empfohlen). Aus: festes Raster wie bisher.',
-            defaultValue: false,
-          }),
-          darstellung: fields.select({
-            label: 'Darstellung des scrollenden Bandes',
-            description:
-              'Weiss zeigt alle Logos als weisse Silhouette. Farbe zeigt die Logos in Originalfarben auf weissen Kacheln, nur Logos mit ausgefülltem Feld "Logo in Farbe". Gilt nur, wenn das Band eingeschaltet ist.',
-            options: [
-              { label: 'Weiss', value: 'weiss' },
-              { label: 'Farbe', value: 'farbig' },
-            ],
-            defaultValue: 'weiss',
-          }),
-          logos: fields.array(
-            fields.object({
-              name: text('Name', { pflicht: true, max: 60, beschreibung: 'Wird als Bildbeschreibung verwendet.' }),
-              // Gemeinsame Ordner für alle Logos. Die vorhandenen Dateien liegen dort, und Keystatic erkennt Bilder nur im Ordner des Feldes.
-              logo: bild('Logo', 'statisch/logos', { pflicht: true, hinweis: 'SVG oder PNG mit transparentem Hintergrund, unter 30 KB. Im scrollenden Band als weisse Silhouette, darum weiss oder einfarbig hell einfärben.' }),
-              logoFarbig: bild('Logo in Farbe (optional)', 'statisch/logos-farbig', {
-                hinweis: 'Originalfarben, zugeschnitten auf das Logo, mit weissem Hintergrund, unter 30 KB. Wird nur in der Farbdarstellung des scrollenden Bandes gezeigt.',
-              }),
-              link: link('Link (optional)'),
-            }),
-            {
-              label: 'Logos',
-              itemLabel: (p) => p.fields.name.value || 'Logo',
-              validation: { length: { min: 3, max: 200 } },
-            }
-          ),
-        }),
+        schema: logosFeld(),
       },
 
       kundenstimmen: {

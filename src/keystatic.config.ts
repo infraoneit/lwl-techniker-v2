@@ -1,15 +1,19 @@
 import { collection, config, fields, singleton } from '@keystatic/core';
 import { GITHUB_REPO, KEYSTATIC_MODUS, PROJEKT_NAME } from './site.config';
 import { seitenBloecke } from './keystatic/bloecke';
-import { alttext, bild, fliesstext, langtext, link, seo, text, titelMitAdresse } from './keystatic/felder';
+import { alttext, bild, fliesstext, langtext, link, logosFeld, seo, text, titelMitAdresse } from './keystatic/felder';
 
-/** Titel, Einleitung und SEO für die festen Übersichtsseiten /leistungen, /referenzen und /jobs. */
-function uebersicht(label: string, standardTitel: string) {
+/**
+ * Titel, Einleitung und SEO für die festen Übersichtsseiten /leistungen, /referenzen und /jobs.
+ * `zusatz` ergänzt weitere Felder vor dem SEO-Feld, z. B. das Logo-Band auf /referenzen.
+ */
+function uebersicht<Zusatz extends object = Record<string, never>>(label: string, standardTitel: string, zusatz: Zusatz = {} as Zusatz) {
   return fields.object(
     {
       ueberzeile: text('Überzeile', { max: 60, beschreibung: 'Kleine Zeile über dem Titel. Kann leer bleiben.' }),
       titel: text('Titel', { pflicht: true, max: 90, standard: standardTitel }),
       einleitung: langtext('Einleitung', { max: 400 }),
+      ...zusatz,
       seo: seo(),
     },
     { label }
@@ -159,7 +163,9 @@ export default config({
       format: { data: 'json' },
       schema: {
         leistungen: uebersicht('Seite /leistungen', 'Unsere Leistungen'),
-        referenzen: uebersicht('Seite /referenzen', 'Referenzen'),
+        referenzen: uebersicht('Seite /referenzen', 'Referenzen', {
+          logos: logosFeld({ label: 'Logos aller Kunden ("Allgemein", über den einzelnen Referenzen)' }),
+        }),
         jobs: uebersicht('Seite /jobs', 'Offene Stellen'),
       },
     }),

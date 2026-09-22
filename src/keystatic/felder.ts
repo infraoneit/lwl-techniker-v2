@@ -162,6 +162,52 @@ export function alttext(pflicht = false) {
   });
 }
 
+/**
+ * Logo-Band oder Logo-Raster mit Weiss/Farbe-Umschalter. Wiederverwendet im Block "Partner und
+ * Referenzen (Logos)" für frei gestaltbare Seiten sowie direkt in der Übersicht /referenzen.
+ * Alle Logos liegen in denselben Ordnern statisch/logos und statisch/logos-farbig, unabhängig
+ * davon, wo das Feld eingebunden ist.
+ */
+export function logosFeld(o: { label?: string } = {}) {
+  const felder = {
+    titel: text('Titel', { max: 90, beschreibung: 'z. B. "Partner und Mitgliedschaften" oder "Allgemein". Kann leer bleiben.' }),
+    laufschrift: fields.checkbox({
+      label: 'Als scrollendes Band zeigen',
+      description: 'Ein: Logos laufen ununterbrochen durch (ab 4 Logos empfohlen). Aus: festes Raster wie bisher.',
+      defaultValue: false,
+    }),
+    darstellung: fields.select({
+      label: 'Darstellung des scrollenden Bandes',
+      description:
+        'Weiss zeigt alle Logos als weisse Silhouette. Farbe zeigt die Logos in Originalfarben auf weissen Kacheln, nur Logos mit ausgefülltem Feld "Logo in Farbe". Gilt nur, wenn das Band eingeschaltet ist.',
+      options: [
+        { label: 'Weiss', value: 'weiss' as const },
+        { label: 'Farbe', value: 'farbig' as const },
+      ],
+      defaultValue: 'weiss' as const,
+    }),
+    logos: fields.array(
+      fields.object({
+        name: text('Name', { pflicht: true, max: 60, beschreibung: 'Wird als Bildbeschreibung verwendet.' }),
+        logo: bild('Logo', 'statisch/logos', {
+          pflicht: true,
+          hinweis: 'SVG oder PNG mit transparentem Hintergrund, unter 30 KB. Im scrollenden Band als weisse Silhouette, darum weiss oder einfarbig hell einfärben.',
+        }),
+        logoFarbig: bild('Logo in Farbe (optional)', 'statisch/logos-farbig', {
+          hinweis: 'Originalfarben, zugeschnitten auf das Logo, mit weissem Hintergrund, unter 30 KB. Wird nur in der Farbdarstellung des scrollenden Bandes gezeigt.',
+        }),
+        link: link('Link (optional)'),
+      }),
+      {
+        label: 'Logos',
+        itemLabel: (p) => p.fields.name.value || 'Logo',
+        validation: { length: { min: 3, max: 200 } },
+      }
+    ),
+  };
+  return o.label ? fields.object(felder, { label: o.label }) : fields.object(felder);
+}
+
 /** SEO-Felder für jede Seite und jeden Sammlungseintrag. */
 export function seo() {
   return fields.object(
