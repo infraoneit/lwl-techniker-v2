@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { ArrowRight, ImageOff, MapPin, Clock } from 'lucide-react';
 import type { Job, Leistung, Referenz } from '@/lib/cms';
 import { cn } from '@/lib/cn';
+import { BildOhneBeschnitt } from '@/components/ui/BildOhneBeschnitt';
 import { monatJahr } from '@/lib/datum';
 import { sauberText } from '@/lib/text';
 
@@ -26,7 +27,7 @@ export function ReferenzKarte({ referenz: r, titelEbene = 'h3', sizes = KARTEN_S
     <article data-einblenden className="group relative flex flex-col">
       <div className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius-karte)] bg-flaeche">
         {r.titelbild ? (
-          <Image src={r.titelbild} alt={r.titelbildAlt} fill sizes={sizes} className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]" />
+          <BildOhneBeschnitt src={r.titelbild} alt={r.titelbildAlt} sizes={sizes} zoomBeiHover />
         ) : (
           <span className="absolute inset-0 flex items-center justify-center text-linie" aria-hidden>
             <ImageOff className="size-1/6" strokeWidth={1} />

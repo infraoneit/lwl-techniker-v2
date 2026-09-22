@@ -1,6 +1,6 @@
-import Image from 'next/image';
 import { ImageOff } from 'lucide-react';
 import { notFound } from 'next/navigation';
+import { BildOhneBeschnitt } from '@/components/ui/BildOhneBeschnitt';
 import { Seitenkopf } from '@/components/ui/Seitenkopf';
 import { ReferenzKarte } from '@/components/karten/Karten';
 import { holeReferenz, holeReferenzen, holeUebersichten } from '@/lib/cms';
@@ -52,7 +52,7 @@ export default async function ReferenzSeite({ params }: Props) {
       <div className="container-seite pt-12 lg:pt-16">
         <div className="relative aspect-[16/9] overflow-hidden rounded-[var(--radius-karte)] bg-flaeche lg:aspect-[21/9]">
           {r.titelbild ? (
-            <Image src={r.titelbild} alt={r.titelbildAlt} fill loading="eager" fetchPriority="high" sizes="(min-width: 2400px) 2304px, 100vw" className="object-cover" />
+            <BildOhneBeschnitt src={r.titelbild} alt={r.titelbildAlt} sizes="(min-width: 2400px) 2304px, 100vw" prioritaet />
           ) : (
             <span className="absolute inset-0 flex items-center justify-center text-linie" aria-hidden>
               <ImageOff className="size-1/6" strokeWidth={1} />
@@ -84,7 +84,7 @@ export default async function ReferenzSeite({ params }: Props) {
           <div className="container-seite grid gap-6 sm:grid-cols-2 lg:gap-8 xl:grid-cols-3">
             {r.galerie.map((b, i) => (
               <figure key={i} className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius-karte)] bg-flaeche">
-                <Image src={b.bild} alt={b.alt} fill sizes="(min-width: 1280px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover" />
+                <BildOhneBeschnitt src={b.bild} alt={b.alt} sizes="(min-width: 1280px) 33vw, (min-width: 640px) 50vw, 100vw" />
               </figure>
             ))}
           </div>
