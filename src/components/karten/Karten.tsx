@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, MapPin, Clock } from 'lucide-react';
+import { ArrowRight, ImageOff, MapPin, Clock } from 'lucide-react';
 import type { Job, Leistung, Referenz } from '@/lib/cms';
 import { cn } from '@/lib/cn';
 import { monatJahr } from '@/lib/datum';
@@ -25,7 +25,13 @@ export function ReferenzKarte({ referenz: r, titelEbene = 'h3', sizes = KARTEN_S
   return (
     <article data-einblenden className="group relative flex flex-col">
       <div className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius-karte)] bg-flaeche">
-        <Image src={r.titelbild} alt={r.titelbildAlt} fill sizes={sizes} className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]" />
+        {r.titelbild ? (
+          <Image src={r.titelbild} alt={r.titelbildAlt} fill sizes={sizes} className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]" />
+        ) : (
+          <span className="absolute inset-0 flex items-center justify-center text-linie" aria-hidden>
+            <ImageOff className="size-1/6" strokeWidth={1} />
+          </span>
+        )}
       </div>
       <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-text-leise">
         {r.kategorie ? <span className="text-xs font-medium tracking-[0.2em] text-marke uppercase">{r.kategorie}</span> : null}

@@ -253,8 +253,10 @@ export default config({
         ort: text('Ort', { max: 60 }),
         kategorie: text('Kategorie', { max: 40, beschreibung: 'z. B. Neubau, Umbau, Service' }),
         kurzbeschreibung: langtext('Kurzbeschreibung', { pflicht: true, max: 220 }),
-        titelbild: bild('Titelbild', 'referenzen', { pflicht: true }),
-        titelbildAlt: alttext(true),
+        titelbild: bild('Titelbild', 'referenzen', {
+          hinweis: 'JPG oder WebP, idealerweise 2400 px breit und unter 500 KB. Ohne Bild zeigt die Seite einen Platzhalter.',
+        }),
+        titelbildAlt: alttext(),
         galerie: fields.array(
           fields.object({
             bild: bild('Bild', 'referenzen', { pflicht: true }),

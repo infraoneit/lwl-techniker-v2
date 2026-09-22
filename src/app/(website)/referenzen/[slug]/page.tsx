@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { ImageOff } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import { Seitenkopf } from '@/components/ui/Seitenkopf';
 import { ReferenzKarte } from '@/components/karten/Karten';
@@ -50,7 +51,13 @@ export default async function ReferenzSeite({ params }: Props) {
 
       <div className="container-seite pt-12 lg:pt-16">
         <div className="relative aspect-[16/9] overflow-hidden rounded-[var(--radius-karte)] bg-flaeche lg:aspect-[21/9]">
-          <Image src={r.titelbild} alt={r.titelbildAlt} fill loading="eager" fetchPriority="high" sizes="(min-width: 2400px) 2304px, 100vw" className="object-cover" />
+          {r.titelbild ? (
+            <Image src={r.titelbild} alt={r.titelbildAlt} fill loading="eager" fetchPriority="high" sizes="(min-width: 2400px) 2304px, 100vw" className="object-cover" />
+          ) : (
+            <span className="absolute inset-0 flex items-center justify-center text-linie" aria-hidden>
+              <ImageOff className="size-1/6" strokeWidth={1} />
+            </span>
+          )}
         </div>
       </div>
 
