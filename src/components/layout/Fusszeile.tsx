@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Einstellungen, Navigation } from '@/lib/cms';
-import { sauberText } from '@/lib/text';
+import { sauberText, whatsappLink } from '@/lib/text';
 
 const SOCIAL_NAMEN: Record<string, string> = {
   linkedin: 'LinkedIn',
@@ -45,6 +45,13 @@ export function Fusszeile({ einstellungen: e, navigation: n }: { einstellungen: 
                   {e.email}
                 </a>
               </p>
+              {e.whatsapp ? (
+                <p>
+                  <a href={whatsappLink(e.whatsapp)} target="_blank" rel="noopener noreferrer" className="inline-block py-1 hover:text-marke">
+                    WhatsApp
+                  </a>
+                </p>
+              ) : null}
             </address>
           </div>
 

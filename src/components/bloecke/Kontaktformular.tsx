@@ -1,7 +1,7 @@
-import { Clock, Mail, MapPin, Phone } from 'lucide-react';
+import { Clock, Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
 import { NetlifyFormular } from '@/components/formulare/NetlifyFormular';
 import type { Einstellungen } from '@/lib/cms';
-import { absaetze, sauberText } from '@/lib/text';
+import { absaetze, sauberText, whatsappLink } from '@/lib/text';
 import type { BlockDaten } from './BlockRenderer';
 
 export function Kontaktformular({ daten: d, einstellungen: e }: { daten: BlockDaten<'kontaktformular'>; einstellungen: Einstellungen }) {
@@ -49,6 +49,14 @@ export function Kontaktformular({ daten: d, einstellungen: e }: { daten: BlockDa
                   {e.email}
                 </a>
               </li>
+              {e.whatsapp ? (
+                <li className="flex gap-4">
+                  <MessageCircle className="mt-1 size-5 shrink-0 text-marke" aria-hidden />
+                  <a href={whatsappLink(e.whatsapp)} target="_blank" rel="noopener noreferrer" className="inline-block py-1 hover:text-marke">
+                    WhatsApp
+                  </a>
+                </li>
+              ) : null}
               {e.oeffnungszeiten.length > 0 ? (
                 <li className="flex gap-4">
                   <Clock className="mt-1 size-5 shrink-0 text-marke" aria-hidden />

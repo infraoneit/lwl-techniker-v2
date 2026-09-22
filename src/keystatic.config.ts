@@ -51,6 +51,10 @@ export default config({
         logo: bild('Logo für hellen Hintergrund', 'firma', { hinweis: 'SVG, sonst PNG mit transparentem Hintergrund, unter 30 KB.' }),
         logohell: bild('Logo für dunklen Hintergrund', 'firma', { hinweis: 'Helle Version für die Fusszeile. SVG, sonst PNG mit transparentem Hintergrund.' }),
         telefon: text('Telefon', { pflicht: true, max: 30, beschreibung: 'Internationales Format, z. B. +41 71 000 00 00' }),
+        whatsapp: text('WhatsApp-Nummer (optional)', {
+          max: 30,
+          beschreibung: 'Internationales Format, z. B. +41 71 000 00 00. Leer lassen, dann erscheint kein WhatsApp-Knopf.',
+        }),
         email: fields.text({
           label: 'E-Mail',
           validation: {

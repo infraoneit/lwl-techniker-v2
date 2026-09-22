@@ -59,3 +59,8 @@ export function absaetze(wert: string | null | undefined): string[] {
     .map((a) => a.trim())
     .filter(Boolean);
 }
+
+/** wa.me erwartet nur Ziffern (Landesvorwahl ohne Plus, keine Leerzeichen). */
+export function whatsappLink(nummer: string): string {
+  return `https://wa.me/${nummer.replace(/\D/g, '')}`;
+}
