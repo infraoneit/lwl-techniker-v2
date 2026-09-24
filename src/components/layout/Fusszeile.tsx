@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import type { Einstellungen, Navigation } from '@/lib/cms';
+import { MarkenLogo } from '@/components/ui/MarkenLogo';
 import { sauberText, whatsappLink } from '@/lib/text';
 
 const SOCIAL_NAMEN: Record<string, string> = {
@@ -19,8 +19,8 @@ export function Fusszeile({ einstellungen: e, navigation: n }: { einstellungen: 
       <div className="container-seite abschnitt">
         <div className="grid gap-12 md:grid-cols-2 xl:grid-cols-[1.4fr_1fr_1fr_1fr] xl:gap-16">
           <div className="max-w-md">
-            {e.logohell ? (
-              <Image src={e.logohell} alt={e.firmenname} width={220} height={92} unoptimized={e.logohell.endsWith('.svg')} className="h-16 w-auto" />
+            {e.logohell || e.logo ? (
+              <MarkenLogo logoHell={e.logohell ?? null} logoDunkel={e.logo ?? null} alt={e.firmenname} width={220} height={92} className="h-16 w-auto" />
             ) : (
               <p className="font-titel text-xl font-bold tracking-[0.06em] uppercase">{e.firmenname}</p>
             )}
@@ -85,7 +85,7 @@ export function Fusszeile({ einstellungen: e, navigation: n }: { einstellungen: 
           ) : null}
         </div>
 
-        <div className="mt-16 flex flex-col gap-6 border-t border-linie pt-6 text-[0.65rem] tracking-[0.22em] text-text-leise uppercase md:flex-row md:items-center md:justify-between">
+        <div className="mt-16 flex flex-col gap-6 border-t border-linie pt-6 text-xs tracking-[0.18em] text-text-leise uppercase md:flex-row md:items-center md:justify-between">
           <p>
             © {jahr} {e.firmenname}, {e.ort}
           </p>

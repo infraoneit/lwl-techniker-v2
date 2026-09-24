@@ -14,6 +14,6 @@ export const schriftText = Exo_2({
 export const schriftUeberschrift = Poppins({
   subsets: ['latin'],
   variable: '--font-ueberschrift',
-  weight: ['500', '600', '700'],
+  weight: ['600', '700'],
   display: 'swap',
 });

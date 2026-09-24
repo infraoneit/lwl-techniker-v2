@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { holeAktivesTheme, THEMA_GEAENDERT } from '@/lib/theme';
 
 /**
  * Faserbündel: rund 30 dünne, leicht verdrillte Fasern laufen als Bündel in einer weichen Kurve
@@ -31,6 +32,17 @@ const FARBEN = ['240,168,0', '240,200,0', '255,150,20', '240,180,40', '250,220,9
 
 const SCHRITT = 6;
 
+/** Liest eine CSS-Farbvariable (z. B. "--color-grund") und gibt sie als "r,g,b" für rgba() zurück. */
+function leseFarbvariable(name: string, ersatz: string): string {
+  const wert = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  const bereinigt = wert.replace('#', '');
+  if (bereinigt.length !== 6) return ersatz;
+  const r = parseInt(bereinigt.substring(0, 2), 16);
+  const g = parseInt(bereinigt.substring(2, 4), 16);
+  const b = parseInt(bereinigt.substring(4, 6), 16);
+  return Number.isNaN(r) || Number.isNaN(g) || Number.isNaN(b) ? ersatz : `${r},${g},${b}`;
+}
+
 export function Faserwellen() {
   const ref = useRef<HTMLCanvasElement>(null);
 
@@ -48,6 +60,10 @@ export function Faserwellen() {
     let naechsterSchub = 0;
     let anfrage = 0;
     let aktiv = true;
+    // Erscheinungsbild: Im hellen Modus verblasst das Bündel zu Weiss statt zu Nachtblau, und die
+    // Lichtpulse leuchten normal statt additiv (additiv verschwindet auf hellem Grund).
+    let hell = holeAktivesTheme() === 'hell';
+    let grundFarbe = leseFarbvariable('--color-grund', hell ? '244,245,250' : '8,17,46');
 
     const zufall = (min: number, max: number) => min + Math.random() * (max - min);
 
@@ -138,14 +154,19 @@ export function Faserwellen() {
           if (x === 0) ctx.moveTo(x, y);
           else ctx.lineTo(x, y);
         }
-        ctx.strokeStyle = `rgba(${f.farbe},${f.alpha * (0.75 + 0.25 * atem)})`;
+        const hellFaktor = hell ? 1.5 : 1;
+        ctx.strokeStyle = `rgba(${f.farbe},${Math.min(1, f.alpha * hellFaktor * (0.75 + 0.25 * atem))})`;
         ctx.lineWidth = f.breite;
         ctx.stroke();
       }
 
-      // Lichtpulse: Schweif entlang der Faser und leuchtender Kopf, additiv gemischt
+      // Lichtpulse: Schweif entlang der Faser und leuchtender Kopf.
+      // Additiv gemischt im dunklen Modus (leuchtet auf Nachtblau), normal gemischt im hellen Modus
+      // (additiv verschwindet auf hellem Grund) mit kräftigerer Bernstein-Farbe statt Fast-Weiss.
       if (bewegt && t >= naechsterSchub) schub();
-      ctx.globalCompositeOperation = 'lighter';
+      ctx.globalCompositeOperation = hell ? 'source-over' : 'lighter';
+      const schweifKopf = hell ? '200,120,0' : '255,230,120';
+      const glutKern = hell ? '190,115,0' : '255,250,220';
       for (const p of pulse) {
         if (bewegt) p.pos += p.tempo;
         const f = fasern[p.faser];
@@ -163,7 +184,7 @@ export function Faserwellen() {
         ctx.lineTo(Math.min(breite, kopfX), faserY(f, Math.min(breite, kopfX)));
         const schweif = ctx.createLinearGradient(startX, 0, kopfX, 0);
         schweif.addColorStop(0, 'rgba(240,200,0,0)');
-        schweif.addColorStop(1, `rgba(255,230,120,${0.55 * p.staerke})`);
+        schweif.addColorStop(1, `rgba(${schweifKopf},${0.55 * p.staerke})`);
         ctx.strokeStyle = schweif;
         ctx.lineWidth = 1.8;
         ctx.stroke();
@@ -171,7 +192,7 @@ export function Faserwellen() {
         const kopfY = faserY(f, kopfX);
         const radius = 9 + 7 * p.staerke;
         const glut = ctx.createRadialGradient(kopfX, kopfY, 0, kopfX, kopfY, radius);
-        glut.addColorStop(0, `rgba(255,250,220,${0.9 * p.staerke})`);
+        glut.addColorStop(0, `rgba(${glutKern},${0.9 * p.staerke})`);
         glut.addColorStop(0.35, `rgba(240,200,0,${0.5 * p.staerke})`);
         glut.addColorStop(1, 'rgba(240,168,0,0)');
         ctx.fillStyle = glut;
@@ -182,12 +203,12 @@ export function Faserwellen() {
       ctx.globalCompositeOperation = 'source-over';
       pulse = pulse.filter((p) => p.pos < 1.12);
 
-      // Verlauf von oben, damit Text und Navigation lesbar bleiben
+      // Verlauf von oben zur Seitenfläche, damit Text und Navigation lesbar bleiben
       const g = ctx.createLinearGradient(0, 0, 0, hoehe);
-      g.addColorStop(0, 'rgba(8,17,46,0.97)');
-      g.addColorStop(0.35, 'rgba(8,17,46,0.7)');
-      g.addColorStop(0.7, 'rgba(8,17,46,0.35)');
-      g.addColorStop(1, 'rgba(8,17,46,0.08)');
+      g.addColorStop(0, `rgba(${grundFarbe},0.97)`);
+      g.addColorStop(0.35, `rgba(${grundFarbe},0.7)`);
+      g.addColorStop(0.7, `rgba(${grundFarbe},0.35)`);
+      g.addColorStop(1, `rgba(${grundFarbe},0.08)`);
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, breite, hoehe);
     };
@@ -204,6 +225,13 @@ export function Faserwellen() {
       if (aktiv) anfrage = requestAnimationFrame(schleife);
     };
 
+    /** Beim Wechsel des Erscheinungsbilds (Schalter oder Geräteeinstellung) Farben neu lesen und, im ruhigen Standbild, sofort neu zeichnen */
+    const themenwechsel = () => {
+      hell = holeAktivesTheme() === 'hell';
+      grundFarbe = leseFarbvariable('--color-grund', hell ? '244,245,250' : '8,17,46');
+      if (ruhig) zeichnen(false);
+    };
+
     groesse();
     if (ruhig) {
       // Ruhiges Standbild mit einem Lichtschub mitten im Bündel
@@ -213,13 +241,18 @@ export function Faserwellen() {
       anfrage = requestAnimationFrame(schleife);
     }
 
+    const geraet = window.matchMedia('(prefers-color-scheme: light)');
     window.addEventListener('resize', groesse);
     document.addEventListener('visibilitychange', sichtbarkeit);
+    document.addEventListener(THEMA_GEAENDERT, themenwechsel);
+    geraet.addEventListener('change', themenwechsel);
     return () => {
       aktiv = false;
       cancelAnimationFrame(anfrage);
       window.removeEventListener('resize', groesse);
       document.removeEventListener('visibilitychange', sichtbarkeit);
+      document.removeEventListener(THEMA_GEAENDERT, themenwechsel);
+      geraet.removeEventListener('change', themenwechsel);
     };
   }, []);
 

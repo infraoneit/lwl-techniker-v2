@@ -2,29 +2,35 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import { cn } from '@/lib/cn';
+import { ThemeSchalter } from '@/components/ui/ThemeSchalter';
+import { MarkenLogo } from '@/components/ui/MarkenLogo';
 
 type Unterpunkt = { text: string; link: string; beschreibung?: string };
 type Punkt = { text: string; link: string; unterpunkte: readonly Unterpunkt[] };
 
 type Props = {
   firmenname: string;
-  logo: string | null;
+  /** Helle Logovariante, für die dunkle Pille im dunklen Erscheinungsbild */
+  logoHell: string | null;
+  /** Dunkle Logovariante, für die helle Pille im hellen Erscheinungsbild */
+  logoDunkel: string | null;
   telefon: string;
   menue: readonly Punkt[];
   knopf: { text?: string; link?: string };
 };
 
 /**
- * Schwebende Pill-Navigation aus dem Entwurf (mit der hellen Logovariante, weil die Pille dunkel ist): fest oben in der Mitte, dunkel und leicht durchscheinend,
- * Menüpunkte in Versalien, Knopf im Bernstein-Verlauf. Untermenüs klappen als dunkle Tafel auf.
+ * Schwebende Pill-Navigation aus dem Entwurf: fest oben in der Mitte, leicht durchscheinend,
+ * Menüpunkte in Versalien, Knopf im Bernstein-Verlauf. Untermenüs klappen als Tafel auf.
  * Auf dem Handy wird die Pille so breit wie der Bildschirm, das Menü öffnet als Vollbild.
  * Tastatur: Escape schliesst, Fokus springt ins Menü und zurück, geschlossen ist das Menü inert.
+ * Logo: Die Pille ist im dunklen Erscheinungsbild dunkel und im hellen Erscheinungsbild hell, darum
+ * wechselt auch das Logo passend mit (helle Variante auf dunkel, dunkle Variante auf hell).
  */
-export function Kopfzeile({ firmenname, logo, telefon, menue, knopf }: Props) {
+export function Kopfzeile({ firmenname, logoHell, logoDunkel, telefon, menue, knopf }: Props) {
   const pfad = usePathname();
   const [offen, setOffen] = useState(false);
   const umschalter = useRef<HTMLButtonElement>(null);
@@ -34,9 +40,12 @@ export function Kopfzeile({ firmenname, logo, telefon, menue, knopf }: Props) {
   const [untermenue, setUntermenue] = useState<number | null>(null);
   /** Mit Escape geschlossenes Untermenü, bleibt verborgen bis die Maus den Menüpunkt verlässt */
   const [verborgen, setVerborgen] = useState<number | null>(null);
+  /** Im mobilen Vollbildmenü eingeklapptes Untermenü, damit lange Listen (z. B. Leistungen) nicht den Knopf und die Telefonnummer verdrängen */
+  const [mobilesUntermenue, setMobilesUntermenue] = useState<number | null>(null);
 
   const schliessen = useCallback(() => {
     setOffen(false);
+    setMobilesUntermenue(null);
     umschalter.current?.focus();
   }, []);
 
@@ -46,6 +55,7 @@ export function Kopfzeile({ firmenname, logo, telefon, menue, knopf }: Props) {
     setLetzterPfad(pfad);
     setOffen(false);
     setUntermenue(null);
+    setMobilesUntermenue(null);
   }
 
   // Untermenü am Desktop: Escape und Klick ausserhalb schliessen
@@ -75,7 +85,10 @@ export function Kopfzeile({ firmenname, logo, telefon, menue, knopf }: Props) {
   useEffect(() => {
     const breit = window.matchMedia('(min-width: 1024px)');
     const pruefen = () => {
-      if (breit.matches) setOffen(false);
+      if (breit.matches) {
+        setOffen(false);
+        setMobilesUntermenue(null);
+      }
     };
     breit.addEventListener('change', pruefen);
     return () => breit.removeEventListener('change', pruefen);
@@ -124,7 +137,7 @@ export function Kopfzeile({ firmenname, logo, telefon, menue, knopf }: Props) {
         </a>
         <div
           className={cn(
-            'flex items-center justify-between gap-6 rounded-full border border-marke/20 bg-flaeche-dunkel/90 px-4 py-2 whitespace-nowrap backdrop-blur-xl transition-[border-color,box-shadow] duration-300 hover:border-marke/35 hover:shadow-[0_0_28px_rgba(240,168,0,0.06)] lg:justify-start lg:px-5 lg:py-2.5 3xl:px-7 3xl:py-3.5'
+            'flex items-center justify-between gap-6 rounded-full border border-marke/20 bg-flaeche-dunkel/90 px-4 py-2 whitespace-nowrap backdrop-blur-xl transition-colors duration-300 hover:border-marke/35 lg:justify-start lg:px-5 lg:py-2.5 3xl:px-7 3xl:py-3.5'
           )}
         >
           <Link
@@ -138,8 +151,8 @@ export function Kopfzeile({ firmenname, logo, telefon, menue, knopf }: Props) {
               window.scrollTo({ top: 0 });
             }}
           >
-            {logo ? (
-              <Image src={logo} alt={firmenname} width={240} height={100} loading="eager" unoptimized={logo.endsWith('.svg')} className="h-9 w-auto lg:h-11 3xl:h-14" />
+            {logoHell || logoDunkel ? (
+              <MarkenLogo logoHell={logoHell} logoDunkel={logoDunkel} alt={firmenname} width={240} height={100} eager className="h-9 w-auto lg:h-11 3xl:h-14" />
             ) : (
               <span className="font-titel text-base font-bold tracking-[0.06em] uppercase">{firmenname}</span>
             )}
@@ -232,23 +245,27 @@ export function Kopfzeile({ firmenname, logo, telefon, menue, knopf }: Props) {
           {hatKnopf ? (
             <Link
               href={knopf.link!}
-              className="hidden items-center rounded-full bg-gradient-to-r from-marke to-marke-hell px-5 py-2 font-titel text-[0.7rem] font-semibold tracking-[0.18em] text-text-dunkel uppercase shadow-[0_0_16px_rgba(240,168,0,0.25)] transition-opacity hover:opacity-85 lg:inline-flex 3xl:px-6 3xl:text-xs"
+              className="hidden items-center rounded-full bg-gradient-to-r from-[#f0a800] to-[#f0d200] px-5 py-2 font-titel text-[0.7rem] font-semibold tracking-[0.18em] text-text-dunkel uppercase shadow-[0_0_16px_rgba(240,168,0,0.25)] transition-opacity hover:opacity-85 lg:inline-flex 3xl:px-6 3xl:text-xs"
             >
               {knopf.text}
             </Link>
           ) : null}
 
-          <button
-            ref={umschalter}
-            type="button"
-            className="inline-flex size-10 items-center justify-center rounded-full border border-marke/20 text-marke lg:hidden"
-            onClick={() => (offen ? schliessen() : setOffen(true))}
-            aria-expanded={offen}
-            aria-controls="mobiles-menue"
-            aria-label={offen ? 'Menü schliessen' : 'Menü öffnen'}
-          >
-            {offen ? <X className="size-5" aria-hidden /> : <Menu className="size-5" aria-hidden />}
-          </button>
+          <div className="flex items-center gap-1">
+            <ThemeSchalter />
+
+            <button
+              ref={umschalter}
+              type="button"
+              className="inline-flex size-10 items-center justify-center rounded-full border border-marke/20 text-marke lg:hidden"
+              onClick={() => (offen ? schliessen() : setOffen(true))}
+              aria-expanded={offen}
+              aria-controls="mobiles-menue"
+              aria-label={offen ? 'Menü schliessen' : 'Menü öffnen'}
+            >
+              {offen ? <X className="size-5" aria-hidden /> : <Menu className="size-5" aria-hidden />}
+            </button>
+          </div>
         </div>
       </header>
 
@@ -273,20 +290,34 @@ export function Kopfzeile({ firmenname, logo, telefon, menue, knopf }: Props) {
                 <Link
                   href={punkt.link}
                   onClick={() => setOffen(false)}
-                  className={cn('block py-3 font-titel text-2xl tracking-[0.2em] text-text-leise uppercase hover:text-marke', istAktiv(punkt.link) && 'text-marke')}
+                  className={cn('block py-3 font-titel text-2xl font-semibold tracking-[0.2em] text-text-leise uppercase hover:text-marke', istAktiv(punkt.link) && 'text-marke')}
                 >
                   {punkt.text}
                 </Link>
                 {punkt.unterpunkte.length > 0 ? (
-                  <ul className="mb-4 space-y-1 border-l border-linie pl-4">
-                    {punkt.unterpunkte.map((u) => (
-                      <li key={u.link}>
-                        <Link href={u.link} onClick={() => setOffen(false)} className="block py-2 text-base text-text-leise hover:text-text">
-                          {u.text}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="mb-4 border-l border-linie pl-4">
+                    <button
+                      type="button"
+                      className="flex items-center gap-2 py-2 text-sm font-medium tracking-[0.14em] text-text-leise uppercase hover:text-text"
+                      aria-expanded={mobilesUntermenue === i}
+                      aria-controls={`mobiles-untermenue-${i}`}
+                      onClick={() => setMobilesUntermenue(mobilesUntermenue === i ? null : i)}
+                    >
+                      <ChevronDown className={cn('size-4 transition-transform', mobilesUntermenue === i && 'rotate-180')} aria-hidden />
+                      {mobilesUntermenue === i ? 'Weniger anzeigen' : 'Alle anzeigen'}
+                    </button>
+                    {mobilesUntermenue === i ? (
+                      <ul id={`mobiles-untermenue-${i}`} className="space-y-1 pb-2">
+                        {punkt.unterpunkte.map((u) => (
+                          <li key={u.link}>
+                            <Link href={u.link} onClick={() => setOffen(false)} className="block py-2 text-base text-text-leise hover:text-text">
+                              {u.text}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
+                  </div>
                 ) : null}
               </li>
             ))}

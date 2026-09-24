@@ -10,25 +10,23 @@
  * Breiten, Abstände und Klassen der InfraOne-Vorlage bleiben erhalten (docs/08-design-und-qualitaet.md).
  */
 
-@theme {
-  /* Markenfarben: Bernstein aus dem Logo. Kontrast Bernstein auf Nachtblau 9.6 zu 1, dunkler Text auf Bernstein 11 zu 1 */
-  --color-marke: #f0a800;
-  --color-marke-dunkel: #d99700;
-  --color-marke-hell: #f0d200;
-
-  /* Flächen und Text: Nachtblau in drei Stufen */
-  --color-grund: #08112e;
-  --color-flaeche: #0f1a40;
-  --color-flaeche-dunkel: #060d22;
-  --color-flaeche-dunkel-2: #0f1a40;
-  --color-blau: #1e2d78;
-  --color-text: #e8e4f8;
-  --color-text-leise: #aaa7c8;
-  --color-text-hell: #e8e4f8;
-  --color-text-hell-leise: #aaa7c8;
-  --color-text-dunkel: #060d22;
-  --color-linie: #1e2d78;
-  --color-linie-dunkel: #1e2d78;
+@theme inline {
+  /* Farben zeigen auf die Variablen weiter unten, damit der Lightmodus sie zur Laufzeit umschalten kann */
+  --color-marke: var(--c-marke);
+  --color-marke-dunkel: var(--c-marke-dunkel);
+  --color-marke-hell: var(--c-marke-hell);
+  --color-grund: var(--c-grund);
+  --color-flaeche: var(--c-flaeche);
+  --color-flaeche-dunkel: var(--c-flaeche-dunkel);
+  --color-flaeche-dunkel-2: var(--c-flaeche-dunkel-2);
+  --color-blau: var(--c-blau);
+  --color-text: var(--c-text);
+  --color-text-leise: var(--c-text-leise);
+  --color-text-hell: var(--c-text-hell);
+  --color-text-hell-leise: var(--c-text-hell-leise);
+  --color-text-dunkel: var(--c-text-dunkel);
+  --color-linie: var(--c-linie);
+  --color-linie-dunkel: var(--c-linie-dunkel);
 
   /* Zusätzlicher Breakpoint für sehr breite Bildschirme (2200 px). In rem, damit er richtig nach 2xl sortiert wird */
   --breakpoint-3xl: 137.5rem;
@@ -55,6 +53,69 @@
   }
 }
 
+/*
+ * FARBWERTE FÜR DEN LIGHTMODUS
+ * Dunkel ist der Standard (abgenommenes Design). Hell greift automatisch bei Geräteeinstellung
+ * "hell" (system.ts liest das über prefers-color-scheme) oder wenn die Kundschaft über den Schalter
+ * in der Kopfzeile manuell "hell" wählt (data-theme="hell" auf <html>, siehe src/lib/theme.ts).
+ * --color-text-hell/-leise und --color-text-dunkel bleiben in beiden Erscheinungsbildern fest: Sie
+ * stehen auf Fotos oder auf dem festen Bernstein der Knöpfe, nicht auf der wechselnden Seitenfläche.
+ * .knopf-primaer und der Kontakt-Knopf im Header nutzen ebenfalls feste Bernstein-Werte statt dieser
+ * Variablen, damit Knöpfe in beiden Erscheinungsbildern gleich kräftig und lesbar bleiben.
+ */
+:root {
+  /* Dunkel (Standard): Kontrast Bernstein auf Nachtblau 9.6 zu 1, dunkler Text auf Bernstein 11 zu 1 */
+  --c-marke: #f0a800;
+  --c-marke-dunkel: #d99700;
+  --c-marke-hell: #f0d200;
+  --c-grund: #08112e;
+  --c-flaeche: #0f1a40;
+  --c-flaeche-dunkel: #060d22;
+  --c-flaeche-dunkel-2: #0f1a40;
+  --c-blau: #1e2d78;
+  --c-text: #e8e4f8;
+  --c-text-leise: #aaa7c8;
+  --c-text-hell: #e8e4f8;
+  --c-text-hell-leise: #aaa7c8;
+  --c-text-dunkel: #060d22;
+  --c-linie: #1e2d78;
+  --c-linie-dunkel: #1e2d78;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dunkel']) {
+    /* Hell, Geräteeinstellung: Bernstein auf Weiss 5.1 zu 1, Fliesstext auf Weiss 15.6 zu 1 */
+    --c-marke: #996300;
+    --c-marke-dunkel: #663f00;
+    --c-marke-hell: #7a4f00;
+    --c-grund: #f4f5fa;
+    --c-flaeche: #ffffff;
+    --c-flaeche-dunkel: #e9ebf3;
+    --c-flaeche-dunkel-2: #e9ebf3;
+    --c-blau: #33468f;
+    --c-text: #0c1433;
+    --c-text-leise: #565e7e;
+    --c-linie: #dcdfec;
+    --c-linie-dunkel: #dcdfec;
+  }
+}
+
+:root[data-theme='hell'] {
+  /* Hell, manuell über den Schalter gewählt: gleiche Werte wie oben */
+  --c-marke: #996300;
+  --c-marke-dunkel: #663f00;
+  --c-marke-hell: #7a4f00;
+  --c-grund: #f4f5fa;
+  --c-flaeche: #ffffff;
+  --c-flaeche-dunkel: #e9ebf3;
+  --c-flaeche-dunkel-2: #e9ebf3;
+  --c-blau: #33468f;
+  --c-text: #0c1433;
+  --c-text-leise: #565e7e;
+  --c-linie: #dcdfec;
+  --c-linie-dunkel: #dcdfec;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -79,7 +140,7 @@
     position: fixed;
     inset: 0;
     z-index: -20;
-    background-image: radial-gradient(circle, rgb(30 45 120 / 0.5) 1px, transparent 1px);
+    background-image: radial-gradient(circle, color-mix(in srgb, var(--color-linie) 50%, transparent) 1px, transparent 1px);
     background-size: 38px 38px;
     pointer-events: none;
   }
@@ -284,6 +345,11 @@
     line-height: 1.6;
   }
 
+  /* Kompakter Fliesstext in Zeilen und Karten (zwischen text-sm und dem Standardtext), z. B. Leistungen-Liste, Ablauf, Referenzen */
+  .text-kompakt {
+    @apply text-[0.95rem] leading-7 text-text-leise;
+  }
+
   /* Konturschrift und Farbverlauf für einzelne Wörter in Titeln */
   .kontur {
     color: transparent;
@@ -300,7 +366,8 @@
   /* Knöpfe: Bernstein-Verlauf mit abgeschnittener Ecke (primär), Geisterknopf (sekundär und hell) */
   .knopf-primaer {
     @apply inline-flex min-h-12 items-center justify-center gap-3 px-7 py-3 font-titel text-sm font-bold tracking-[0.18em] text-text-dunkel uppercase transition-opacity duration-200 hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-60 lg:min-h-14 lg:px-9;
-    background: linear-gradient(100deg, var(--color-marke), var(--color-marke-hell));
+    /* Feste, helle Bernstein-Werte statt der Variablen: Der Knopf bleibt in beiden Erscheinungsbildern gleich kräftig */
+    background: linear-gradient(100deg, #f0a800, #f0d200);
     clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
     box-shadow: 0 0 24px rgb(240 168 0 / 0.22);
   }

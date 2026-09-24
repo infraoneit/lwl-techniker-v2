@@ -44,7 +44,7 @@ export default async function WebsiteLayout({ children }: { children: React.Reac
 
   return (
     <>
-      <Kopfzeile firmenname={e.firmenname} logo={e.logohell ?? e.logo} telefon={e.telefon} menue={n.hauptmenue} knopf={n.knopf} />
+      <Kopfzeile firmenname={e.firmenname} logoHell={e.logohell ?? null} logoDunkel={e.logo ?? null} telefon={e.telefon} menue={n.hauptmenue} knopf={n.knopf} />
       {/* Faserwellen liegen fest hinter der ganzen Seite, der Startbereich der Startseite füllt den Bildschirm */}
       <Faserwellen />
       <main id="inhalt" className="pt-24 lg:pt-28">

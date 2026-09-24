@@ -95,18 +95,18 @@ export default async function JobSeite({ params }: Props) {
       <section className="abschnitt">
         <div className="container-seite grid gap-12 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] lg:gap-20">
           <div className="fliesstext lesebreite">{inhalt}</div>
-          <aside className="h-fit rounded-[var(--radius-karte)] border border-linie bg-flaeche p-8 text-text-hell lg:sticky lg:top-32 lg:p-10">
+          <aside className="h-fit rounded-[var(--radius-karte)] border border-linie bg-flaeche p-8 lg:sticky lg:top-32 lg:p-10">
             <h2 className="titel-3">So bewerben Sie sich</h2>
-            <p className="mt-3 text-text-hell-leise">
+            <p className="mt-3 text-text-leise">
               Senden Sie Ihre Unterlagen per E-Mail{j.kontaktperson ? ` an ${j.kontaktperson}` : ''}. Wir melden uns persönlich bei Ihnen.
             </p>
             <a href={`mailto:${j.bewerbungEmail}?subject=${betreff}`} className="knopf-primaer mt-8 w-full">
               <Mail className="size-5" aria-hidden />
               Bewerbung senden
             </a>
-            <p className="mt-6 text-sm text-text-hell-leise">
+            <p className="mt-6 text-sm text-text-leise">
               Fragen zur Stelle:{' '}
-              <a href={`tel:${e.telefon.replaceAll(' ', '')}`} className="inline-block py-1 text-text-hell underline underline-offset-4">
+              <a href={`tel:${e.telefon.replaceAll(' ', '')}`} className="inline-block py-1 text-text underline underline-offset-4">
                 {e.telefon}
               </a>
             </p>

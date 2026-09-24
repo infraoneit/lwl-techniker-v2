@@ -7,8 +7,14 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#08112e',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#f4f5fa' },
+    { media: '(prefers-color-scheme: dark)', color: '#08112e' },
+  ],
 };
+
+/** Setzt data-theme auf <html>, bevor irgendetwas gezeichnet wird, falls die Kundschaft den Schalter schon einmal manuell benutzt hat. Ohne das würde die Seite kurz im falschen Erscheinungsbild aufblitzen. */
+const THEMA_SCRIPT = `try{var t=localStorage.getItem('lwl-theme');if(t==='hell'||t==='dunkel')document.documentElement.dataset.theme=t;}catch(e){}`;
 
 /**
  * Wurzel-Layout: nur html und body.
@@ -17,9 +23,13 @@ export const viewport: Viewport = {
  */
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang={SPRACHE} className={`${schriftText.variable} ${schriftUeberschrift.variable}`}>
+    // suppressHydrationWarning: data-theme wird vom Skript unten vor der Hydration gesetzt
+    <html lang={SPRACHE} className={`${schriftText.variable} ${schriftUeberschrift.variable}`} suppressHydrationWarning>
       {/* suppressHydrationWarning: Browser-Erweiterungen (z. B. ColorZilla) schreiben Attribute in den Body, bevor React lädt */}
-      <body suppressHydrationWarning>{children}</body>
+      <body suppressHydrationWarning>
+        <script dangerouslySetInnerHTML={{ __html: THEMA_SCRIPT }} />
+        {children}
+      </body>
     </html>
   );
 }
