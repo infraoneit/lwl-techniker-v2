@@ -24,7 +24,9 @@
       "value": {
         "ueberzeile": "Leistungen",
         "titel": "Unsere Expertise",
-        "text": "Von der Muffenspleissung über den FTTH-Anschluss bis zur Verkabelung im Rechenzentrum. Jede Installation schliessen wir mit Messung und Protokoll ab."
+        "text": "Von der Muffenspleissung über den FTTH-Anschluss bis zur Verkabelung im Rechenzentrum. Jede Installation schliessen wir mit Messung und Protokoll ab.",
+        "anzahl": "4",
+        "linkText": "Alle Leistungen"
       }
     },
     {

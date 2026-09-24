@@ -1,5 +1,7 @@
 import Link from 'next/link';
+import { ImageOff } from 'lucide-react';
 import { AbschnittKopf } from '@/components/ui/AbschnittKopf';
+import { BildOhneBeschnitt } from '@/components/ui/BildOhneBeschnitt';
 import { holeReferenzenFuerStartseite } from '@/lib/cms';
 import { cn } from '@/lib/cn';
 import { sauberText } from '@/lib/text';
@@ -25,18 +27,32 @@ export async function ReferenzenBlock({ daten: d }: { daten: BlockDaten<'referen
         />
         <ul className={cn('grid gap-px border border-linie bg-linie sm:grid-cols-2', anzahl === 3 ? 'lg:grid-cols-3' : anzahl === 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3')}>
           {referenzen.map((r, i) => (
-            <li key={r.slug} data-einblenden className="group relative overflow-hidden bg-flaeche p-7 transition-colors hover:bg-blau/20 lg:p-8">
+            <li key={r.slug} data-einblenden className="group relative flex flex-col overflow-hidden bg-flaeche transition-colors hover:bg-blau/20">
               <span className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-marke to-marke-hell transition-transform duration-500 group-hover:scale-x-100" aria-hidden />
-              <span className="block font-titel text-4xl font-bold leading-none text-linie transition-colors group-hover:text-marke" aria-hidden>
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <h3 className="mt-4 text-sm font-semibold tracking-[0.12em] uppercase">
-                <Link href={`/referenzen/${r.slug}`} className="after:absolute after:inset-0">
-                  {sauberText(r.titel)}
-                </Link>
-              </h3>
-              {r.kategorie || r.ort ? <p className="mt-1 text-xs text-text-leise">{[r.kategorie, r.ort].filter(Boolean).join(', ')}</p> : null}
-              <p className="mt-4 line-clamp-3 text-[0.95rem] leading-7 text-text-leise">{sauberText(r.kurzbeschreibung)}</p>
+              <div className="relative aspect-[4/3] overflow-hidden bg-flaeche-dunkel">
+                {r.titelbild ? (
+                  <BildOhneBeschnitt src={r.titelbild} alt={r.titelbildAlt} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" zoomBeiHover />
+                ) : (
+                  <span className="absolute inset-0 flex items-center justify-center text-linie" aria-hidden>
+                    <ImageOff className="size-1/6" strokeWidth={1} />
+                  </span>
+                )}
+                <span
+                  className="absolute top-4 left-4 font-titel text-3xl font-bold text-text-hell drop-shadow-[0_1px_8px_rgba(8,17,46,0.85)] transition-colors group-hover:text-marke"
+                  aria-hidden
+                >
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+              </div>
+              <div className="flex flex-1 flex-col p-7 lg:p-8">
+                <h3 className="text-sm font-semibold tracking-[0.12em] uppercase">
+                  <Link href={`/referenzen/${r.slug}`} className="after:absolute after:inset-0">
+                    {sauberText(r.titel)}
+                  </Link>
+                </h3>
+                {r.kategorie || r.ort ? <p className="mt-1 text-xs text-text-leise">{[r.kategorie, r.ort].filter(Boolean).join(', ')}</p> : null}
+                <p className="text-kompakt mt-4 line-clamp-3 hyphens-auto break-words">{sauberText(r.kurzbeschreibung)}</p>
+              </div>
             </li>
           ))}
         </ul>

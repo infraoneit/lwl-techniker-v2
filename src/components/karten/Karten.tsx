@@ -44,7 +44,7 @@ export function ReferenzKarte({ referenz: r, titelEbene = 'h3', sizes = KARTEN_S
           {sauberText(r.titel)}
         </Link>
       </Titel>
-      <p className="mt-2 line-clamp-3 text-text-leise">{sauberText(r.kurzbeschreibung)}</p>
+      <p className="mt-2 line-clamp-3 text-text-leise hyphens-auto break-words">{sauberText(r.kurzbeschreibung)}</p>
     </article>
   );
 }
@@ -87,7 +87,7 @@ export function JobZeile({ job: j, titelEbene = 'h3' }: { job: Job; titelEbene?:
         </Titel>
         <p className="mt-2 max-w-3xl text-text-leise">{sauberText(j.kurzbeschreibung)}</p>
       </div>
-      <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-[0.95rem] text-text-leise md:justify-end">
+      <div className="text-kompakt flex flex-wrap items-center gap-x-6 gap-y-2 md:justify-end">
         <span className="inline-flex items-center gap-2">
           <Clock className="size-4" aria-hidden />
           {j.pensum}

@@ -134,6 +134,16 @@ export function seitenBloecke(bildOrdner: string) {
           ueberzeile: ueberzeile(),
           titel: text('Titel', { pflicht: true, max: 90 }),
           text: langtext('Einleitung', { max: 280, beschreibung: 'Die Leistungen selbst erscheinen automatisch, sortiert nach dem Feld Reihenfolge.' }),
+          anzahl: fields.select({
+            label: 'Anzahl',
+            description: 'Es erscheinen die ersten Leistungen nach dem Feld Reihenfolge.',
+            options: [
+              { label: '3 Leistungen', value: '3' },
+              { label: '4 Leistungen', value: '4' },
+            ],
+            defaultValue: '4',
+          }),
+          linkText: text('Text für Link zur Übersicht', { max: 40, standard: 'Alle Leistungen' }),
         }),
       },
 

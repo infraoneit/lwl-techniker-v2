@@ -10,13 +10,19 @@ import type { BlockDaten } from './BlockRenderer';
  * als nummerierte Zeilen wie im Entwurf (Nummer, Titel, Beschreibung, Pfeil).
  */
 export async function LeistungenBlock({ daten: d }: { daten: BlockDaten<'leistungen'> }) {
-  const leistungen = await holeLeistungen();
-  if (leistungen.length === 0) return null;
+  const alle = await holeLeistungen();
+  if (alle.length === 0) return null;
+  const leistungen = alle.slice(0, Number(d.anzahl));
 
   return (
     <section className="abschnitt">
       <div className="container-seite">
-        <AbschnittKopf ueberzeile={d.ueberzeile} titel={d.titel} text={d.text} />
+        <AbschnittKopf
+          ueberzeile={d.ueberzeile}
+          titel={d.titel}
+          text={d.text}
+          link={d.linkText ? { text: d.linkText, href: '/leistungen' } : undefined}
+        />
         <ol className="border-t border-linie">
           {leistungen.map((l, i) => (
             <li
@@ -35,7 +41,7 @@ export async function LeistungenBlock({ daten: d }: { daten: BlockDaten<'leistun
                   {sauberText(l.titel)}
                 </Link>
               </h3>
-              <p className="col-start-2 text-[0.95rem] leading-7 text-text-leise lg:col-start-3 lg:row-start-1 lg:pt-0.5">{sauberText(l.kurzbeschreibung)}</p>
+              <p className="text-kompakt col-start-2 lg:col-start-3 lg:row-start-1 lg:pt-0.5">{sauberText(l.kurzbeschreibung)}</p>
               <ArrowRight
                 className="col-start-3 row-start-1 mt-1 size-5 self-start text-linie transition-[color,transform] group-hover:translate-x-1 group-hover:text-marke lg:col-start-4"
                 aria-hidden

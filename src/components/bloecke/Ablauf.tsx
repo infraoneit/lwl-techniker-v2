@@ -19,12 +19,12 @@ export function Ablauf({ daten: d }: { daten: BlockDaten<'ablauf'> }) {
           {d.schritte.map((s, i) => (
             <li key={i} data-einblenden style={{ '--einblenden-index': i } as React.CSSProperties} className="relative pl-10 md:pl-0 xl:pt-12">
               <span
-                className="absolute top-0 left-0 size-[14px] rounded-full border-2 border-marke bg-grund shadow-[0_0_14px_rgba(240,168,0,0.4)] md:static md:mb-5 md:block xl:absolute xl:mb-0"
+                className="absolute top-0 left-0 size-[14px] rounded-full border-2 border-marke bg-grund md:static md:mb-5 md:block xl:absolute xl:mb-0"
                 aria-hidden
               />
               <p className="text-xs font-medium tracking-[0.32em] text-marke uppercase">Schritt {String(i + 1).padStart(2, '0')}</p>
               <h3 className="titel-3 mt-2">{sauberText(s.titel)}</h3>
-              <p className="mt-3 max-w-xl text-[0.95rem] leading-7 text-text-leise">{sauberText(s.text)}</p>
+              <p className="text-kompakt mt-3 max-w-xl">{sauberText(s.text)}</p>
             </li>
           ))}
         </ol>
