@@ -6,7 +6,7 @@
   publish = ".next"
 
 [build.environment]
-  NODE_VERSION = "22"
+  NODE_VERSION = "22.23.2"
   NEXT_TELEMETRY_DISABLED = "1"
 
 # Sicherheits-Header zusätzlich hier, damit sie auch für Dateien aus public/ gelten,
