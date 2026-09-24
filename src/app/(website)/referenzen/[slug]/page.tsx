@@ -1,6 +1,6 @@
 import { ImageOff } from 'lucide-react';
 import { notFound } from 'next/navigation';
-import { BildOhneBeschnitt } from '@/components/ui/BildOhneBeschnitt';
+import { Galerie } from '@/components/ui/Galerie';
 import { Seitenkopf } from '@/components/ui/Seitenkopf';
 import { ReferenzKarte } from '@/components/karten/Karten';
 import { holeReferenz, holeReferenzen, holeUebersichten } from '@/lib/cms';
@@ -29,6 +29,7 @@ export default async function ReferenzSeite({ params }: Props) {
   if (!r) notFound();
   const inhalt = await renderMarkdoc(r.inhalt);
   const weitere = alle.filter((x) => x.slug !== slug).slice(0, 3);
+  const bilder = [...(r.titelbild ? [{ bild: r.titelbild, alt: r.titelbildAlt }] : []), ...r.galerie];
 
   const fakten = [
     { titel: 'Bauherrschaft', wert: r.kunde },
@@ -50,15 +51,15 @@ export default async function ReferenzSeite({ params }: Props) {
       />
 
       <div className="container-seite pt-12 lg:pt-16">
-        <div className="relative aspect-[16/9] overflow-hidden rounded-[var(--radius-karte)] bg-flaeche lg:aspect-[21/9]">
-          {r.titelbild ? (
-            <BildOhneBeschnitt src={r.titelbild} alt={r.titelbildAlt} sizes="(min-width: 2400px) 2304px, 100vw" prioritaet />
-          ) : (
+        {bilder.length > 0 ? (
+          <Galerie bilder={bilder} />
+        ) : (
+          <div className="relative aspect-[16/9] overflow-hidden rounded-[var(--radius-karte)] bg-flaeche lg:aspect-[21/9]">
             <span className="absolute inset-0 flex items-center justify-center text-linie" aria-hidden>
               <ImageOff className="size-1/6" strokeWidth={1} />
             </span>
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
       <section className="abschnitt">
@@ -78,18 +79,6 @@ export default async function ReferenzSeite({ params }: Props) {
           ) : null}
         </div>
       </section>
-
-      {r.galerie.length > 0 ? (
-        <section className="pb-16 lg:pb-24">
-          <div className="container-seite grid gap-6 sm:grid-cols-2 lg:gap-8 xl:grid-cols-3">
-            {r.galerie.map((b, i) => (
-              <figure key={i} className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius-karte)] bg-flaeche">
-                <BildOhneBeschnitt src={b.bild} alt={b.alt} sizes="(min-width: 1280px) 33vw, (min-width: 640px) 50vw, 100vw" />
-              </figure>
-            ))}
-          </div>
-        </section>
-      ) : null}
 
       {weitere.length > 0 ? (
         <section className="abschnitt border-t border-linie bg-flaeche/60">
